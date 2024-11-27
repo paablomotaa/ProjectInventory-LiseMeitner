@@ -1,3 +1,3 @@
 package app.base.utils
 
-enum class Status{NEW,MODIFIED,VERIFIED}
+enum class Estado{NEW,MODIFIED,VERIFIED}
