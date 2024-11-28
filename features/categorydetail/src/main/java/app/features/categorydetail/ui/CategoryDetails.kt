@@ -36,7 +36,7 @@ fun CategoryDetailsScreen(category: Category) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Image(
-            painter = painterResource(id = R.drawable.ic_logo), // Cambia ic_logo por tu recurso local
+            painter = painterResource(id = app.base.ui.R.drawable.ic_cactus),
             contentDescription = "Imagen de la categoría",
             modifier = Modifier
                 .size(120.dp)

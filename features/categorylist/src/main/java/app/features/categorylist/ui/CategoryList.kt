@@ -43,7 +43,7 @@ fun CategoryItem(category: Category, onClick: () -> Unit) {
             modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_logo),
+                painter = painterResource(id = app.base.ui.R.drawable.ic_cactus),
                 contentDescription = "Logo de la categoría",
                 modifier = Modifier
                     .size(48.dp)
