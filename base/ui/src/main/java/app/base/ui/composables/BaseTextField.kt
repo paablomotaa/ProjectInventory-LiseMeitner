@@ -14,7 +14,7 @@ fun BaseTextField(text: String, value: MutableState<String>, modifier: Modifier 
         value = value.value,
         onValueChange = { value.value = it },
         label = { Text(text) },
-        )
+    )
 }
 
 @Composable

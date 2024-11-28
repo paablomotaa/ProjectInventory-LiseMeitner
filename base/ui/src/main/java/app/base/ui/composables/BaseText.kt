@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun BaseText(value: String) {
-    Text(text=value)
+    Text(text = value)
 }

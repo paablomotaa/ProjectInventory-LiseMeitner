@@ -1,19 +1,34 @@
 package app.base.ui.composables
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextAlign
+import app.base.ui.Dimensions
 
 @Composable
-fun TitleText(text:String){
-    Text(text = text, fontWeight = FontWeight.Bold, fontSize = 30.sp)
+fun TitleText(text: String) {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth(),
+        text = text, fontWeight = FontWeight.Bold, fontSize = Dimensions.Medium,
+        textAlign = TextAlign.Center,
+    )
 }
+
 @Composable
-fun MediumTitleText(text:String){
-    Text(text = text, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+fun MediumTitleText(text: String) {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth(),
+        text = text, fontWeight = FontWeight.Bold, fontSize = Dimensions.Small,
+        textAlign = TextAlign.Center,
+    )
 }
+
 @Composable
-fun ErrorTextInputField(text:String){
+fun ErrorTextInputField(text: String) {
     Text(text = text)
 }

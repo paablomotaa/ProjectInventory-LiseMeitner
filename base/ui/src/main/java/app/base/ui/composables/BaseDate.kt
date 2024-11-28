@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import app.base.ui.Separations
 import app.base.utils.dateValidation
 import java.time.LocalDate
 
@@ -45,7 +46,7 @@ fun DateField(
         trailingIcon = {
             IconButton(onClick = {
                 showDialog.value = true
-            }){
+            }) {
                 Icon(Icons.Default.DateRange, contentDescription = null)
             }
 
@@ -63,7 +64,11 @@ fun DateField(
 }
 
 @Composable
-fun DialogDate(showDialog: MutableState<Boolean>, selectedDate: MutableState<String>, isDateError: MutableState<Boolean>){
+fun DialogDate(
+    showDialog: MutableState<Boolean>,
+    selectedDate: MutableState<String>,
+    isDateError: MutableState<Boolean>
+) {
     if (showDialog.value) {
         DatePickerDialog(
             onDismissRequest = { showDialog.value = false },
@@ -82,7 +87,10 @@ fun DatePickerDialog(
     onDismissRequest: () -> Unit,
     onDateSelected: (LocalDate) -> Unit
 ) {
-    Dialog(onDismissRequest = onDismissRequest,properties = DialogProperties( usePlatformDefaultWidth = false )) {
+    Dialog(
+        onDismissRequest = onDismissRequest,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
         Surface(
             shape = MaterialTheme.shapes.medium,
             tonalElevation = Separations.VerySmall
@@ -92,7 +100,7 @@ fun DatePickerDialog(
                     .fillMaxWidth()
             ) {
                 val datePickerState = rememberDatePickerState()
-                DatePicker(state = datePickerState, )
+                DatePicker(state = datePickerState)
 
                 Row(
                     horizontalArrangement = Arrangement.End,
@@ -105,7 +113,8 @@ fun DatePickerDialog(
                         onClick = {
                             val selectedDateMillis = datePickerState.selectedDateMillis
                             if (selectedDateMillis != null) {
-                                val selectedDate = LocalDate.ofEpochDay(selectedDateMillis / (24 * 60 * 60 * 1000))
+                                val selectedDate =
+                                    LocalDate.ofEpochDay(selectedDateMillis / (24 * 60 * 60 * 1000))
                                 onDateSelected(selectedDate)
                             }
                         }
