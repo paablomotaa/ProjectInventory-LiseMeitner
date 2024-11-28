@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import app.base.ui.R
 
 @Composable
-fun BaseImage(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? = null){
+fun BaseImageBig(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? = null) {
     val imageModifier = modifier
         .size(150.dp)
         .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
@@ -38,6 +38,49 @@ fun BaseImage(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? =
         modifier = imageModifier
     )
 }
+
+@Composable
+fun BaseImageMedium(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? = null) {
+    val imageModifier = modifier
+        .size(100.dp)
+        .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
+        .background(Color.Gray, shape = CircleShape)
+        .clip(CircleShape)
+
+    val painter = if (image?.value != null) {
+        BitmapPainter(image.value!!)
+    } else {
+        painterResource(id = R.drawable.ic_cactus)
+    }
+    Image(
+        painter = painter,
+        contentDescription = "hola",
+        contentScale = ContentScale.Crop,
+        modifier = imageModifier
+    )
+}
+
+@Composable
+fun BaseImageSmall(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? = null) {
+    val imageModifier = modifier
+        .size(50.dp)
+        .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
+        .background(Color.Gray, shape = CircleShape)
+        .clip(CircleShape)
+
+    val painter = if (image?.value != null) {
+        BitmapPainter(image.value!!)
+    } else {
+        painterResource(id = R.drawable.ic_cactus)
+    }
+    Image(
+        painter = painter,
+        contentDescription = "hola",
+        contentScale = ContentScale.Crop,
+        modifier = imageModifier
+    )
+}
+
 
 /*
 @Composable

@@ -1,5 +1,7 @@
 package app.base.ui.composables
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -11,20 +13,41 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseDropdownMenu(value: MutableState<Boolean>, texto: MutableState<String>, text: String, modifier: Modifier = Modifier){
+fun BaseDropdownMenu(
+    valueChange: MutableState<Boolean>,
+    text: MutableState<String>,
+    title: String,
+    modifier: Modifier = Modifier,
+    option: List<String>
+) {
     ExposedDropdownMenuBox(
-        modifier = modifier,
-        expanded = value.value,
-            onExpandedChange = {value.value = !value.value}) {
+        modifier = modifier.fillMaxSize(),
+        expanded = valueChange.value,
+        onExpandedChange = { valueChange.value = !valueChange.value }) {
 
-        TextField( label = { Text(text=(text)) },
-            value = texto.value,
+        TextField(
+            modifier = modifier.menuAnchor(),
+            label = { Text(text = (title)) },
+            singleLine = true,
+            value = text.value,
             onValueChange = {},
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = value.value)},
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = valueChange.value) },
             readOnly = true,
         )
 
-        ExposedDropdownMenu(expanded = value.value,
-            onDismissRequest = {value.value = false}) { }
+        ExposedDropdownMenu(modifier = modifier.exposedDropdownSize(),
+            expanded = valueChange.value,
+            onDismissRequest = { valueChange.value = false }) {
+            option.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(text = option) },
+                    onClick = {
+                        text.value = option
+                        valueChange.value = false
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                )
+            }
+        }
     }
 }

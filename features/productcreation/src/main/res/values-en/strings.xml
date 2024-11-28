@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="code">Code</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="numSerial">Serial number</string>
+    <string name="codModel">Model code</string>
+    <string name="amount">Amount</string>
+    <string name="price">Price</string>
+    <string name="typeProduct">Tipe product</string>
+    <string name="category">Category</string>
+    <string name="section">Section</string>
+    <string name="status">Status</string>
+    <string name="acquisitionDate">Acquisition date</string>
+    <string name="create">Create</string>
+    <string name="cancellationDate">Cancellation date</string>
+    <string name="notes">Notes</string>
+    <string name="save">Save</string>
+</resources>

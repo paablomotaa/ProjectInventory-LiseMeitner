@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="code">Código</string>
+    <string name="name">Nombre</string>
+    <string name="description">Descripción</string>
+    <string name="numSerial">Numero de serie</string>
+    <string name="codModel">Código del modelo</string>
+    <string name="amount">Cantidad</string>
+    <string name="price">Precio</string>
+    <string name="typeProduct">Tipo producto</string>
+    <string name="category">Categoria</string>
+    <string name="section">Sección</string>
+    <string name="status">Estado</string>
+    <string name="acquisitionDate">Fecha adquisicion</string>
+    <string name="create">Crear</string>
+    <string name="cancellationDate">Fecha baja</string>
+    <string name="notes">Notas</string>
+    <string name="tags" translatable="false">Tags</string>
+    <string name="save">Guardar</string>
 </resources>
