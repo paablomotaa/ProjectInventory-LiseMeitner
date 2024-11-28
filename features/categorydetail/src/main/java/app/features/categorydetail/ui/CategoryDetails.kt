@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
-import app.features.categorydetail.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,7 +35,7 @@ fun CategoryDetailsScreen(category: Category) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Image(
-            painter = painterResource(id = R.drawable.ic_logo), // Cambia ic_logo por tu recurso local
+            painter = painterResource(id = app.base.ui.R.drawable.ic_cactus), // Cambia ic_logo por tu recurso local
             contentDescription = "Imagen de la categoría",
             modifier = Modifier
                 .size(120.dp)

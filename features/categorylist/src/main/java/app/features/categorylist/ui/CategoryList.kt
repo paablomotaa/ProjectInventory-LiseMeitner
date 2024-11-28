@@ -1,12 +1,15 @@
 package app.features.categorylist.ui
 
+import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,17 +21,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
-import app.features.categorylist.R
 import java.util.Date
 
 @Composable
-fun CategoryListScreen(categories: List<Category>, onCategoryClick: (Category) -> Unit) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(categories) { category ->
-            CategoryItem(category = category, onClick = { onCategoryClick(category) })
+fun CategoryListScreen(categories: List<Category>, onCategoryClick: (Category) -> Unit, onFabClick: () -> Unit) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(categories) { category ->
+                CategoryItem(category = category, onClick = { onCategoryClick(category) })
+            }
+        }
+
+        FloatingActionButton(
+            onClick = {  },
+            modifier = Modifier
+                .align(Alignment.BottomEnd) // Alinear en la esquina inferior derecha
+                .padding(16.dp)
+        ) {
+            Icon(
+                imageVector = androidx.compose.material.icons.Icons.Default.Add,
+                contentDescription = "Crear categoría"
+            )
         }
     }
 }
+
 
 @Composable
 fun CategoryItem(category: Category, onClick: () -> Unit) {
@@ -43,7 +60,7 @@ fun CategoryItem(category: Category, onClick: () -> Unit) {
             modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_logo),
+                painter = painterResource(id = app.base.ui.R.drawable.ic_cactus),
                 contentDescription = "Logo de la categoría",
                 modifier = Modifier
                     .size(48.dp)
@@ -135,12 +152,12 @@ fun PreviewCategoryListWithScroll() {
             createdDate = Date(), type = CategoryType.ECONOMICO, isFungible = true
         )
     )
-
     CategoryListScreen(
         categories = sampleCategories,
         onCategoryClick = { category ->
             println("Clic en la categoría: ${category.name}")
-        }
+        },
+        onFabClick = { }
     )
 }
 
