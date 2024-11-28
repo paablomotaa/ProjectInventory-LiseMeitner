@@ -35,7 +35,7 @@ fun ProductDetails(modifier: Modifier = Modifier) {
     var notas = rememberSaveable { mutableStateOf("") }
     var tags = rememberSaveable { mutableStateOf("") }
 
-    TopAppBarOneAction(title = nombre.value, Icons.Default.Edit, "Editar", funtion = {}) {
+    TopAppBarOneAction(title = nombre.value, Icons.Default.Edit, stringResource(R.string.edit), funtion = {}) {
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {

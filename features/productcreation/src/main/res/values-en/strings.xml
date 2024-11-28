@@ -16,4 +16,6 @@
     <string name="cancellationDate">Cancellation date</string>
     <string name="notes">Notes</string>
     <string name="save">Save</string>
+    <string name="createProduct">Create product</string>
+    <string name="editProduct">Edit product</string>
 </resources>

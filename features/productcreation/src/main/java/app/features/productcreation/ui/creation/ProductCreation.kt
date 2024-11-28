@@ -65,7 +65,7 @@ fun ProductCreation(modifier: Modifier = Modifier) {
     //endregion
 
 
-    TopAppBarTitle(title = "Crear Producto") {
+    TopAppBarTitle(title = stringResource(R.string.createProduct)) {
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {

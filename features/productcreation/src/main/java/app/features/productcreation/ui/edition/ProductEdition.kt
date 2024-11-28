@@ -56,7 +56,7 @@ fun ProductEdition(modifier: Modifier = Modifier) {
     val seccionList = listOf("Seccion 1", "Seccion 2", "Seccion 3", "Seccion 4")
     val estadoList = listOf("New", "Modified", "Verified")
 
-    TopAppBarTitle(title = "Editar Producto") {
+    TopAppBarTitle(title = stringResource(R.string.editProduct)) {
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {
