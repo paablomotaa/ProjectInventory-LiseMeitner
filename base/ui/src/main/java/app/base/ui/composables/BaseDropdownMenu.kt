@@ -30,6 +30,7 @@ fun BaseDropdownMenu(
             label = { Text(text = (title)) },
             singleLine = true,
             value = text.value.toString(),
+            value = text.value,
             onValueChange = {},
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = valueChange.value) },
             readOnly = true,

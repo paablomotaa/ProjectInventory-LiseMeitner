@@ -13,7 +13,7 @@ data class Product(
     val codModel: String,
     val typeProduct: String,
     val category: String,
-    val section: String,
+    val section: Section,
     val status: Status,
     val amount: Int,
     val price: Double,
