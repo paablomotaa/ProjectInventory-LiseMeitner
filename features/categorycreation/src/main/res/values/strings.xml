@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="category_name_label">Nombre de la categoría</string>
+    <string name="category_short_name_label">Nombre corto</string>
+    <string name="category_description_label">Descripción</string>
+    <string name="category_type_label">Tipo</string>
+    <string name="category_is_fungible_label">Es fungible</string>
+    <string name="category_creation_date_label">Fecha de creación</string>
+    <string name="save_button">Guardar</string>
+    <string name="update_button">Actualizar</string>
+    <string name="category_type_dropdown">Seleccionar tipo</string>
 </resources>
