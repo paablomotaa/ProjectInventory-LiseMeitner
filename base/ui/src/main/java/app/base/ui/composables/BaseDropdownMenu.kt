@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun BaseDropdownMenu(
     valueChange: MutableState<Boolean>,
-    text: MutableState<String>,
+    text: MutableState<String?>,
     title: String,
     modifier: Modifier = Modifier,
     option: List<String>
@@ -29,6 +29,7 @@ fun BaseDropdownMenu(
             modifier = modifier.menuAnchor(),
             label = { Text(text = (title)) },
             singleLine = true,
+            value = text.value.toString(),
             value = text.value,
             onValueChange = {},
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = valueChange.value) },
