@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Registrar">REGISTRAR</string>
+    <string name="Editar">EDITAR</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Codigo">Codigo</string>
+    <string name="Tipo">Tipo</string>
 </resources>
