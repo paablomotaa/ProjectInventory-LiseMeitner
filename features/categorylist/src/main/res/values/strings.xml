@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="fab_create_category">Crear categoría</string>
+    <string name="category_logo_content_description">Logo de la categoría</string>
+    <string name="edit_category_content_description">Editar categoría</string>
 </resources>

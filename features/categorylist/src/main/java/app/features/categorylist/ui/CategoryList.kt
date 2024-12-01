@@ -1,6 +1,5 @@
 package app.features.categorylist.ui
 
-import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
@@ -8,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -18,14 +16,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
+import app.features.categorylist.R
 import java.util.Date
 
 @Composable
-fun CategoryListScreen(categories: List<Category>, onCategoryClick: (Category) -> Unit, onFabClick: () -> Unit) {
+fun CategoryListScreen(
+    categories: List<Category>,
+    onCategoryClick: (Category) -> Unit,
+    onFabClick: () -> Unit
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(categories) { category ->
@@ -34,14 +38,14 @@ fun CategoryListScreen(categories: List<Category>, onCategoryClick: (Category) -
         }
 
         FloatingActionButton(
-            onClick = {  },
+            onClick = onFabClick,
             modifier = Modifier
-                .align(Alignment.BottomEnd) // Alinear en la esquina inferior derecha
+                .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
             Icon(
                 imageVector = androidx.compose.material.icons.Icons.Default.Add,
-                contentDescription = "Crear categoría"
+                contentDescription = stringResource(id = R.string.fab_create_category)
             )
         }
     }
@@ -62,14 +66,13 @@ fun CategoryItem(category: Category, onClick: () -> Unit) {
         ) {
             Image(
                 painter = painterResource(id = app.base.ui.R.drawable.ic_cactus),
-                contentDescription = "Logo de la categoría",
+                contentDescription = stringResource(id = R.string.category_logo_content_description),
                 modifier = Modifier
                     .size(48.dp)
                     .padding(end = 16.dp),
             )
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Columna para los textos
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -83,13 +86,14 @@ fun CategoryItem(category: Category, onClick: () -> Unit) {
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+
             Icon(
                 imageVector = androidx.compose.material.icons.Icons.Default.Edit,
-                contentDescription = "Opciones",
+                contentDescription = stringResource(id = R.string.edit_category_content_description),
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable {//TODO acceso a details
-
+                    .clickable {
+                        // TODO acceso a details
                     }
             )
         }

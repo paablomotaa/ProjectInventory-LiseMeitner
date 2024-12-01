@@ -5,10 +5,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
+import app.features.categorycreation.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,21 +35,21 @@ fun CategoryFormScreen(category: Category?, onSave: (Category) -> Unit) {
         TextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nombre de la categoría") },
+            label = { Text(stringResource(id = R.string.category_name_label)) },
             modifier = Modifier.fillMaxWidth()
         )
 
         TextField(
             value = shortName,
             onValueChange = { shortName = it },
-            label = { Text("Nombre corto") },
+            label = { Text(stringResource(id = R.string.category_short_name_label)) },
             modifier = Modifier.fillMaxWidth()
         )
 
         TextField(
             value = description,
             onValueChange = { description = it },
-            label = { Text("Descripción") },
+            label = { Text(stringResource(id = R.string.category_description_label)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -74,13 +76,12 @@ fun CategoryFormScreen(category: Category?, onSave: (Category) -> Unit) {
             }
         }
 
-        // Es fungible
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(checked = isFungible, onCheckedChange = { isFungible = it })
-            Text("Es fungible")
+            Text(stringResource(id = R.string.category_is_fungible_label))
         }
 
-        Text(text = "Fecha de creación: $formattedDate")
+        Text(text = "${stringResource(id = R.string.category_creation_date_label)}: $formattedDate")
 
         Button(
             onClick = {
@@ -102,13 +103,11 @@ fun CategoryFormScreen(category: Category?, onSave: (Category) -> Unit) {
                         isFungible = isFungible
                     )
                     onSave(updatedCategory)
-                } else {
-                    // TODO manejar errores
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Guardar")
+            Text(stringResource(id = R.string.save_button))
         }
     }
 }

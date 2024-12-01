@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="category_details_title">Detalles de la Categoría</string>
+    <string name="category_image_description">Imagen de la categoría</string>
+    <string name="category_name">Nombre: %1$s</string>
+    <string name="category_short_name">Nombre corto: %1$s</string>
+    <string name="category_description">Descripción: %1$s</string>
+    <string name="category_type">Tipo: %1$s</string>
+    <string name="category_is_fungible_yes">Sí</string>
+    <string name="category_is_fungible_no">No</string>
+    <string name="category_is_fungible">Es fungible: %1$s</string>
+    <string name="category_created_date">Fecha de creación: %1$s</string>
 </resources>
