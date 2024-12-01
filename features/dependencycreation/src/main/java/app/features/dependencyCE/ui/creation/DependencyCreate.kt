@@ -1,4 +1,4 @@
-package app.features.categorycreation.ui.creation
+package app.features.dependencycreation.ui.creation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

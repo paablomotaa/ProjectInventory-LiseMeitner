@@ -1,4 +1,4 @@
-package app.features.categorydetail.ui
+package app.features.dependencydetail.ui
 
 import app.features.dependencydetail.R
 import androidx.compose.ui.res.stringResource
