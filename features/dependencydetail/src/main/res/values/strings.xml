@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="back_button">Volver</string>
+    <string name="dependency_image_content_description">Imagen de la Dependencia</string>
+    <string name="edit_button">Editar</string>
+    <string name="dependency_details_title">Detalles de la Dependencia</string>
 </resources>
