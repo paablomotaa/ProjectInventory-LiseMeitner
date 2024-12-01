@@ -26,7 +26,7 @@ Esta vista permite a los usuarios añadir nuevas categorías al inventario media
 ---
 
 ### 5. **Vista: Detalles de Categoría**
-Muestra información detallada de una categoría específica seleccionada en la lista. Los detalles incluyen:
+Muestra información detallada de una categoría específica seleccionada en la lista.
 
 
 ---
