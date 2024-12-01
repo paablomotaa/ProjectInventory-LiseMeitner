@@ -46,7 +46,7 @@ fun inventoryCreation(modifier:Modifier = Modifier) {
         ) {
             BaseTextField(stringResource(R.string.Codigo), code, modifier = Modifier.fillMaxWidth())
             BaseTextField(stringResource(R.string.Nombre), name, modifier = Modifier.fillMaxWidth())
-            BaseTextField("Descripcion", name, modifier = Modifier.fillMaxWidth())
+            BaseTextField(stringResource(R.string.Descripcion), name, modifier = Modifier.fillMaxWidth())
             BaseDropdownMenu(expandedtypestate, selectedOption, stringResource(R.string.Tipo), modifier, items)
 
             NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = {})

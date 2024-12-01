@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Registrar">REGISTER</string>
+    <string name="Editar">EDIT</string>
+    <string name="Nombre">Name</string>
+    <string name="Codigo">Code</string>
+    <string name="Tipo">Type</string>
+    <string name="Descripcion">Description</string>
+</resources>

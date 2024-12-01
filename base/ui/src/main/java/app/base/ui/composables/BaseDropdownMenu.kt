@@ -10,6 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +30,7 @@ fun BaseDropdownMenu(
             modifier = modifier.menuAnchor(),
             label = { Text(text = (title)) },
             singleLine = true,
-            value = text.value.toString(),
+            value = text.value,
             value = text.value,
             onValueChange = {},
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = valueChange.value) },

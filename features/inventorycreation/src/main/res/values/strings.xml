@@ -6,4 +6,5 @@
     <string name="Nombre">Nombre</string>
     <string name="Codigo">Codigo</string>
     <string name="Tipo">Tipo</string>
+    <string name="Descripcion">Descripción</string>
 </resources>

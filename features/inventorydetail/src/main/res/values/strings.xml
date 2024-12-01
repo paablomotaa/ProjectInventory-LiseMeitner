@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Detalles">DETALLES</string>
+    <string name="Codigo">Código</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Descripcion">Descripcion</string>
+    <string name="Tipo">Tipo</string>
+    <string name="FechActivo">Fecha en activo</string>
 </resources>

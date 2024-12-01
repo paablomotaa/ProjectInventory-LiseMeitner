@@ -1,4 +1,4 @@
-package app.features.inventorycreation.ui.edition
+package app.features.inventorydetail.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,35 +14,37 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.base.ui.composables.BaseDropdownMenu
 import app.base.ui.composables.BaseTextField
+import app.base.ui.composables.BaseTextFieldRead
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
-import app.features.inventorycreation.R
+import app.features.inventorydetail.R
 
 @Composable
-fun inventoryEdition(modifier: Modifier = Modifier){
+fun InventoryDetails(){
     var code = rememberSaveable() { mutableStateOf("") }
     var name = rememberSaveable() { mutableStateOf("") }
-    var expandedtypestate = rememberSaveable() { mutableStateOf(false) }
+    var description = rememberSaveable() { mutableStateOf("") }
+    var typeSelected = rememberSaveable() { mutableStateOf("") }
+    var dateActive = rememberSaveable() { mutableStateOf("") }
 
-    val items = listOf("Semestral", "Anual", "Bianual")
-    var selectedOption = rememberSaveable() { mutableStateOf<String?>(null) }
-    TopAppBarTitle(title = stringResource(R.string.Editar)) {
+
+    TopAppBarTitle(title = stringResource(R.string.Detalles)) {
         Column(
             modifier = Modifier.padding(13.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            BaseTextField(stringResource(R.string.Codigo), code, modifier = Modifier.fillMaxWidth())
-            BaseTextField(stringResource(R.string.Nombre), name, modifier = Modifier.fillMaxWidth())
-            BaseTextField(stringResource(R.string.Descripcion), name, modifier = Modifier.fillMaxWidth())
-            BaseDropdownMenu(expandedtypestate, selectedOption, stringResource(R.string.Tipo), modifier, items)
-
-            NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = {})
+            BaseTextFieldRead(stringResource(R.string.Codigo),code)
+            BaseTextFieldRead(stringResource(R.string.Nombre), name)
+            BaseTextFieldRead(stringResource(R.string.Descripcion), description)
+            BaseTextFieldRead(stringResource(R.string.Tipo),typeSelected)
+            BaseTextFieldRead(stringResource(R.string.FechActivo),dateActive)
         }
     }
 }
+
 @Preview
 @Composable
-fun invetoryEditionPreview(){
-    inventoryEdition()
+fun InventoryDetailsPreview(){
+    InventoryDetails()
 }
