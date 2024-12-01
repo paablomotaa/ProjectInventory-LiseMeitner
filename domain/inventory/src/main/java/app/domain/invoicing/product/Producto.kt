@@ -20,6 +20,4 @@ data class Producto(val id: Long,
                     val fechaAdquisicion: Date,
                     val fechaBaja: Date,
                     val notas: String,
-                    val tags: String){
-
-}
+                    val tags: String)
