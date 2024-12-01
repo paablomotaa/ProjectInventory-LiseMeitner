@@ -1,6 +1,7 @@
 package app.domain.invoicing.product
 
 import app.base.utils.Status
+import app.domain.invoicing.category.Category
 import java.util.Date
 
 data class Product(
@@ -12,7 +13,7 @@ data class Product(
     val numSerial: Double,
     val codModel: String,
     val typeProduct: String,
-    val category: String,
+    val category: Category,
     val section: Section,
     val status: Status,
     val amount: Int,
