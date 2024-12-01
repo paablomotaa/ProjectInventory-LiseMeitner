@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.base.ui.composables.BaseDropdownMenu
 import app.base.ui.composables.BaseTextField
+import app.base.ui.composables.BaseTextFieldRead
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
 import app.features.inventorycreation.R
@@ -32,7 +33,7 @@ fun inventoryEdition(modifier: Modifier = Modifier){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            BaseTextField(stringResource(R.string.Codigo), code, modifier = Modifier.fillMaxWidth())
+            BaseTextFieldRead(stringResource(R.string.Codigo), code, modifier = Modifier.fillMaxWidth())
             BaseTextField(stringResource(R.string.Nombre), name, modifier = Modifier.fillMaxWidth())
             BaseTextField(stringResource(R.string.Descripcion), name, modifier = Modifier.fillMaxWidth())
             BaseDropdownMenu(expandedtypestate, selectedOption, stringResource(R.string.Tipo), modifier, items)

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import app.base.ui.Dimensions
@@ -30,5 +31,5 @@ fun MediumTitleText(text: String) {
 
 @Composable
 fun ErrorTextInputField(text: String) {
-    Text(text = text)
+    Text(text = text,color = Color.Red)
 }
