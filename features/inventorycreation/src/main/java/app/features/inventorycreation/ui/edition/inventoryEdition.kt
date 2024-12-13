@@ -26,7 +26,7 @@ fun inventoryEdition(modifier: Modifier = Modifier){
     var expandedtypestate = rememberSaveable() { mutableStateOf(false) }
 
     val items = listOf("Semestral", "Anual", "Bianual")
-    var selectedOption = rememberSaveable() { mutableStateOf<String?>(null) }
+    var selectedOption = rememberSaveable() { mutableStateOf<String>("") }
     TopAppBarTitle(title = stringResource(R.string.Editar)) {
         Column(
             modifier = Modifier.padding(13.dp),

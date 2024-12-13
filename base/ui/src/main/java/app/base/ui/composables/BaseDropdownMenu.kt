@@ -1,6 +1,7 @@
 package app.base.ui.composables
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -16,13 +17,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Composable
 fun BaseDropdownMenu(
     valueChange: MutableState<Boolean>,
-    text: MutableState<String?>,
+    text: MutableState<String>,
     title: String,
     modifier: Modifier = Modifier,
     option: List<String>
 ) {
     ExposedDropdownMenuBox(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxWidth(),
         expanded = valueChange.value,
         onExpandedChange = { valueChange.value = !valueChange.value }) {
 
@@ -30,7 +31,6 @@ fun BaseDropdownMenu(
             modifier = modifier.menuAnchor(),
             label = { Text(text = (title)) },
             singleLine = true,
-            value = text.value,
             value = text.value,
             onValueChange = {},
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = valueChange.value) },
