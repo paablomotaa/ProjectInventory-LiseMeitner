@@ -171,7 +171,7 @@ fun TopAppBarComplete(title: String, onBack: () -> Unit, filter: String, onFilte
         },
 
         floatingActionButton = {
-            FloatingActionButton(onClick = {onAdd()}) {
+            FloatingActionButton(onClick = {}) {
                 Icon(Icons.Default.Add, contentDescription = "Añadir")
             }
         }

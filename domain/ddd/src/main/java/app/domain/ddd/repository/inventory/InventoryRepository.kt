@@ -1,5 +1,6 @@
 package app.domain.ddd.repository.inventory
 
+import app.base.utils.BaseResult
 import app.domain.invoicing.inventory.Inventory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -7,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 import java.util.Date
 
-class InventoryRepository {
+object InventoryRepository {
     private var dataSet:MutableList<Inventory> = mutableListOf()
     init{
         initialize()
@@ -20,7 +21,6 @@ class InventoryRepository {
             shortName = "IE",
             description = "Este es un inventario de ejemplo",
             type = "Tipo random",
-            dateProgress = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
             dateActive = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
             dateHistory = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
         )
@@ -81,7 +81,12 @@ class InventoryRepository {
         )
         inventario = inventario2
     }
-    suspend fun isDuplicate(code:String):Boolean{
-        return dataSet.any{it.code == code}
+    suspend fun isDuplicate(code:String):BaseResult<Inventory>{
+        val inventory = dataSet.firstOrNull { it.code == code }
+        val result: BaseResult<Inventory> = inventory?.let {
+            BaseResult.Success(inventory)
+        } ?: BaseResult.Error(InventoryException.TakenCode)
+        return result
     }
+
 }

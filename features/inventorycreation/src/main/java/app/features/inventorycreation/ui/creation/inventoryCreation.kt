@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.base.ui.composables.TopAppBarTitle
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,33 +24,70 @@ import androidx.compose.ui.res.stringResource
 import app.base.ui.Separations
 import app.base.ui.composables.BaseDropdownMenu
 import app.base.ui.composables.BaseRow
+import app.base.ui.composables.BaseText
 import app.base.ui.composables.BaseTextField
 import app.base.ui.composables.MediumSpace
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.SmallSpace
 import app.features.inventorycreation.R
 
+data class RegisterEvents(
+    val onCodeChange: (String) -> Unit = {},
+    val onNameChange: (String) -> Unit = {},
+    val onDescriptionChange: (String) -> Unit = {},
+    val onShortNameChange: (String) -> Unit,
+    //val onTypeChange:(String)-> Unit
+    val onCreationClick:() -> Unit
+)
+
 @Composable
-fun inventoryCreation(modifier:Modifier = Modifier) {
-    var code = rememberSaveable() { mutableStateOf("") }
-    var name = rememberSaveable() { mutableStateOf("") }
-    var expandedtypestate = rememberSaveable() { mutableStateOf(false) }
+fun inventoryCreationScreen(modifier:Modifier = Modifier,viewmodel:InventoryCreationViewModel){
+val eventos = RegisterEvents(
+    onCodeChange =viewmodel::onCodeChange,
+    onNameChange = viewmodel::onNameChange,
+    onDescriptionChange = viewmodel::onDescriptionChange,
+    onShortNameChange = viewmodel::onShortNameChange,
+    onCreationClick = viewmodel::onCreationClick
+)
+}
+
+@Composable
+fun inventoryCreationContent(modifier:Modifier = Modifier,state:InventoryCreationState,events: RegisterEvents) {
 
     val items = listOf("Semestral", "Anual", "Bianual")
-    var selectedOption = rememberSaveable() { mutableStateOf<String>("") }
 
-    TopAppBarTitle(title = stringResource(R.string.Registrar)) {
+    TopAppBarTitle(
+        title = stringResource(R.string.Registrar),
+        onBack = {}
+    ) {
         Column(
             modifier = Modifier.padding(13.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            BaseTextField(stringResource(R.string.Codigo), code, modifier = Modifier.fillMaxWidth())
-            BaseTextField(stringResource(R.string.Nombre), name, modifier = Modifier.fillMaxWidth())
-            BaseTextField(stringResource(R.string.Descripcion), name, modifier = Modifier.fillMaxWidth())
-            BaseDropdownMenu(expandedtypestate, selectedOption, stringResource(R.string.Tipo), modifier, items)
+            BaseTextField(
+                stringResource(R.string.Codigo), state.code, modifier = Modifier.fillMaxWidth(),
+                onValueChange = events.onCodeChange
+            )
+            BaseTextField(
+                stringResource(R.string.Nombre),
+                state.name,
+                modifier = Modifier.fillMaxWidth(),
+                onValueChange = events.onNameChange
+            )
+            BaseTextField(
+                stringResource(R.string.Descripcion),
+                state.description,
+                modifier = Modifier.fillMaxWidth(),
+                onValueChange = events.onDescriptionChange,
+            )
+            BaseTextField(
+                stringResource(R.string.NombreCorto),
+                state.shortName,
+                modifier = Modifier.fillMaxWidth(),
+                onValueChange = events.onShortNameChange)
 
-            NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = {})
+            NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = events.onCreationClick)
 
         }
     }
@@ -58,5 +96,8 @@ fun inventoryCreation(modifier:Modifier = Modifier) {
 @Preview
 @Composable
 fun inventoryCreationPreview(){
-    inventoryCreation()
+    val viewmodel = remember { InventoryCreationViewModel() }
+    inventoryCreationScreen(
+        viewmodel = viewmodel
+    )
 }
