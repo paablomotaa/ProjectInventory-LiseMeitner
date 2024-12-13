@@ -1,9 +1,10 @@
-package app.domain.invoicing.repository
+package app.domain.ddd.repository.inventory
 
 import app.domain.invoicing.inventory.Inventory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.LocalDate
 import java.util.Date
 
 class InventoryRepository {
@@ -19,9 +20,9 @@ class InventoryRepository {
             shortName = "IE",
             description = "Este es un inventario de ejemplo",
             type = "Tipo random",
-            dateProgress = TODO(),
-            dateActive = TODO(),
-            dateHistory = TODO(),
+            dateProgress = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
+            dateActive = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
+            dateHistory = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
         )
         )
     }
