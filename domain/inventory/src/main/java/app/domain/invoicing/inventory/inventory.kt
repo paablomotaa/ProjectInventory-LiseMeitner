@@ -2,7 +2,7 @@ package app.domain.invoicing.inventory
 
 import java.util.Date
 
-data class inventory(
+data class Inventory(
     val id:Long,
     val code:String,
     val name:String,
@@ -12,4 +12,5 @@ data class inventory(
     val dateProgress: Date,
     val dateActive: Date,
     val dateHistory: Date
+
     )
