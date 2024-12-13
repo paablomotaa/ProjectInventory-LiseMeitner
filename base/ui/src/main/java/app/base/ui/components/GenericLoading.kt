@@ -44,5 +44,5 @@ fun GenericLoading() {
 @Composable
 @Preview
 private fun Preview() {
-    LoadingUi( )
+    LoadingUi()
 }

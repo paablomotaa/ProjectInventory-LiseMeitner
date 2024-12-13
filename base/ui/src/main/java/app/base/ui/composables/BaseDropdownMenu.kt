@@ -9,43 +9,86 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseDropdownMenu(
-    valueChange: MutableState<Boolean>,
-    text: MutableState<String>,
+    expandeValue: Boolean,
+    onExpandeValueChange: () -> Unit,
+    text: String,
+    onValueChange: (String) -> Unit,
     title: String,
     modifier: Modifier = Modifier,
     option: List<String>
 ) {
     ExposedDropdownMenuBox(
         modifier = modifier.fillMaxWidth(),
-        expanded = valueChange.value,
-        onExpandedChange = { valueChange.value = !valueChange.value }) {
+        expanded = expandeValue,
+        onExpandedChange = {onExpandeValueChange()}) {
 
         TextField(
             modifier = modifier.menuAnchor(),
             label = { Text(text = (title)) },
             singleLine = true,
-            value = text.value,
+            value = text,
             onValueChange = {},
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = valueChange.value) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandeValue) },
             readOnly = true,
         )
 
         ExposedDropdownMenu(modifier = modifier.exposedDropdownSize(),
-            expanded = valueChange.value,
-            onDismissRequest = { valueChange.value = false }) {
+            expanded = expandeValue,
+            onDismissRequest = { onExpandeValueChange() }) {
             option.forEach { option ->
                 DropdownMenuItem(
                     text = { Text(text = option) },
                     onClick = {
-                        text.value = option
-                        valueChange.value = false
+                        onValueChange(option)
+                        onExpandeValueChange()
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun <T> BaseDropdownMenuAnyTypes(
+    expandeValue: Boolean,
+    onExpandeValueChange: () -> Unit,
+    text: T,
+    onValueChange: (T) -> Unit,
+    title: String,
+    modifier: Modifier = Modifier,
+    option: List<T>
+) {
+    ExposedDropdownMenuBox(
+        modifier = modifier.fillMaxSize(),
+        expanded = expandeValue,
+        onExpandedChange = {onExpandeValueChange()}) {
+
+        TextField(
+            modifier = modifier.menuAnchor(),
+            label = { Text(text = (title)) },
+            singleLine = true,
+            value = text.toString(),
+            onValueChange = {},
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandeValue) },
+            readOnly = true,
+        )
+
+        ExposedDropdownMenu(modifier = modifier.exposedDropdownSize(),
+            expanded = expandeValue,
+            onDismissRequest = { onExpandeValueChange() }) {
+            option.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(text = option.toString()) },
+                    onClick = {
+                        onValueChange(option)
+                        onExpandeValueChange()
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                 )
