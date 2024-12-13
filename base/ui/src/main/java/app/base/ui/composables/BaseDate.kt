@@ -18,35 +18,32 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import app.base.ui.Separations
-import app.base.utils.dateValidation
 import java.time.LocalDate
+import java.util.Date
 
 @Composable
 fun DateField(
-    showDialog: MutableState<Boolean>,
-    selectedDate: MutableState<String>,
-    isDateError: MutableState<Boolean>,
+    showDialog: () -> Unit,
+    selectedDate: LocalDate,
+    isDateError: Boolean,
     text: String,
     modifier: Modifier = Modifier
 ) {
     TextField(
         modifier = modifier,
-        isError = isDateError.value,
+        isError = isDateError,
         singleLine = true,
-        value = selectedDate.value,
+        value = selectedDate.toString(),
         label = { Text(text) },
         onValueChange = {},
         readOnly = true,
         trailingIcon = {
-            IconButton(onClick = {
-                showDialog.value = true
-            }) {
+            IconButton(onClick = showDialog) {
                 Icon(Icons.Default.DateRange, contentDescription = null)
             }
 
@@ -54,7 +51,7 @@ fun DateField(
         supportingText = {
             Row {
                 Text(
-                    text = if (isDateError.value) "Fecha muy grande" else "",
+                    text = if (isDateError) "Fecha muy grande" else "",
                     Modifier.clearAndSetSemantics {})
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -65,21 +62,21 @@ fun DateField(
 
 @Composable
 fun DialogDate(
-    showDialog: MutableState<Boolean>,
-    selectedDate: MutableState<String>,
-    isDateError: MutableState<Boolean>
+    showDialog: Boolean,
+    onShowDialog: () -> Unit,
+    onSelectedDate: (LocalDate) -> Unit
 ) {
-    if (showDialog.value) {
+    if (showDialog) {
         DatePickerDialog(
-            onDismissRequest = { showDialog.value = false },
+            onDismissRequest = onShowDialog,
             onDateSelected = { date ->
-                selectedDate.value = date.toString()
-                isDateError.value = !dateValidation(selectedDate.value)
-                showDialog.value = false
+                onSelectedDate(date)
+                onShowDialog()
             }
         )
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

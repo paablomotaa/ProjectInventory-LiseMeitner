@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarTitle(title: String, content: @Composable () -> Unit) {
+fun TopAppBarTitle(title: String, onBack: () -> Unit, content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -51,7 +51,7 @@ fun TopAppBarTitle(title: String, content: @Composable () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarFloating(title: String, content: @Composable () -> Unit) {
+fun TopAppBarFloating(title: String,onBack: () -> Unit, funtion: () -> Unit, content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -90,6 +90,7 @@ fun TopAppBarOneAction(
     title: String,
     icon: ImageVector,
     description: String,
+    onBack: () -> Unit,
     funtion: () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -131,7 +132,7 @@ fun TopAppBarOneAction(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarComplete(title: String, content: @Composable () -> Unit) {
+fun TopAppBarComplete(title: String, onBack: () -> Unit, filter: String, onFilter: (String) -> Unit,  onAdd: (() -> Unit) -> Unit, onAccount:() -> Unit, content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -143,7 +144,7 @@ fun TopAppBarComplete(title: String, content: @Composable () -> Unit) {
                     TitleText(title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { TODO() }) {
+                    IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -151,20 +152,14 @@ fun TopAppBarComplete(title: String, content: @Composable () -> Unit) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { TODO() }) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Buscar"
-                        )
-                    }
-                    IconButton(onClick = { TODO() }) {
+                    IconButton(onClick = {onFilter(filter)}) {
                         Icon(
                             //TODO cambiar icono
                             imageVector = Icons.Default.List,
                             contentDescription = "Filtrar"
                         )
                     }
-                    IconButton(onClick = { TODO() }) {
+                    IconButton(onClick = onAccount) {
                         Icon(
                             imageVector = Icons.Filled.AccountCircle,
                             contentDescription = "Cuenta"
@@ -176,7 +171,7 @@ fun TopAppBarComplete(title: String, content: @Composable () -> Unit) {
         },
 
         floatingActionButton = {
-            FloatingActionButton(onClick = { TODO() }) {
+            FloatingActionButton(onClick = {onAdd()}) {
                 Icon(Icons.Default.Add, contentDescription = "Añadir")
             }
         }
