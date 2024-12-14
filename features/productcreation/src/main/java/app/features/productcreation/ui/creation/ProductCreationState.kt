@@ -87,6 +87,7 @@ data class ProductCreationState(
     val tagsFormatError: String? = null,
     //endregion
 
+    val isError:Boolean = false,
     val isExitsError:Boolean = false,
     val isEmpty:Boolean = false,
     val isOffline: Boolean = false,
