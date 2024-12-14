@@ -192,3 +192,55 @@ fun <T> TopAppBarComplete(
         }
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun <T> TopAppBarNormal(title: String,
+                    expandedValue: Boolean,
+                    onExpandedChange: () -> Unit,
+                    listFilter: List<T>,
+                    onFilter: (T) -> Unit,
+                    onAdd: (() -> Unit) -> Unit,
+                    goAdd: () -> Unit,
+                    onAccount:() -> Unit,
+                    content: @Composable () -> Unit){
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    TitleText(title)
+                },
+                actions = {
+                    IconButton(onClick = onExpandedChange) {
+                        Icon(
+                            //TODO cambiar icono
+                            imageVector = Icons.Default.List,
+                            contentDescription = "Filtrar"
+                        )
+                    }
+                    IconDropDownMenuAnyType(expandeValue = expandedValue, onExpandeValueChange = onExpandedChange, menuItemData = listFilter, function = onFilter)
+                    IconButton(onClick = onAccount) {
+                        Icon(
+                            imageVector = Icons.Filled.AccountCircle,
+                            contentDescription = "Cuenta"
+                        )
+                    }
+                },
+
+                )
+        },
+
+        floatingActionButton = {
+            FloatingActionButton(onClick = {onAdd(goAdd)}) {
+                Icon(Icons.Default.Add, contentDescription = "AÃ±adir")
+            }
+        }
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            content()
+        }
+    }
+}
