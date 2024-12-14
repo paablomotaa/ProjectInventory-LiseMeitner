@@ -2,6 +2,7 @@ package app.base.ui.composables
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -85,7 +86,7 @@ fun <T> BaseDropdownMenuAnyTypes(
             onDismissRequest = { onExpandeValueChange() }) {
             option.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(text = option.toString()) },
+                    text = { Text(text = option.toString() + "1") },
                     onClick = {
                         onValueChange(option)
                         onExpandeValueChange()
@@ -93,6 +94,44 @@ fun <T> BaseDropdownMenuAnyTypes(
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun IconDropDownMenu(
+    expandeValue: Boolean,
+    onExpandeValueChange: () -> Unit,
+    menuItemData: List<String>,
+    function: (String) -> Unit){
+    DropdownMenu(
+        expanded = expandeValue,
+        onDismissRequest = onExpandeValueChange
+    ) {
+        menuItemData.forEach { option ->
+            DropdownMenuItem(
+                text = { Text(option) },
+                onClick = { function(option) }
+            )
+        }
+    }
+}
+
+@Composable
+fun <T> IconDropDownMenuAnyType(
+    expandeValue: Boolean,
+    onExpandeValueChange: () -> Unit,
+    menuItemData: List<T>,
+    function: (T) -> Unit){
+    DropdownMenu(
+        expanded = expandeValue,
+        onDismissRequest = onExpandeValueChange
+    ) {
+        menuItemData.forEach { option ->
+            DropdownMenuItem(
+                text = { Text(option.toString()) },
+                onClick = { function(option) }
+            )
         }
     }
 }

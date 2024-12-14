@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,6 +13,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import app.base.ui.Dimensions
 import app.base.ui.Separations
+import app.base.ui.components.LoadingUi
+import app.base.ui.components.NoDataScreen
 import app.base.ui.composables.BaseImageSmall
 import app.base.ui.composables.BaseStructureCompletePadding
 import app.base.ui.composables.CardRow
@@ -78,25 +80,70 @@ val lista = listOf(
 )
 //endregion
 */
-@Preview(showBackground = true)
+
 @Composable
-fun ProductList(modifier: Modifier = Modifier) {
+fun ProductListScreen(
+    goBack: () -> Unit,
+    goAdd: () -> Unit,
+    goView: () -> Unit,
+    viewModel: ProductListViewModel,
+    modifier: Modifier = Modifier){
+    when(viewModel.state){
+        is ProductListState.NoData ->{NoDataScreen(modifier)}
+        is ProductListState.Loading ->{
+            LoadingUi()
+        }
+        is ProductListState.Success ->{
+            ProductList(goBack, goAdd,goView, viewModel.list, viewModel, modifier)
+        }
+    }
+}
 
-    var codigo = rememberSaveable { mutableStateListOf("") }
-    var nameInventory = rememberSaveable { mutableStateOf("") }
-    var listProduct = rememberSaveable { mutableStateOf<List<Product>>(emptyList()) }
+data class EventProductList(
+    //Uso {_,_ ->} para que no de error de 'Expected 2 parameters of types Product, () -> Unit'
+    val onDeleteProduct: (Product) -> Unit = {},
+    val onViewProduct: (Product, () -> Unit) -> Unit = {_,_ ->},
+    val onAddProduct: (() -> Unit) -> Unit = {},
+    val onEditProduct: (Product, () -> Unit) -> Unit = {_,_ ->},
+    val onFilterProduct: (String) -> Unit = {},
+    val onBackProduct: (()-> Unit) -> Unit = {},
+    val onAccountView: () -> Unit = {},
+    val onExpandadChange: () -> Unit = {}
+)
 
-    TopAppBarComplete(title = nameInventory.value) {
+@Composable
+fun ProductList(
+    goBack: () -> Unit,
+    goAdd: () -> Unit,
+    goView: () -> Unit,
+    listProduct: List<Product>,
+    viewModel: ProductListViewModel,
+    modifier: Modifier,
+    event: EventProductList = EventProductList(
+        onDeleteProduct = viewModel::onDeleteProduct,
+        onViewProduct = viewModel::onViewProduct,
+        onAddProduct = viewModel::onAddProduct,
+        onEditProduct = viewModel::onEditProduct,
+        onFilterProduct = viewModel::onFilterProduct,
+        onAccountView = viewModel::onAccountView,
+        onExpandadChange = viewModel::onExpandedChange
+    )
+) {
+
+    //TODO:  Cambiar el titulo
+    var nameInventory = rememberSaveable { mutableStateOf("Inventario") }
+
+    TopAppBarComplete(title = nameInventory.value, viewModel.state.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, event.onAccountView) {
         BaseStructureCompletePadding(modifier, Separations.Zero, scrolleable = false) {
-            MessageList(listProduct.value)
+            MessageList(viewModel, listProduct, goView)
         }
 
     }
 }
 
 @Composable
-fun ProductItem(product: Product) {
-    CardRow(onClick = {/*TODO*/ }) {
+fun ProductItem(viewModel: ProductListViewModel, product: Product, goView: () -> Unit) {
+    CardRow(onClick = {viewModel.onViewProduct(product, goView)}) {
         BaseImageSmall()
         Text(
             text = product.name,
@@ -112,13 +159,23 @@ fun ProductItem(product: Product) {
 }
 
 @Composable
-fun MessageList(product: List<Product>) {
+fun MessageList(viewModel: ProductListViewModel, product: List<Product>, goView: () -> Unit) {
     LazyColumn {
         product.forEach { product ->
             item {
-                ProductItem(product)
+                ProductItem(viewModel, product, goView)
             }
         }
 
     }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview() {
+    val viewModel = remember{ProductListViewModel()}
+    viewModel.getList()
+    ProductListScreen({}, {}, {}, viewModel)
+
 }
