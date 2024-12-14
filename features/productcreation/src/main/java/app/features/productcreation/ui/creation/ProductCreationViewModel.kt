@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.repository.ProductRepository
-import app.domain.invoicing.section.Section
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -103,7 +102,7 @@ class ProductCreationViewModel() : ViewModel() {
         state = state.copy(category = category)
     }
 
-    fun onSectionChange(section: Section?) {
+    fun onSectionChange(section: String) {
         state = state.copy(section = section)
     }
 
@@ -220,7 +219,7 @@ class ProductCreationViewModel() : ViewModel() {
                     codModel = state.codModel,
                     typeProduct = state.typeProduct,
                     category = state.category!!,
-                    section = state.section!!,
+                    section = state.section,
                     status = state.status,
                     amount = state.amount,
                     price = state.price,

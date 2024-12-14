@@ -88,7 +88,7 @@ data class ProductCreationEvent(
     val onPriceChange: (Double?) -> Unit = {},
     val onTypeProductChange: (String) -> Unit = {},
     val onCategoryChange: (Category?) -> Unit = {},
-    val onSectionChange: (Section?) -> Unit = {},
+    val onSectionChange: (String) -> Unit = {},
     val onStatusChange: (Status) -> Unit = {},
     val onImageChange: (String) -> Unit = {},
     val onAcquisitionDateChange: (LocalDate) -> Unit = {},
@@ -186,7 +186,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                         )
                     }
                     BaseRow(Separations.Small) {
-                        BaseDropdownMenuAnyTypes(
+                        BaseDropdownMenu(
                             state.expandedSeccionState,
                             event.onExpandedSeccionState,
                             state.section,

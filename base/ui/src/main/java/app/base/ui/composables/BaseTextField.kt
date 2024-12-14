@@ -33,6 +33,7 @@ fun BaseTextFieldRead(text: String, value: String, onValueChange: (String) -> Un
 @Composable
 fun BaseTextFieldInt(text: String, value: String, onValueChange: (Int?) -> Unit, modifier: Modifier = Modifier) {
     TextField(
+
         modifier = modifier,
         singleLine = true,
         value = value,
