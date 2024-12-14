@@ -31,7 +31,7 @@ object ProductRepository {
                 codModel = "001",
                 typeProduct = "PRODUCTO PRUEBA",
                 category = Category(id = "1", name = "PRODUCTO PR", shortName = "PRODUCTO PR" ,description = "PRODUCTO PR", imageUrl = "", createdDate = Date(), type = CategoryType.BASICO, isFungible = true),
-                section = null,
+                section = "",
                 status = Status.NEW,
                 amount = 1,
                 price = 1.0,
