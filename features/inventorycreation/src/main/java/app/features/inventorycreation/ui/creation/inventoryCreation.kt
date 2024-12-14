@@ -36,7 +36,7 @@ fun inventoryCreation(modifier:Modifier = Modifier) {
     var expandedtypestate = rememberSaveable() { mutableStateOf(false) }
 
     val items = listOf("Semestral", "Anual", "Bianual")
-    var selectedOption = rememberSaveable() { mutableStateOf<String?>(null) }
+    var selectedOption = rememberSaveable() { mutableStateOf<String>("") }
 
     TopAppBarTitle(title = stringResource(R.string.Registrar)) {
         Column(
@@ -50,6 +50,7 @@ fun inventoryCreation(modifier:Modifier = Modifier) {
             BaseDropdownMenu(expandedtypestate, selectedOption, stringResource(R.string.Tipo), modifier, items)
 
             NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = {})
+
         }
     }
 }
