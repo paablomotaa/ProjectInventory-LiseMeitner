@@ -7,5 +7,4 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(project(":domain:inventory"))
     implementation(project(":base:utils"))
-    implementation(project(":features:inventorycreation"))
 }

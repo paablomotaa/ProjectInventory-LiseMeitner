@@ -49,6 +49,7 @@ val eventos = RegisterEvents(
     onShortNameChange = viewmodel::onShortNameChange,
     onCreationClick = viewmodel::onCreationClick
 )
+    inventoryCreationContent()
 }
 
 @Composable

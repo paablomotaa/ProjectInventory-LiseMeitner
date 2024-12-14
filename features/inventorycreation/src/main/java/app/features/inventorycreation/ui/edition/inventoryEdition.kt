@@ -27,7 +27,7 @@ fun inventoryEdition(modifier: Modifier = Modifier){
 
     val items = listOf("Semestral", "Anual", "Bianual")
     var selectedOption = rememberSaveable() { mutableStateOf<String>("") }
-    TopAppBarTitle(title = stringResource(R.string.Editar)) {
+    /*TopAppBarTitle(title = stringResource(R.string.Editar)) {
         Column(
             modifier = Modifier.padding(13.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,7 +40,7 @@ fun inventoryEdition(modifier: Modifier = Modifier){
 
             NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = {})
         }
-    }
+    }*/
 }
 @Preview
 @Composable

@@ -15,7 +15,7 @@ data class Product(
     val codModel: String,
     val typeProduct: String,
     val category: Category,
-    val section: String,
+    val section: String?,
     val status: Status,
     val amount: Int,
     val price: Double,
