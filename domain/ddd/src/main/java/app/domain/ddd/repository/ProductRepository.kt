@@ -55,14 +55,9 @@ object ProductRepository {
         return Status.entries
     }
 
-    suspend fun getTags(): Flow<List<String>> {
+    suspend fun existProduct(code: String): Boolean {
         delay(2000)
-        return flow { emit(productsSet.map { it.tags }) }
-    }
-
-    suspend fun existProduct(id: Long): Boolean {
-        delay(2000)
-        return productsSet.any {it.id == id }
+        return productsSet.any {it.code == code }
     }
 
     suspend fun createProduct(

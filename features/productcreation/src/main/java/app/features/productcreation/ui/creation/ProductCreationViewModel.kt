@@ -60,7 +60,7 @@ class ProductCreationViewModel() : ViewModel() {
 
     fun onNameChange(name: String) {
         if(name.isEmpty())
-            state = state.copy(nameError = true, nameFormatError = "Error de formato name")
+            state = state.copy(name = name, nameError = true, nameFormatError = "Error de formato name")
         else
             state = state.copy(name = name, nameError = false, nameFormatError = null)
     }
@@ -84,7 +84,7 @@ class ProductCreationViewModel() : ViewModel() {
 
     fun onDescriptionChange(description: String) {
         if(description.isEmpty())
-            state = state.copy(descriptionError = true, descriptionFormatError = "Error de formato description")
+            state = state.copy(description = description, descriptionError = true, descriptionFormatError = "Error de formato description")
         else
             state = state.copy(description = description, descriptionError = false, descriptionFormatError = null)
     }
@@ -201,15 +201,18 @@ class ProductCreationViewModel() : ViewModel() {
             state = state.copy(isEmpty = true)
             return
         }
-        if (hasValidationErrors()) return
+        if (hasValidationErrors()){
+            state = state.copy(isError = false)
+            return
+        }
         state = state.copy(isLoading = true)
         viewModelScope.launch {
-            val responde = ProductRepository.existProduct(state.id)
+            val responde = ProductRepository.existProduct(state.code)
             if (responde) {
                 state = state.copy(isLoading = false, isExitsError = true)
             }
             else{
-                val response = ProductRepository.createProduct(
+                val product = ProductRepository.createProduct(
                     id = state.id,
                     code = state.code,
                     name = state.name,
@@ -229,13 +232,11 @@ class ProductCreationViewModel() : ViewModel() {
                     tags = state.tags,
                     notes = state.notes
                 )
-                if (response) {
+                if (product) {
                     state = state.copy(isLoading = false, success = true)
                 }
             }
-
         }
-
     }
 
     fun onDismissDialog(){
