@@ -11,20 +11,41 @@ import androidx.compose.ui.unit.dp
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
 import app.features.categorycreation.R
-import java.text.SimpleDateFormat
 import java.util.*
 
-@Composable
-fun CategoryFormScreen(category: Category?, onSave: (Category) -> Unit) {
-    var name by remember { mutableStateOf(category?.name ?: "") }
-    var shortName by remember { mutableStateOf(category?.shortName ?: "") }
-    var description by remember { mutableStateOf(category?.description ?: "") }
-    var type by remember { mutableStateOf(category?.type ?: CategoryType.BASICO) }
-    var isFungible by remember { mutableStateOf(category?.isFungible ?: false) }
-    var showTypeMenu by remember { mutableStateOf(false) }
 
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-    val formattedDate = category?.createdDate?.let { dateFormat.format(it) } ?: "Fecha no disponible"
+@Composable
+fun CategoryFormScreen(viewModel: CategoryCreateViewModel, onSave: (Category) -> Unit) {
+    val state = viewModel.state
+
+    CategoryForm(
+        state = state,
+        onNameChange = { viewModel.onNameChange(it) },
+        onShortNameChange = { viewModel.onShortNameChange(it) },
+        onDescriptionChange = { viewModel.onDescriptionChange(it) },
+        onTypeChange = { viewModel.onTypeChange(it) },
+        onFungibleChange = { viewModel.onFungibleChange(it) }
+    )
+
+    Button(
+        onClick = {},
+        modifier = Modifier.fillMaxWidth(),
+        enabled = state.isValidForm()
+    ) {
+        Text(stringResource(id = R.string.save_button))
+    }
+}
+
+@Composable
+fun CategoryForm(
+    state: CategoryCreateState,
+    onNameChange: (String) -> Unit,
+    onShortNameChange: (String) -> Unit,
+    onDescriptionChange: (String) -> Unit,
+    onTypeChange: (CategoryType) -> Unit,
+    onFungibleChange: (Boolean) -> Unit
+) {
+    var isDropdownExpanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -33,42 +54,46 @@ fun CategoryFormScreen(category: Category?, onSave: (Category) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         TextField(
-            value = name,
-            onValueChange = { name = it },
+            value = state.name,
+            onValueChange = onNameChange,
             label = { Text(stringResource(id = R.string.category_name_label)) },
+            isError = state.isNameError,
             modifier = Modifier.fillMaxWidth()
         )
 
         TextField(
-            value = shortName,
-            onValueChange = { shortName = it },
+            value = state.shortName,
+            onValueChange = onShortNameChange,
             label = { Text(stringResource(id = R.string.category_short_name_label)) },
+            isError = state.isShortNameError,
             modifier = Modifier.fillMaxWidth()
         )
 
         TextField(
-            value = description,
-            onValueChange = { description = it },
+            value = state.description,
+            onValueChange = onDescriptionChange,
             label = { Text(stringResource(id = R.string.category_description_label)) },
+            isError = state.isDescriptionError,
             modifier = Modifier.fillMaxWidth()
         )
 
+        // Dropdown menu for category type
         Box(modifier = Modifier.fillMaxWidth()) {
             Button(
-                onClick = { showTypeMenu = true },
+                onClick = { isDropdownExpanded = !isDropdownExpanded },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
-                Text(type.name)
+                Text(state.type.name)
             }
             DropdownMenu(
-                expanded = showTypeMenu,
-                onDismissRequest = { showTypeMenu = false }
+                expanded = isDropdownExpanded,
+                onDismissRequest = { isDropdownExpanded = false }
             ) {
                 CategoryType.values().forEach { categoryType ->
                     DropdownMenuItem(
                         onClick = {
-                            type = categoryType
-                            showTypeMenu = false
+                            onTypeChange(categoryType)
+                            isDropdownExpanded = false
                         },
                         text = { Text(categoryType.name) }
                     )
@@ -77,40 +102,15 @@ fun CategoryFormScreen(category: Category?, onSave: (Category) -> Unit) {
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(checked = isFungible, onCheckedChange = { isFungible = it })
+            Checkbox(
+                checked = state.isFungible,
+                onCheckedChange = onFungibleChange
+            )
             Text(stringResource(id = R.string.category_is_fungible_label))
-        }
-
-        Text(text = "${stringResource(id = R.string.category_creation_date_label)}: $formattedDate")
-
-        Button(
-            onClick = {
-                if (name.isNotBlank() && shortName.isNotBlank()) {
-                    val updatedCategory = category?.copy(
-                        name = name,
-                        shortName = shortName,
-                        description = description,
-                        type = type,
-                        isFungible = isFungible
-                    ) ?: Category(
-                        id = UUID.randomUUID().toString(),
-                        name = name,
-                        shortName = shortName,
-                        description = description,
-                        imageUrl = "",
-                        createdDate = Date(),
-                        type = type,
-                        isFungible = isFungible
-                    )
-                    onSave(updatedCategory)
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(stringResource(id = R.string.save_button))
         }
     }
 }
+
 
 @Preview
 @Composable
@@ -125,7 +125,9 @@ fun PreviewCategoryFormScreen() {
         type = CategoryType.PREMIUM,
         isFungible = true
     )
-    CategoryFormScreen(category = sampleCategory, onSave = {  })//TODO accion para guardar
+    val viewModel = CategoryCreateViewModel()
+    CategoryFormScreen(viewModel = viewModel, onSave = {})
 }
+
 
 
