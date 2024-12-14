@@ -1,20 +1,30 @@
 package app.base.ui.composables
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
-fun BaseTextField(text: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier) {
+fun BaseTextField(text: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier,isError:Boolean,ErrorText:String) {
     TextField(
         modifier = modifier,
         singleLine = true,
         value = value,
         onValueChange = onValueChange,
         label = { Text(text) },
+        isError = isError,
+        supportingText = @Composable(){
+            Row{
+                Text(
+                    text = if(isError) ErrorText else "",
+                )
+            }
+        }
     )
 }
 

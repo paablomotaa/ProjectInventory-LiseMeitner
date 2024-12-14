@@ -42,7 +42,7 @@ fun InventoryList(modifier: Modifier = Modifier){
     var inventorydescr = rememberSaveable() { mutableStateOf("") }
 
 
-    TopAppBarTitle(title = stringResource(R.string.Titulo)) {
+    /*TopAppBarTitle(title = stringResource(R.string.Titulo)) {
         Box(
             modifier = Modifier.padding(WindowInsets.systemBars.asPaddingValues()).background(Color.Gray).fillMaxSize()
         ){
@@ -81,7 +81,7 @@ fun InventoryList(modifier: Modifier = Modifier){
                 }
             }
         }
-    }
+    }*/
 
 }
 @Preview
