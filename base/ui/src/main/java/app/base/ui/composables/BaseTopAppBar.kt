@@ -132,7 +132,17 @@ fun TopAppBarOneAction(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarComplete(title: String, onBack: () -> Unit, filter: String, onFilter: (String) -> Unit,  onAdd: (() -> Unit) -> Unit, onAccount:() -> Unit, content: @Composable () -> Unit) {
+fun <T> TopAppBarComplete(
+    title: String,
+    expandedValue: Boolean,
+    onExpandedChange: () -> Unit,
+    listFilter: List<T>,
+    goBack: () -> Unit,
+    onFilter: (T) -> Unit,
+    onAdd: (() -> Unit) -> Unit,
+    goAdd: () -> Unit,
+    onAccount:() -> Unit,
+    content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -144,7 +154,7 @@ fun TopAppBarComplete(title: String, onBack: () -> Unit, filter: String, onFilte
                     TitleText(title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = goBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -152,13 +162,14 @@ fun TopAppBarComplete(title: String, onBack: () -> Unit, filter: String, onFilte
                     }
                 },
                 actions = {
-                    IconButton(onClick = {onFilter(filter)}) {
+                    IconButton(onClick = onExpandedChange) {
                         Icon(
                             //TODO cambiar icono
                             imageVector = Icons.Default.List,
                             contentDescription = "Filtrar"
                         )
                     }
+                    IconDropDownMenuAnyType(expandeValue = expandedValue, onExpandeValueChange = onExpandedChange, menuItemData = listFilter, function = onFilter)
                     IconButton(onClick = onAccount) {
                         Icon(
                             imageVector = Icons.Filled.AccountCircle,
@@ -171,8 +182,8 @@ fun TopAppBarComplete(title: String, onBack: () -> Unit, filter: String, onFilte
         },
 
         floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
-                Icon(Icons.Default.Add, contentDescription = "Añadir")
+            FloatingActionButton(onClick = {onAdd(goAdd)}) {
+                Icon(Icons.Default.Add, contentDescription = "AÃ±adir")
             }
         }
     ) { innerPadding ->
