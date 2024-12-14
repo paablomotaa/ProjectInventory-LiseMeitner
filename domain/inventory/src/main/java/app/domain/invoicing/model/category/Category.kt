@@ -4,13 +4,13 @@ import java.util.Date
 
 data class Category(
     val id: String,
-    val name: String,
-    val shortName: String,
-    val description: String,
-    val imageUrl: String,
+    var name: String,
+    var shortName: String,
+    var description: String,
+    var imageUrl: String,
     val createdDate: Date,
-    val type: CategoryType = CategoryType.BASICO,
-    val isFungible: Boolean = false
+    var type: CategoryType = CategoryType.BASICO,
+    var isFungible: Boolean = false
 )
 
 enum class CategoryType {
