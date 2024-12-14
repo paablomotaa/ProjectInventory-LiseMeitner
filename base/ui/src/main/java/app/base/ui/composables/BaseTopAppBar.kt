@@ -7,6 +7,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -131,17 +132,7 @@ fun TopAppBarOneAction(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> TopAppBarComplete(
-    title: String,
-    expandedValue: Boolean,
-    onExpandedChange: () -> Unit,
-    listFilter: List<T>,
-    goBack: () -> Unit,
-    onFilter: (T) -> Unit,
-    onAdd: (() -> Unit) -> Unit,
-    goAdd: () -> Unit,
-    onAccount:() -> Unit,
-    content: @Composable () -> Unit) {
+fun TopAppBarComplete(title: String, onBack: () -> Unit, filter: String, onFilter: (String) -> Unit,  onAdd: (() -> Unit) -> Unit, onAccount:() -> Unit, content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -153,7 +144,7 @@ fun <T> TopAppBarComplete(
                     TitleText(title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = goBack) {
+                    IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -161,14 +152,13 @@ fun <T> TopAppBarComplete(
                     }
                 },
                 actions = {
-                    IconButton(onClick = onExpandedChange) {
+                    IconButton(onClick = {onFilter(filter)}) {
                         Icon(
                             //TODO cambiar icono
                             imageVector = Icons.Default.List,
                             contentDescription = "Filtrar"
                         )
                     }
-                    IconDropDownMenuAnyType(expandeValue = expandedValue, onExpandeValueChange = onExpandedChange, menuItemData = listFilter, function = onFilter)
                     IconButton(onClick = onAccount) {
                         Icon(
                             imageVector = Icons.Filled.AccountCircle,
@@ -181,7 +171,7 @@ fun <T> TopAppBarComplete(
         },
 
         floatingActionButton = {
-            FloatingActionButton(onClick = {onAdd(goAdd)}) {
+            FloatingActionButton(onClick = {}) {
                 Icon(Icons.Default.Add, contentDescription = "Añadir")
             }
         }

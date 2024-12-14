@@ -49,7 +49,7 @@ val eventos = RegisterEvents(
     onShortNameChange = viewmodel::onShortNameChange,
     onCreationClick = viewmodel::onCreationClick
 )
-    inventoryCreationContent()
+    inventoryCreationContent(modifier,viewmodel.state,eventos)
 }
 
 @Composable
@@ -68,25 +68,34 @@ fun inventoryCreationContent(modifier:Modifier = Modifier,state:InventoryCreatio
         ) {
             BaseTextField(
                 stringResource(R.string.Codigo), state.code, modifier = Modifier.fillMaxWidth(),
-                onValueChange = events.onCodeChange
+                onValueChange = events.onCodeChange,
+                isError = state.isCodeError,
+                ErrorText = state.ErrorCodeFormat
             )
             BaseTextField(
                 stringResource(R.string.Nombre),
                 state.name,
                 modifier = Modifier.fillMaxWidth(),
-                onValueChange = events.onNameChange
+                onValueChange = events.onNameChange,
+                isError = state.isNameError,
+                ErrorText = state.ErrorNameFormat
             )
             BaseTextField(
                 stringResource(R.string.Descripcion),
                 state.description,
                 modifier = Modifier.fillMaxWidth(),
                 onValueChange = events.onDescriptionChange,
+                isError = state.isDescriptionError,
+                ErrorText = state.ErrorDescriptionFormat
             )
             BaseTextField(
                 stringResource(R.string.NombreCorto),
                 state.shortName,
                 modifier = Modifier.fillMaxWidth(),
-                onValueChange = events.onShortNameChange)
+                onValueChange = events.onShortNameChange,
+                isError = state.isShortNameError,
+                ErrorText = state.ErrorShortNameFormat
+            )
 
             NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = events.onCreationClick)
 

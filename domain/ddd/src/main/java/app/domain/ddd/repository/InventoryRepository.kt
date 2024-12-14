@@ -1,4 +1,4 @@
-package app.domain.ddd.repository.inventory
+package app.domain.ddd.repository
 
 import app.base.utils.BaseResult
 import app.domain.invoicing.inventory.Inventory
@@ -88,5 +88,4 @@ object InventoryRepository {
         } ?: BaseResult.Error(InventoryException.TakenCode)
         return result
     }
-
 }

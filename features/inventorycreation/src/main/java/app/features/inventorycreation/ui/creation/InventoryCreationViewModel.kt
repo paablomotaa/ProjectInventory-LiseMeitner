@@ -5,10 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import app.base.utils.BaseResult
 import app.base.utils.isValidShortName
-import app.domain.ddd.repository.inventory.InventoryRepository
+import app.domain.ddd.repository.InventoryRepository
 import kotlinx.coroutines.launch
 
 class InventoryCreationViewModel : ViewModel() {
@@ -19,7 +18,7 @@ class InventoryCreationViewModel : ViewModel() {
     fun onCodeChange(code:String){
         if(code.contains(' '))
             return
-        if(code == null){
+        if(code == null || code.isEmpty()){
             state =state.copy(code = code, isCodeError = true, ErrorCodeFormat = "ERROR. Formato no correcto",)
             return
         }
@@ -30,46 +29,45 @@ class InventoryCreationViewModel : ViewModel() {
     fun onNameChange(name:String){
         if (name.contains(' '))
             return
-        if(name == null){
-            state = state.copy(name = name, ErrorCodeFormat = "ERROR. Campo vacío", isNameError = true)
+        if(name == null || name.isEmpty()){
+            state = state.copy(name = name, ErrorNameFormat = "ERROR. Campo vacío", isNameError = true)
             return
         }
         else{
-            state = state.copy(name = name, ErrorCodeFormat = "ERROR. Campo vacío", isNameError = false)
+            state = state.copy(name = name, ErrorNameFormat = "ERROR. Campo vacío", isNameError = false)
         }
     }
     fun onDescriptionChange(description:String){
         if(description.contains(' ')){
             return
         }
-        if(description == null){
-            state = state.copy(description = description, ErrorCodeFormat = "ERROR. Campo vacío", isDescriptionError = true)
-            return
+        if(description == null || description.isEmpty()){
+            state = state.copy(description = description, ErrorDescriptionFormat = "ERROR. Campo vacío", isDescriptionError = true)
         }
         else{
-            state = state.copy(name = description, isDescriptionError = false)
+            state = state.copy(description = description, isDescriptionError = false)
         }
     }
     fun onShortNameChange(shortname:String){
         if(shortname.contains(' '))
             return
         if(shortname == null || !isValidShortName(shortname) || shortname.length<3){
-            state = state.copy(description = shortname, ErrorCodeFormat = "ERROR. Campo vacío", isShortNameError = true)
+            state = state.copy(shortName = shortname, ErrorShortNameFormat = "ERROR. Formato mal puesto", isShortNameError = true)
             return
         }
         else{
-            state = state.copy(name = shortname, isShortNameError = false)
+            state = state.copy(shortName = shortname, isShortNameError = false)
         }
     }
     fun onCreationClick(){
         if(isEmptyFields()){
-            state = state.copy(isEmpty = "Campos vacios")
+            state = state.copy(isEmpty = "a")
         }
         if(isErrorFields()){
             return
         }
         viewModelScope.launch {
-            val response =InventoryRepository.isDuplicate(state.code)
+            val response = InventoryRepository.isDuplicate(state.code)
             when(response){
                 is BaseResult.Error ->{state = state.copy(isCodeError = state.isCodeError)}
                 is BaseResult.Success ->{state = state.copy(Success = true)}
@@ -77,8 +75,30 @@ class InventoryCreationViewModel : ViewModel() {
         }
     }
 
-    private fun isEmptyFields(): Boolean{
-        return (state.code.isEmpty() || state.name.isEmpty() || state.shortName.isEmpty() || state.description.isEmpty())
+    private fun isEmptyFields(): Boolean {
+        var hasEmptyFields = false
+
+        if (state.code.isBlank()) {
+            hasEmptyFields = true
+            state = state.copy(isCodeError = true, ErrorCodeFormat = "El código no puede estar vacío")
+        }
+
+        if (state.name.isBlank()) {
+            hasEmptyFields = true
+            state = state.copy(isNameError = true, ErrorNameFormat = "El nombre no puede estar vacío")
+        }
+
+        if (state.description.isBlank()) {
+            hasEmptyFields = true
+            state = state.copy(isDescriptionError = true, ErrorDescriptionFormat = "La descripción no puede estar vacía")
+        }
+
+        if (state.shortName.isBlank()) {
+            hasEmptyFields = true
+            state = state.copy(isShortNameError = true, ErrorShortNameFormat = "El nombre corto no puede estar vacío")
+        }
+
+        return hasEmptyFields
     }
     private fun isErrorFields():Boolean{
         return (state.isCodeError || state.isNameError || state.isShortNameError || state.isDescriptionError || state.isErrorCreation)
