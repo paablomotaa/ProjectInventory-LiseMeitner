@@ -20,7 +20,7 @@ import app.features.productdetail.R
 
 @Composable
 fun ProductDetails(modifier: Modifier = Modifier) {
-
+/*
     var codigo = rememberSaveable { mutableStateOf("") }
     var nombre = rememberSaveable { mutableStateOf("") }
     var descripcion = rememberSaveable { mutableStateOf("") }
@@ -99,7 +99,7 @@ fun ProductDetails(modifier: Modifier = Modifier) {
             }
 
         }
-    }
+    }*/
 }
 
 @Preview(showBackground = true)

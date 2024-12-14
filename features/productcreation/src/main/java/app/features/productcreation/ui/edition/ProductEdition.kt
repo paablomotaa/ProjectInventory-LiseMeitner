@@ -23,7 +23,7 @@ import app.features.productcreation.R
 
 @Composable
 fun ProductEdition(modifier: Modifier = Modifier) {
-
+/*
     //var imagen = rememberSaveableBitmap()
     var codigo = rememberSaveable { mutableStateOf("") }
     var nombre = rememberSaveable { mutableStateOf("") }
@@ -135,7 +135,7 @@ fun ProductEdition(modifier: Modifier = Modifier) {
 
 
         }
-    }
+    }*/
 }
 
 @Preview(showBackground = true)
