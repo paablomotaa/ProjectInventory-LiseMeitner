@@ -55,7 +55,7 @@ fun BaseTextFieldDouble(text: String, value: String, onValueChange: (Double?) ->
             val doubleValue = newValue.toDoubleOrNull()
             onValueChange(doubleValue)
         },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         label = { Text(text) },
     )
 }

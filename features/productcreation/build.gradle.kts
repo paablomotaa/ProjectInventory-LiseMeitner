@@ -9,5 +9,4 @@ android {
 
 dependencies {
     implementation(projects.domain.inventory)
-    implementation(project(":app"))
 }
