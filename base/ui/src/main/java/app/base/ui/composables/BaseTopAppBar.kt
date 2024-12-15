@@ -34,7 +34,7 @@ fun TopAppBarTitle(title: String, onBack: () -> Unit, content: @Composable () ->
                     TitleText(title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { TODO() }) {
+                    IconButton(onClick = { onBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -63,7 +63,7 @@ fun TopAppBarFloating(title: String,onBack: () -> Unit, funtion: () -> Unit, con
                     TitleText(title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { TODO() }) {
+                    IconButton(onClick = {onBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -105,7 +105,7 @@ fun TopAppBarOneAction(
                     TitleText(title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { TODO() }) {
+                    IconButton(onClick = { onBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -135,7 +135,7 @@ fun TopAppBarOneAction(
 fun <T> TopAppBarComplete(
     title: String,
     expandedValue: Boolean,
-    onExpandedChange: () -> Unit,
+    onExpandedChange: (Boolean) -> Unit,
     listFilter: List<T>,
     goBack: () -> Unit,
     onFilter: (T) -> Unit,
@@ -154,7 +154,7 @@ fun <T> TopAppBarComplete(
                     TitleText(title)
                 },
                 navigationIcon = {
-                    IconButton(onClick = goBack) {
+                    IconButton(onClick = {goBack()}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -162,7 +162,7 @@ fun <T> TopAppBarComplete(
                     }
                 },
                 actions = {
-                    IconButton(onClick = onExpandedChange) {
+                    IconButton(onClick = {onExpandedChange(true)}) {
                         Icon(
                             //TODO cambiar icono
                             imageVector = Icons.Default.List,
@@ -196,7 +196,7 @@ fun <T> TopAppBarComplete(
 @Composable
 fun <T> TopAppBarNormal(title: String,
                     expandedValue: Boolean,
-                    onExpandedChange: () -> Unit,
+                    onExpandedChange: (Boolean) -> Unit,
                     listFilter: List<T>,
                     onFilter: (T) -> Unit,
                     onAdd: (() -> Unit) -> Unit,
@@ -214,7 +214,7 @@ fun <T> TopAppBarNormal(title: String,
                     TitleText(title)
                 },
                 actions = {
-                    IconButton(onClick = onExpandedChange) {
+                    IconButton(onClick = {onExpandedChange(true)}) {
                         Icon(
                             //TODO cambiar icono
                             imageVector = Icons.Default.List,

@@ -120,12 +120,12 @@ fun IconDropDownMenu(
 @Composable
 fun <T> IconDropDownMenuAnyType(
     expandeValue: Boolean,
-    onExpandeValueChange: () -> Unit,
+    onExpandeValueChange: (Boolean) -> Unit,
     menuItemData: List<T>,
     function: (T) -> Unit){
     DropdownMenu(
         expanded = expandeValue,
-        onDismissRequest = onExpandeValueChange
+        onDismissRequest = {onExpandeValueChange(false)}
     ) {
         menuItemData.forEach { option ->
             DropdownMenuItem(

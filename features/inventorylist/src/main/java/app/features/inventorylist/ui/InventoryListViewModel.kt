@@ -31,8 +31,8 @@ class InventoryListViewModel : ViewModel() {
                 state = InventoryListState.NoData
         }
     }
-    fun onExpandedChange(){
-        state.expanded = !state.expanded
+    fun onExpandedChange(expanded:Boolean){
+        state.expanded = expanded
     }
     fun onViewInventory(navigateView:()->Unit){
         navigateView()

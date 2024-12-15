@@ -4,7 +4,6 @@ import app.base.utils.Status
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
 import app.domain.invoicing.product.Product
-import app.domain.invoicing.section.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,7 +29,7 @@ object ProductRepository {
                 numSerial = 1.0,
                 codModel = "001",
                 typeProduct = "PRODUCTO PRUEBA",
-                category = Category(id = "1", name = "PRODUCTO PR", shortName = "PRODUCTO PR" ,description = "PRODUCTO PR", imageUrl = "", createdDate = Date(), type = CategoryType.BASICO, isFungible = true),
+                category = "h",
                 section = "",
                 status = Status.NEW,
                 amount = 1,
@@ -45,18 +44,18 @@ object ProductRepository {
     }
 
     suspend fun getProduct(): Flow<List<Product>> {
-        delay(2000)
+        delay(1000)
 
         return flow { emit(productsSet) }
     }
 
     suspend fun getStatus(): List<Status> {
-        delay(2000)
+        delay(1000)
         return Status.entries
     }
 
     suspend fun existProduct(code: String): Boolean {
-        delay(2000)
+        delay(1000)
         return productsSet.any {it.code == code }
     }
 
@@ -70,7 +69,7 @@ object ProductRepository {
         numSerial: Double,
         codModel: String,
         typeProduct: String,
-        category: Category,
+        category: String,
         section: String,
         status: Status,
         amount: Int,
@@ -115,7 +114,7 @@ object ProductRepository {
         numSerial: Double,
         codModel: String,
         typeProduct: String,
-        category: Category,
+        category: String,
         section: String,
         status: Status,
         amount: Int,

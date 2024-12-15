@@ -14,7 +14,7 @@ data class ProductCreationState(
     val numSerial: Double = 0.0,
     val codModel: String = "",
     val typeProduct: String = "",
-    val category: Category? = null,
+    val category: String = "",
     val section: String = "",
     val status: Status = Status.NEW,
     val amount: Int = 0,
@@ -33,7 +33,7 @@ data class ProductCreationState(
     val showDialogCancellation: Boolean = false,
 
     val listTipoProducto: List<String> = emptyList(),
-    val listCategoria: List<Category> = emptyList(),
+    val listCategoria: List<String> = emptyList(),
     val listSeccion: List<String> = emptyList(),
     val listStatus: List<Status> = emptyList(),
 
