@@ -61,7 +61,12 @@ class InventoryCreationViewModel : ViewModel() {
             state = state.copy(shortName = shortname, isShortNameError = false, ErrorShortNameFormat = "")
         }
     }
-
+    fun onExpandeChange(expanded:Boolean){
+        state = state.copy(expanded = expanded)
+    }
+    fun onValueChange(tipo:String){
+        state = state.copy(type = tipo)
+    }
 
     fun onCreationClick(navController: NavController){
         if(isEmptyFields()){
@@ -83,7 +88,7 @@ class InventoryCreationViewModel : ViewModel() {
                 when(response){
                     is BaseResult.Error ->{state = state.copy(isCodeError = state.isCodeError)}
                     is BaseResult.Success ->{
-                        state = state.copy(Success = true)
+                        state = state.copy(Success = true, code = "",name = "", description = "", shortName = "")
                         navController.popBackStack()
                     }
                 }

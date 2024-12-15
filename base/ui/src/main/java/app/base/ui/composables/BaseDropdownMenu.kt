@@ -33,7 +33,7 @@ fun BaseDropdownMenu(
             label = { Text(text = (title)) },
             singleLine = true,
             value = text,
-            onValueChange = {},
+            onValueChange = onValueChange,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandeValue) },
             readOnly = true,
         )
@@ -67,7 +67,7 @@ fun <T> BaseDropdownMenuAnyTypes(
     option: List<T>
 ) {
     ExposedDropdownMenuBox(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxWidth(),
         expanded = expandeValue,
         onExpandedChange = {onExpandeValueChange(true)}) {
 

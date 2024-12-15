@@ -1,9 +1,12 @@
 package app.features.inventorycreation.ui.creation
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.base.ui.composables.BaseDropdownMenu
+import app.base.ui.composables.BaseDropdownMenuAnyTypes
 import app.base.ui.composables.BaseTextField
 import app.base.ui.composables.NormalButton
 import app.features.inventorycreation.R
@@ -26,7 +30,9 @@ data class RegisterEvents(
     val onDescriptionChange: (String) -> Unit = {},
     val onShortNameChange: (String) -> Unit,
     //val onTypeChange:(String)-> Unit
-    val onCreationClick:(NavController) -> Unit
+    val onCreationClick:(NavController) -> Unit,
+    val onExpandedChange:(Boolean) -> Unit,
+    val onValueChange:(String) -> Unit,
 )
 
 @Composable
@@ -36,7 +42,9 @@ val eventos = RegisterEvents(
     onNameChange = viewmodel::onNameChange,
     onDescriptionChange = viewmodel::onDescriptionChange,
     onShortNameChange = viewmodel::onShortNameChange,
-    onCreationClick = viewmodel::onCreationClick
+    onCreationClick = viewmodel::onCreationClick,
+    onExpandedChange = viewmodel::onExpandeChange,
+    onValueChange = viewmodel::onValueChange
 )
     inventoryCreationContent(goBack,modifier,viewmodel.state,eventos,navController)
 }
@@ -85,7 +93,15 @@ fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,stat
                 isError = state.isShortNameError,
                 ErrorText = state.ErrorShortNameFormat
             )
-
+                BaseDropdownMenuAnyTypes(
+                    expandeValue = state.expanded,
+                    onExpandeValueChange = events.onExpandedChange,
+                    text = state.type,
+                    onValueChange = events.onValueChange,
+                    title = "Tipo",
+                    modifier = modifier,
+                    option = items,
+                )
             NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = { events.onCreationClick(navController) })
 
         }

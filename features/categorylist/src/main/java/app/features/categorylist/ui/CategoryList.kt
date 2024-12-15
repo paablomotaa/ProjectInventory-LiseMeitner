@@ -27,11 +27,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import app.domain.invoicing.category.Category
-import app.domain.navigation.CategoryGraph
+//import app.domain.navigation.CategoryGraph
 import app.features.categorylist.R
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import app.domain.navigation.categoryGraph
+//import app.domain.navigation.categoryGraph
 
 
 @Composable
@@ -84,7 +84,7 @@ fun CategoryListScreen(
             },
             onFabClick = {
                 // Navegar a la pantalla para crear categoría
-                navController.navigate(CategoryGraph.categoryCreate())
+                //navController.navigate(CategoryGraph.categoryCreate())
             },
             onDeleteClick = { category ->
                 // Lógica para eliminar la categoría
@@ -215,12 +215,12 @@ fun PreviewCategoryListScreen() {
     val navController = rememberNavController()
 
     // Asegúrate de envolver en un NavHost para que las rutas funcionen
-    NavHost(
+    /*NavHost(
         navController = navController,
         startDestination = CategoryGraph.categoryList()
     ) {
         categoryGraph(navController) // Llamar al gráfico de navegación
-    }
+    }*/
 }
 
 

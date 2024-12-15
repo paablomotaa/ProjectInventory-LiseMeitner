@@ -25,6 +25,7 @@ data class InventoryCreationState (
     val Success:Boolean = false,
     val isLoading:Boolean = false,
     val NoData:Boolean = false,
+    val expanded:Boolean = false,
 
 
     //Formatos
@@ -33,4 +34,5 @@ data class InventoryCreationState (
     val ErrorShortNameFormat:String = "",
     val ErrorDescriptionFormat:String = "",
     val isEmpty: String = "",
+
 )
