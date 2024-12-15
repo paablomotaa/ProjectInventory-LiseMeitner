@@ -87,24 +87,32 @@ fun ProductListScreen(
     goAdd: () -> Unit,
     goView: () -> Unit,
     viewModel: ProductListViewModel,
-    modifier: Modifier = Modifier){
-    when(viewModel.state){
-        is ProductListState.NoData ->{NoDataScreen(modifier)}
-        is ProductListState.Loading ->{
-            LoadingUi()
-        }
-        is ProductListState.Success ->{
-            ProductList(goBack, goAdd,goView, viewModel.list, viewModel, modifier)
+    modifier: Modifier = Modifier, event: EventProductList = EventProductList(
+            onViewProduct = viewModel::onViewProduct,
+            onAddProduct = viewModel::onAddProduct,
+            onFilterProduct = viewModel::onFilterProduct,
+            onAccountView = viewModel::onAccountView,
+            onExpandadChange = viewModel::onExpandedChange
+        )){
+    var nameInventory = rememberSaveable { mutableStateOf("Inventario") }
+
+    TopAppBarComplete(title = nameInventory.value, viewModel.state.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, event.onAccountView) {
+        when(viewModel.state){
+            is ProductListState.NoData ->{NoDataScreen(modifier)}
+            is ProductListState.Loading ->{
+                LoadingUi()
+            }
+            is ProductListState.Success ->{
+                ProductList(goView, viewModel.list, viewModel, modifier, event)
+            }
         }
     }
 }
 
 data class EventProductList(
     //Uso {_,_ ->} para que no de error de 'Expected 2 parameters of types Product, () -> Unit'
-    val onDeleteProduct: (Product) -> Unit = {},
     val onViewProduct: (Product, () -> Unit) -> Unit = {_,_ ->},
     val onAddProduct: (() -> Unit) -> Unit = {},
-    val onEditProduct: (Product, () -> Unit) -> Unit = {_,_ ->},
     val onFilterProduct: (String) -> Unit = {},
     val onBackProduct: (()-> Unit) -> Unit = {},
     val onAccountView: () -> Unit = {},
@@ -113,37 +121,23 @@ data class EventProductList(
 
 @Composable
 fun ProductList(
-    goBack: () -> Unit,
-    goAdd: () -> Unit,
     goView: () -> Unit,
     listProduct: List<Product>,
     viewModel: ProductListViewModel,
     modifier: Modifier,
-    event: EventProductList = EventProductList(
-        onDeleteProduct = viewModel::onDeleteProduct,
-        onViewProduct = viewModel::onViewProduct,
-        onAddProduct = viewModel::onAddProduct,
-        onEditProduct = viewModel::onEditProduct,
-        onFilterProduct = viewModel::onFilterProduct,
-        onAccountView = viewModel::onAccountView,
-        onExpandadChange = viewModel::onExpandedChange
-    )
+    event: EventProductList
 ) {
 
     //TODO:  Cambiar el titulo
-    var nameInventory = rememberSaveable { mutableStateOf("Inventario") }
 
-    TopAppBarComplete(title = nameInventory.value, viewModel.state.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, event.onAccountView) {
-        BaseStructureCompletePadding(modifier, Separations.Zero, scrolleable = false) {
-            MessageList(viewModel, listProduct, goView)
-        }
-
+    BaseStructureCompletePadding(modifier, Separations.Zero, scrolleable = false) {
+        MessageList(viewModel, listProduct, goView, event)
     }
 }
 
 @Composable
-fun ProductItem(viewModel: ProductListViewModel, product: Product, goView: () -> Unit) {
-    CardRow(onClick = {viewModel.onViewProduct(product, goView)}) {
+fun ProductItem(product: Product, goView: () -> Unit, event: EventProductList) {
+    CardRow(onClick = {event.onViewProduct(product, goView)}) {
         BaseImageSmall()
         Text(
             text = product.name,
@@ -159,11 +153,11 @@ fun ProductItem(viewModel: ProductListViewModel, product: Product, goView: () ->
 }
 
 @Composable
-fun MessageList(viewModel: ProductListViewModel, product: List<Product>, goView: () -> Unit) {
+fun MessageList(viewModel: ProductListViewModel, product: List<Product>, goView: () -> Unit, event: EventProductList) {
     LazyColumn {
         product.forEach { product ->
             item {
-                ProductItem(viewModel, product, goView)
+                ProductItem(product, goView, event)
             }
         }
 

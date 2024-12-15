@@ -1,4 +1,4 @@
-package app.domain.ddd.repository
+package app.domain.invoicing.model.inventory
 
 sealed class InventoryException(message:String): Exception(message) {
     data object TakenCode: InventoryException("Ya existe una cuenta con ese")

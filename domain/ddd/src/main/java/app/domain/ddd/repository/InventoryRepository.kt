@@ -2,6 +2,7 @@ package app.domain.ddd.repository
 
 import app.base.utils.BaseResult
 import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.model.inventory.InventoryException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -87,5 +88,8 @@ object InventoryRepository {
             BaseResult.Success(inventory)
         } ?: BaseResult.Error(InventoryException.TakenCode)
         return result
+    }
+    suspend fun existInventory(inventory: Inventory):Boolean{
+        return dataSet.any{it.code == inventory.code}
     }
 }

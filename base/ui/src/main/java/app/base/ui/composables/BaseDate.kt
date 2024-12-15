@@ -32,6 +32,7 @@ fun DateField(
     selectedDate: LocalDate,
     isDateError: Boolean,
     text: String,
+    dateFormatError: String?,
     modifier: Modifier = Modifier
 ) {
     TextField(
@@ -51,7 +52,7 @@ fun DateField(
         supportingText = {
             Row {
                 Text(
-                    text = if (isDateError) "Fecha muy grande" else "",
+                    text = dateFormatError ?: "",
                     Modifier.clearAndSetSemantics {})
                 Spacer(modifier = Modifier.weight(1f))
             }

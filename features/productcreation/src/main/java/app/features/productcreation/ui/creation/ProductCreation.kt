@@ -18,13 +18,13 @@ import app.base.ui.composables.BaseStructureCompletePadding
 import app.base.ui.composables.BaseTextField
 import app.base.ui.composables.BaseTextFieldDouble
 import app.base.ui.composables.BaseTextFieldInt
+import app.base.ui.composables.BaseTextFieldNoError
 import app.base.ui.composables.DateField
 import app.base.ui.composables.DialogDate
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
 import app.base.utils.Status
 import app.domain.invoicing.category.Category
-import app.domain.invoicing.section.Section
 import app.features.productcreation.R
 import java.time.LocalDate
 
@@ -72,6 +72,12 @@ fun ProductCreationScreen(goBack: () -> Unit,viewModel: ProductCreationViewModel
             "Aceptar",
             onConfirm = event.onDismissDialog,
             onDismiss = event.onDismissDialog)
+        viewModel.state.isError -> BaseAlertDialog(
+            "Error",
+            "Hay error en el formulario",
+            "Aceptar",
+            onConfirm = event.onDismissDialog,
+            onDismiss = event.onDismissDialog)
         else -> ProductCreation(modifier, goBack, viewModel.state, event)
     }
 
@@ -88,7 +94,7 @@ data class ProductCreationEvent(
     val onPriceChange: (Double?) -> Unit = {},
     val onTypeProductChange: (String) -> Unit = {},
     val onCategoryChange: (Category?) -> Unit = {},
-    val onSectionChange: (Section?) -> Unit = {},
+    val onSectionChange: (String) -> Unit = {},
     val onStatusChange: (Status) -> Unit = {},
     val onImageChange: (String) -> Unit = {},
     val onAcquisitionDateChange: (LocalDate) -> Unit = {},
@@ -156,11 +162,11 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {
                     BaseImageBig()
-                    BaseTextField(stringResource(R.string.code), state.code, event.onCodeChange)
-                    BaseTextField(stringResource(R.string.name), state.name, event.onNameChange)
-                    BaseTextField(stringResource(R.string.description), state.description, event.onDescriptionChange)
+                    BaseTextField(stringResource(R.string.code), state.code, event.onCodeChange, isError = state.codeError, ErrorText = state.codeFormatError)
+                    BaseTextField(stringResource(R.string.name), state.name, event.onNameChange, isError = state.nameError, ErrorText = state.nameFormatError)
+                    BaseTextField(stringResource(R.string.description), state.description, event.onDescriptionChange, isError = state.descriptionError, ErrorText = state.descriptionFormatError)
                     BaseTextFieldDouble(stringResource(R.string.numSerial), state.numSerial.toString(), event.onNumSerialChange)
-                    BaseTextField(stringResource(R.string.codModel), state.codModel, event.onCodModelChange)
+                    BaseTextField(stringResource(R.string.codModel), state.codModel, event.onCodModelChange, isError = state.codModelError, ErrorText = state.codModelFormatError)
                     BaseRow(Separations.Small) {
                         BaseTextFieldInt(stringResource(R.string.amount), state.amount.toString(), event.onAmountChange, Modifier.weight(1f))
                         BaseTextFieldDouble(stringResource(R.string.price), state.price.toString(), event.onPriceChange, Modifier.weight(1f))
@@ -186,7 +192,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                         )
                     }
                     BaseRow(Separations.Small) {
-                        BaseDropdownMenuAnyTypes(
+                        BaseDropdownMenu(
                             state.expandedSeccionState,
                             event.onExpandedSeccionState,
                             state.section,
@@ -211,6 +217,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                             state.acquisitionDate,
                             state.acquisitionDateError,
                             stringResource(R.string.acquisitionDate),
+                            state.acquisitionDateFormatError,
                             Modifier.weight(1f)
                         )
 
@@ -220,13 +227,14 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                             state.cancellationDate,
                             state.cancellationDateError,
                             stringResource(R.string.cancellationDate),
+                            state.cancellationDateFormatError,
                             Modifier.weight(1f)
                         )
                         DialogDate(state.showDialogCancellation, event.onShowDialogCancellationDate, event.onCancellationDateChange)
                     }
-                    BaseTextField(stringResource(R.string.notes), state.notes, event.onNotesChange)
+                    BaseTextFieldNoError(stringResource(R.string.notes), state.notes, event.onNotesChange)
 
-                    BaseTextField(stringResource(R.string.tags), state.tags, event.onTagsChange)
+                    BaseTextFieldNoError(stringResource(R.string.tags), state.tags, event.onTagsChange)
 
                     NormalButton(stringResource(R.string.create), onClick = event.onClickCreateProduct)
                 }

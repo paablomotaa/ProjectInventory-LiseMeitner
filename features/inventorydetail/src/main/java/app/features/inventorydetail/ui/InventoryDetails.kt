@@ -28,7 +28,7 @@ fun InventoryDetails(){
     var dateActive = rememberSaveable() { mutableStateOf("") }
 
 
-    TopAppBarTitle(title = stringResource(R.string.Detalles)) {
+    /*TopAppBarTitle(title = stringResource(R.string.Detalles)) {
         Column(
             modifier = Modifier.padding(13.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,7 +40,7 @@ fun InventoryDetails(){
             BaseTextFieldRead(stringResource(R.string.Tipo),typeSelected)
             BaseTextFieldRead(stringResource(R.string.FechActivo),dateActive)
         }
-    }
+    }*/
 }
 
 @Preview

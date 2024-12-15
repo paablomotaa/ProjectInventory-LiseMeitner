@@ -6,11 +6,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
-fun BaseTextField(text: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier,isError:Boolean,ErrorText:String) {
+fun BaseTextField(
+    text: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier,
+    isError:Boolean,
+    ErrorText: String?
+) {
     TextField(
         modifier = modifier,
         singleLine = true,
@@ -21,10 +24,21 @@ fun BaseTextField(text: String, value: String, onValueChange: (String) -> Unit, 
         supportingText = @Composable(){
             Row{
                 Text(
-                    text = if(isError) ErrorText else "",
+                    text = ErrorText ?: ""
                 )
             }
         }
+    )
+}
+
+@Composable
+fun BaseTextFieldNoError(text: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier) {
+    TextField(
+        modifier = modifier,
+        singleLine = true,
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(text) }
     )
 }
 
@@ -43,6 +57,7 @@ fun BaseTextFieldRead(text: String, value: String, onValueChange: (String) -> Un
 @Composable
 fun BaseTextFieldInt(text: String, value: String, onValueChange: (Int?) -> Unit, modifier: Modifier = Modifier) {
     TextField(
+
         modifier = modifier,
         singleLine = true,
         value = value,
