@@ -36,6 +36,7 @@ fun NavGraphBuilder.productGraph(navController: NavController, productCreationVi
 
 private fun NavGraphBuilder.productCreate(navController: NavController, productCreationViewModel: ProductCreationViewModel) {
     composable(route = ProductGraph.productCreate()) {
+        productCreationViewModel.reset()
         productCreationViewModel.getList()
         ProductCreationScreen(
             goBack = {navController.popBackStack()},

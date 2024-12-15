@@ -1,7 +1,5 @@
 package app.features.productcreation.ui.creation
 
-import app.domain.invoicing.category.Category
-import app.domain.invoicing.section.Section
 import app.base.utils.Status
 import java.time.LocalDate
 
@@ -92,6 +90,5 @@ data class ProductCreationState(
     val isEmpty:Boolean = false,
     val isOffline: Boolean = false,
     var isLoading: Boolean = false,
-    var success: Boolean = false,
-
-    )
+    var success: Boolean = false
+)

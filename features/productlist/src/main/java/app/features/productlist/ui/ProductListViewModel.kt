@@ -64,6 +64,7 @@ class ProductListViewModel: ViewModel(){
     }
 
     fun onFilterProduct(string: String){
+        //TODO("Arreglarlo por parte de los tags y el filtrado")
         val result = if (string != "Sin Tags") {
             list.filter { it.tags == string }
         } else {
@@ -71,7 +72,8 @@ class ProductListViewModel: ViewModel(){
         }
 
         state = if (result.isNotEmpty()) {
-            ProductListState.Success(result)
+            list = result
+            ProductListState.Success(list)
         } else {
             ProductListState.NoData
         }
