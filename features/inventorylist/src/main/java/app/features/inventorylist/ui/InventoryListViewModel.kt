@@ -17,18 +17,22 @@ class InventoryListViewModel : ViewModel() {
     var listinvent: List<Inventory> by mutableStateOf(emptyList())
     private set
     var listtypes:List<String> by mutableStateOf(listOf("Anual","Bianual"))
+    init{
+        getList()
+    }
 
-
-    suspend fun getList(){
-        state = InventoryListState.Loading
-        InventoryRepository.getData().collect{ inventories ->
-            if(inventories.isEmpty()){
-                listinvent = inventories
-                state = InventoryListState.Succes(listinvent)
-                listtypes = listinvent.map { it.type } + ("No tipos")
+    fun getList(){
+        viewModelScope.launch {
+            InventoryRepository.getData().collect{ inventories ->
+                state = InventoryListState.Loading
+                if(inventories.isNotEmpty()){
+                    listinvent = inventories
+                    state = InventoryListState.Succes(listinvent)
+                }
+                else{
+                    state = InventoryListState.NoData
+                }
             }
-            else
-                state = InventoryListState.NoData
         }
     }
     fun onExpandedChange(){
