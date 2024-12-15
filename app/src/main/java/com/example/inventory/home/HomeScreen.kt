@@ -1,5 +1,4 @@
 package com.example.inventory.home
-
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -10,25 +9,20 @@ import app.features.categorycreation.ui.edition.UpdateCategoryScreen
 import app.features.categorydetail.ui.CategoryDetailsScreen
 import app.features.categorylist.ui.CategoryListScreen
 import app.features.categorylist.ui.CategoryListViewModel
+import androidx.navigation.compose.rememberNavController
+import app.features.productcreation.ui.creation.ProductCreationViewModel
+import app.features.productcreation.ui.edition.ProductEditionViewModel
+import app.features.productdetail.ui.ProductDetailsViewModel
+import app.features.productlist.ui.ProductListViewModel
+import com.example.inventory.navigation.ProductGraph
+import com.example.inventory.navigation.productGraph
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "categoryList") {
-        // Define las rutas de navegación
-        composable("categoryList") {
-            // Aquí llamas a la pantalla de lista de categorías
-            CategoryListScreen(
-                viewModel = CategoryListViewModel(), // Aquí pasas el ViewModel
-                navController = navController
-            )
-        }
+fun HomeScreen(navController: NavHostController, productListViewModel: ProductListViewModel, productCreationViewModel: ProductCreationViewModel, productDetailsViewModel: ProductDetailsViewModel, productEditViewModel: ProductEditionViewModel) {
+    val navController = rememberNavController()
 
-        composable("categoryCreate") {
-            CategoryFormScreen(
-                viewModel = CategoryCreateViewModel(),
-                onSave = { navController.popBackStack() },
-                navController = navController
-            )
-        }
+    NavHost(navController = navController, startDestination = ProductGraph.ROUTE) {
+
+        productGraph(navController, productCreationViewModel, productListViewModel, productEditViewModel, productDetailsViewModel)
     }
 }

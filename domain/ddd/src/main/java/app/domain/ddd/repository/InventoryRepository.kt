@@ -31,28 +31,13 @@ object InventoryRepository {
         delay(2000)
         return flow{emit(dataSet)}
     }
-    suspend fun add(
-        id:Long,
-        code:String,
-        name:String,
-        description:String,
-        shortName:String,
-        type:String,
-        dateProgress:Date,
-        dateActive:Date,
-        dateHistory:Date
-    ){
-        dataSet.add(Inventory(
-            id = id,
-            code = code,
-            name = name,
-            description = description,
-            shortName = shortName,
-            type = type,
-            dateProgress = dateProgress,
-            dateActive = dateActive,
-            dateHistory = dateHistory
-        ));
+    suspend fun add(inventory: Inventory):BaseResult<Unit>{
+        dataSet.add(inventory)
+        return try{
+            BaseResult.Success(Unit)
+        } catch(exception:Exception){
+            BaseResult.Error(exception)
+        }
     }
     suspend fun delete(inventario:Inventory){
         dataSet.remove(inventario)

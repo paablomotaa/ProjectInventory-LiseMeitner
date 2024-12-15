@@ -21,66 +21,6 @@ import app.base.ui.composables.CardRow
 import app.base.ui.composables.TopAppBarComplete
 import app.domain.invoicing.product.Product
 
-/*
-//region prueba
-val product1 = Product(
-    3,
-    "fw",
-    "rqr",
-    "rwr",
-    "fef",
-    3.0,
-    "fef",
-    "fef",
-    "fef",
-    Status.NEW,
-    3,
-    3.0,
-    "fef",
-    Date(),
-    Date(),
-    "da",
-    "afwf"
-)
-val product2 = Product(
-    5,
-    "fw",
-    "FFW",
-    "rwr",
-    "fef",
-    3.0,
-    "fef",
-    "fef",
-    "fef",
-    Status.NEW,
-    3,
-    3.0,
-    "fef",
-    Date(),
-    Date(),
-    "da",
-    "afwf"
-)
-
-val lista = listOf(
-    product1,
-    product2,
-    product1,
-    product2,
-    product1,
-    product2,
-    product1,
-    product2,
-    product1,
-    product2,
-    product1,
-    product2,
-    product1,
-    product2,
-)
-//endregion
-*/
-
 @Composable
 fun ProductListScreen(
     goBack: () -> Unit,
@@ -116,7 +56,7 @@ data class EventProductList(
     val onFilterProduct: (String) -> Unit = {},
     val onBackProduct: (()-> Unit) -> Unit = {},
     val onAccountView: () -> Unit = {},
-    val onExpandadChange: () -> Unit = {}
+    val onExpandadChange: (Boolean) -> Unit = {}
 )
 
 @Composable
@@ -144,7 +84,7 @@ fun ProductItem(product: Product, goView: () -> Unit, event: EventProductList) {
             textAlign = TextAlign.Center,
             fontSize = Dimensions.Small,
             modifier = Modifier
-                .padding(Separations.Medium)
+                .padding(Separations.Small)
                 .align(Alignment.CenterVertically)
                 .weight(1f)
         )

@@ -5,9 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import app.base.utils.BaseResult
 import app.base.utils.isValidShortName
 import app.domain.ddd.repository.InventoryRepository
+import app.domain.invoicing.inventory.Inventory
 import kotlinx.coroutines.launch
 
 class InventoryCreationViewModel : ViewModel() {
@@ -23,7 +25,7 @@ class InventoryCreationViewModel : ViewModel() {
             return
         }
         else{
-            state = state.copy(code = code, isCodeError = false)
+            state = state.copy(code = code, isCodeError = false, ErrorCodeFormat = "")
         }
     }
     fun onNameChange(name:String){
@@ -34,7 +36,7 @@ class InventoryCreationViewModel : ViewModel() {
             return
         }
         else{
-            state = state.copy(name = name, ErrorNameFormat = "ERROR. Campo vacío", isNameError = false)
+            state = state.copy(name = name, ErrorNameFormat = "", isNameError = false)
         }
     }
     fun onDescriptionChange(description:String){
@@ -45,21 +47,23 @@ class InventoryCreationViewModel : ViewModel() {
             state = state.copy(description = description, ErrorDescriptionFormat = "ERROR. Campo vacío", isDescriptionError = true)
         }
         else{
-            state = state.copy(description = description, isDescriptionError = false)
+            state = state.copy(description = description, isDescriptionError = false, ErrorDescriptionFormat = "")
         }
     }
     fun onShortNameChange(shortname:String){
         if(shortname.contains(' '))
             return
-        if(shortname == null || !isValidShortName(shortname) || shortname.length<3){
+        if(!isValidShortName(shortname) || shortname.length<3){
             state = state.copy(shortName = shortname, ErrorShortNameFormat = "ERROR. Formato mal puesto", isShortNameError = true)
             return
         }
         else{
-            state = state.copy(shortName = shortname, isShortNameError = false)
+            state = state.copy(shortName = shortname, isShortNameError = false, ErrorShortNameFormat = "")
         }
     }
-    fun onCreationClick(){
+
+
+    fun onCreationClick(navController: NavController){
         if(isEmptyFields()){
             state = state.copy(isEmpty = "a")
         }
@@ -67,11 +71,16 @@ class InventoryCreationViewModel : ViewModel() {
             return
         }
         viewModelScope.launch {
-            val response = InventoryRepository.isDuplicate(state.code)
+            val inventory = Inventory(2,state.code,state.name,state.shortName,state.description,state.type,state.dateActive,state.dateProgress,state.dateHistory)
+            val response = InventoryRepository.add(inventory)
             when(response){
                 is BaseResult.Error ->{state = state.copy(isCodeError = state.isCodeError)}
-                is BaseResult.Success ->{state = state.copy(Success = true)}
+                is BaseResult.Success ->{
+                    state = state.copy(Success = true)
+                    navController.popBackStack()
+                }
             }
+
         }
     }
 

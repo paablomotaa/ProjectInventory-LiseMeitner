@@ -93,7 +93,7 @@ data class ProductCreationEvent(
     val onAmountChange: (Int?) -> Unit = {},
     val onPriceChange: (Double?) -> Unit = {},
     val onTypeProductChange: (String) -> Unit = {},
-    val onCategoryChange: (Category?) -> Unit = {},
+    val onCategoryChange: (String) -> Unit = {},
     val onSectionChange: (String) -> Unit = {},
     val onStatusChange: (Status) -> Unit = {},
     val onImageChange: (String) -> Unit = {},
@@ -112,50 +112,11 @@ data class ProductCreationEvent(
 
     val onDismissDialog: () -> Unit = {},
 
-    val onClickCreateProduct: () -> Unit = {}
+    val onClickCreateProduct: (() -> Unit) -> Unit = {}
     )
 
 @Composable
 fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: ProductCreationState,event: ProductCreationEvent) {
-
-    //var imagen = rememberSaveableBitmap()
-    /*
-    var code = rememberSaveable { mutableStateOf("") }
-    var name = rememberSaveable { mutableStateOf("") }
-    var description = rememberSaveable { mutableStateOf("") }
-    var numSerial = rememberSaveable { mutableStateOf("") }
-    var codModel = rememberSaveable { mutableStateOf("") }
-    var amount = rememberSaveable { mutableStateOf("") }
-    var price = rememberSaveable { mutableStateOf("") }
-
-    var expandedTipoState = rememberSaveable { mutableStateOf(false) }
-    var tipoSelected = rememberSaveable { mutableStateOf("") }
-    var expandedCategoriaState = rememberSaveable { mutableStateOf(false) }
-    var categoriaSelected = rememberSaveable { mutableStateOf("") }
-    var expandedSeccionState = rememberSaveable { mutableStateOf(false) }
-    var seccionSelected = rememberSaveable { mutableStateOf("") }
-    var expandedEstadoState = rememberSaveable { mutableStateOf(false) }
-    var estadoSelected = rememberSaveable { mutableStateOf("") }
-    var selectedDateAqui = rememberSaveable { mutableStateOf("") }
-    var showDialogAqui = rememberSaveable { mutableStateOf(false) }
-    var isDateErrorAqui = rememberSaveable { mutableStateOf(false) }
-    var selectedDateBaja = rememberSaveable { mutableStateOf("") }
-    var showDialogBaja = rememberSaveable { mutableStateOf(false) }
-    var isDateErrorBaja = rememberSaveable { mutableStateOf(false) }
-
-    var notas = rememberSaveable { mutableStateOf("") }
-    var tags = rememberSaveable { mutableStateOf("") }
-
-    val statusOptions = Status.entries.map { it.name }
-    val categoryOptions = rememberSaveable { mutableStateListOf<List<Category>>(emptyList()) }
-    //val secctionOptions = rememberSaveable { mutableStateListOf<List<Section>>(emptyList()) }
-
-    //region Prueba
-    val tipoProducto = listOf("Telefono", "Computadora", "Tablet", "Impresora")
-    val categoriaList = listOf("Basico", "Economico", "Ecologico", "Premium")
-    val seccionList = listOf("Seccion 1", "Seccion 2", "Seccion 3", "Seccion 4")
-    //endregion
-    */
 
     TopAppBarTitle(title = stringResource(R.string.createProduct),goBack) {
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
@@ -164,6 +125,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                     BaseImageBig()
                     BaseTextField(stringResource(R.string.code), state.code, event.onCodeChange, isError = state.codeError, ErrorText = state.codeFormatError)
                     BaseTextField(stringResource(R.string.name), state.name, event.onNameChange, isError = state.nameError, ErrorText = state.nameFormatError)
+                    BaseTextField(stringResource(R.string.shortName), state.shortName, event.onShortNameChange, isError = state.shortNameError, ErrorText = state.shortNameFormatError)
                     BaseTextField(stringResource(R.string.description), state.description, event.onDescriptionChange, isError = state.descriptionError, ErrorText = state.descriptionFormatError)
                     BaseTextFieldDouble(stringResource(R.string.numSerial), state.numSerial.toString(), event.onNumSerialChange)
                     BaseTextField(stringResource(R.string.codModel), state.codModel, event.onCodModelChange, isError = state.codModelError, ErrorText = state.codModelFormatError)
@@ -236,7 +198,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
 
                     BaseTextFieldNoError(stringResource(R.string.tags), state.tags, event.onTagsChange)
 
-                    NormalButton(stringResource(R.string.create), onClick = event.onClickCreateProduct)
+                    NormalButton(stringResource(R.string.create), onClick = {event.onClickCreateProduct(goBack)})
                 }
             }
         }

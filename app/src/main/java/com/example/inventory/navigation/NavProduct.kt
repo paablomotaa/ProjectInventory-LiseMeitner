@@ -26,7 +26,7 @@ fun NavGraphBuilder.productGraph(navController: NavController, productCreationVi
                                  productDetailsViewModel: ProductDetailsViewModel
 ) {
 
-    navigation(startDestination = ProductGraph.productCreate(), route = ProductGraph.ROUTE) {
+    navigation(startDestination = ProductGraph.productList(), route = ProductGraph.ROUTE) {
         productCreate(navController, productCreationViewModel)
         productList(navController, productListViewModel)
         productView(navController, productDetailsViewModel)
@@ -45,10 +45,11 @@ private fun NavGraphBuilder.productCreate(navController: NavController, productC
 
 private fun NavGraphBuilder.productList(navController: NavController, productListViewModel: ProductListViewModel) {
     composable(route = ProductGraph.productList()) {
+        productListViewModel.getList()
         ProductListScreen(
             goBack = {navController.popBackStack()},
             goAdd = {navController.navigate(ProductGraph.productCreate())},
-            goView = {navController.navigate(ProductGraph.productCreate())},
+            goView = {navController.navigate(ProductGraph.productView())},
             productListViewModel,
         )
 

@@ -18,4 +18,5 @@
     <string name="save">Save</string>
     <string name="createProduct">Create product</string>
     <string name="editProduct">Edit product</string>
+    <string name="shortName">Short name</string>
 </resources>
