@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun BaseDropdownMenu(
     expandeValue: Boolean,
-    onExpandeValueChange: () -> Unit,
+    onExpandeValueChange: (Boolean) -> Unit,
     text: String,
     onValueChange: (String) -> Unit,
     title: String,
@@ -26,7 +26,7 @@ fun BaseDropdownMenu(
     ExposedDropdownMenuBox(
         modifier = modifier.fillMaxWidth(),
         expanded = expandeValue,
-        onExpandedChange = {onExpandeValueChange()}) {
+        onExpandedChange = {onExpandeValueChange(true)}) {
 
         TextField(
             modifier = modifier.menuAnchor(),
@@ -40,13 +40,13 @@ fun BaseDropdownMenu(
 
         ExposedDropdownMenu(modifier = modifier.exposedDropdownSize(),
             expanded = expandeValue,
-            onDismissRequest = { onExpandeValueChange() }) {
+            onDismissRequest = { onExpandeValueChange(false) }) {
             option.forEach { option ->
                 DropdownMenuItem(
                     text = { Text(text = option) },
                     onClick = {
                         onValueChange(option)
-                        onExpandeValueChange()
+                        onExpandeValueChange(false)
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                 )
@@ -59,7 +59,7 @@ fun BaseDropdownMenu(
 @Composable
 fun <T> BaseDropdownMenuAnyTypes(
     expandeValue: Boolean,
-    onExpandeValueChange: () -> Unit,
+    onExpandeValueChange: (Boolean) -> Unit,
     text: T,
     onValueChange: (T) -> Unit,
     title: String,
@@ -69,7 +69,7 @@ fun <T> BaseDropdownMenuAnyTypes(
     ExposedDropdownMenuBox(
         modifier = modifier.fillMaxSize(),
         expanded = expandeValue,
-        onExpandedChange = {onExpandeValueChange()}) {
+        onExpandedChange = {onExpandeValueChange(true)}) {
 
         TextField(
             modifier = modifier.menuAnchor(),
@@ -83,13 +83,13 @@ fun <T> BaseDropdownMenuAnyTypes(
 
         ExposedDropdownMenu(modifier = modifier.exposedDropdownSize(),
             expanded = expandeValue,
-            onDismissRequest = { onExpandeValueChange() }) {
+            onDismissRequest = { onExpandeValueChange(false) }) {
             option.forEach { option ->
                 DropdownMenuItem(
-                    text = { Text(text = option.toString() + "1") },
+                    text = { Text(text = option.toString()) },
                     onClick = {
                         onValueChange(option)
-                        onExpandeValueChange()
+                        onExpandeValueChange(false)
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                 )

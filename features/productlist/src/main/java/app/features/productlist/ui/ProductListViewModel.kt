@@ -1,5 +1,6 @@
 package app.features.productlist.ui
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,14 +15,16 @@ class ProductListViewModel: ViewModel(){
     var state by mutableStateOf<ProductListState>(ProductListState.Loading)
         private set
 
+    var viewState by mutableStateOf(ProductListViewState())
+        private set
+
     var _list: List<Product> by mutableStateOf(emptyList())
         private set
 
     var list: List<Product> by mutableStateOf(emptyList())
         private set
 
-
-    var listTags: List<String> by mutableStateOf(listOf("Sin Tags"))
+    var listTags: List<String> by mutableStateOf(emptyList())
 
     fun getList(){
         viewModelScope.launch {
@@ -30,7 +33,6 @@ class ProductListViewModel: ViewModel(){
                 if(products.isNotEmpty()){
                     _list = products
                     list = _list
-                    listTags = list.map { it.tags.ifEmpty { "Sin Tags" } }
                     state = ProductListState.Success(list)
                 }
                 else
@@ -38,10 +40,13 @@ class ProductListViewModel: ViewModel(){
 
             }
         }
+
+        Log.d("Lista", list.map { it.tags }. toString())
+        listTags = list.map { it.tags.ifEmpty { "Sin Tags" } }.distinct()
     }
 
-    fun onExpandedChange(expanded: Boolean){
-        state.expanded
+    fun onExpandedChange(expanded: Boolean) {
+        viewState = viewState.copy(expanded = expanded)
     }
 
     fun onViewProduct(product: Product, navigateView: () -> Unit){
@@ -60,7 +65,7 @@ class ProductListViewModel: ViewModel(){
 
     fun onFilterProduct(string: String){
         val result = if (string != "Sin Tags") {
-            list.filter { it.tags.contains(string) }
+            list.filter { it.tags == string }
         } else {
             list
         }
@@ -72,15 +77,8 @@ class ProductListViewModel: ViewModel(){
         }
     }
 
-    fun onBackProduct(navigateBack: () -> Unit){
-        navigateBack()
-    }
-
     fun onAccountView(){
         //TODO("Implementar Navegación a la vista de cuenta cuando este")
 
     }
-
-
-
 }
