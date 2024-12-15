@@ -11,7 +11,11 @@ import app.base.ui.composables.TopAppBarTitle
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import app.base.ui.composables.BaseDropdownMenu
 import app.base.ui.composables.BaseTextField
 import app.base.ui.composables.NormalButton
 import app.features.inventorycreation.R
@@ -22,11 +26,11 @@ data class RegisterEvents(
     val onDescriptionChange: (String) -> Unit = {},
     val onShortNameChange: (String) -> Unit,
     //val onTypeChange:(String)-> Unit
-    val onCreationClick:() -> Unit
+    val onCreationClick:(NavController) -> Unit
 )
 
 @Composable
-fun inventoryCreationScreen(modifier:Modifier = Modifier,viewmodel:InventoryCreationViewModel){
+fun inventoryCreationScreen(modifier:Modifier = Modifier,viewmodel:InventoryCreationViewModel,goBack:() -> Unit,navController: NavController){
 val eventos = RegisterEvents(
     onCodeChange =viewmodel::onCodeChange,
     onNameChange = viewmodel::onNameChange,
@@ -34,17 +38,17 @@ val eventos = RegisterEvents(
     onShortNameChange = viewmodel::onShortNameChange,
     onCreationClick = viewmodel::onCreationClick
 )
-    inventoryCreationContent(modifier,viewmodel.state,eventos)
+    inventoryCreationContent(goBack,modifier,viewmodel.state,eventos,navController)
 }
 
 @Composable
-fun inventoryCreationContent(modifier:Modifier = Modifier,state:InventoryCreationState,events: RegisterEvents) {
+fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,state:InventoryCreationState,events: RegisterEvents,navController: NavController) {
 
     val items = listOf("Semestral", "Anual", "Bianual")
 
     TopAppBarTitle(
         title = stringResource(R.string.Registrar),
-        onBack = {}
+        onBack = onBack
     ) {
         Column(
             modifier = Modifier.padding(13.dp),
@@ -82,7 +86,7 @@ fun inventoryCreationContent(modifier:Modifier = Modifier,state:InventoryCreatio
                 ErrorText = state.ErrorShortNameFormat
             )
 
-            NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = events.onCreationClick)
+            NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = { events.onCreationClick(navController) })
 
         }
     }
@@ -91,8 +95,11 @@ fun inventoryCreationContent(modifier:Modifier = Modifier,state:InventoryCreatio
 @Preview
 @Composable
 fun inventoryCreationPreview(){
-    val viewmodel = remember { InventoryCreationViewModel() }
+    val viewmodel = remember {InventoryCreationViewModel()}
+    val navController = rememberNavController()
     inventoryCreationScreen(
-        viewmodel = viewmodel
+        viewmodel = viewmodel,
+        goBack = {},
+        navController = navController
     )
 }

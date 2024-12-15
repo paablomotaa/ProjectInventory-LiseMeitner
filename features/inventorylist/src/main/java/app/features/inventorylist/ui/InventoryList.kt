@@ -1,7 +1,6 @@
 package app.features.inventorylist.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +30,11 @@ import androidx.compose.ui.unit.dp
 import app.base.ui.composables.TopAppBarNormal
 import app.domain.invoicing.inventory.Inventory
 import app.features.inventorylist.R
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
+import androidx.compose.ui.modifier.modifierLocalMapOf
+import app.base.ui.components.LoadingUi
+import app.base.ui.components.NoDataScreen
 
 data class eventInventoryList(
     val onViewInventory: (()->Unit) -> Unit,
@@ -43,7 +46,7 @@ data class eventInventoryList(
 )
 
 @Composable
-fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel){
+fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,modifier:Modifier = Modifier){
     val events = eventInventoryList(
         onViewInventory = viewModel::onViewInventory,
         onAddInventory = viewModel::onAddInventory,
@@ -52,7 +55,22 @@ fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel){
         onEditInventory = viewModel::onEditInventory,
         onExpandeChange = viewModel::onExpandedChange
     )
-    InventoryListContent({}, viewmodel = viewModel, events = events, inventories = viewModel.listinvent)
+    when(viewModel.state){
+        InventoryListState.NoData ->{
+            NoDataScreen(modifier)
+        }
+        is InventoryListState.Succes->{
+            InventoryListContent(
+                goAdd,
+                viewmodel = viewModel,
+                events = events,
+                inventories = (viewModel.state as InventoryListState.Succes).data
+            )
+        }
+        InventoryListState.Loading->{
+            LoadingUi()
+        }
+    }
 }
 
 @Composable
@@ -76,8 +94,7 @@ fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmode
                 LazyColumn(
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    inventories.forEach { inventario ->
-                        item {
+                    items(inventories) { inventario ->
                             Card(
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
                                     .fillMaxSize(),
@@ -111,10 +128,9 @@ fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmode
             }
         }
     }
-}
 @Preview
 @Composable
 fun InventoryListPreview(){
-    val viewmodel = remember { InventoryListViewModel() }
-    InventoryListScreen({},viewmodel)
+    val viewModel = InventoryListViewModel()
+    InventoryListScreen({},viewModel)
 }
