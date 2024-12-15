@@ -68,7 +68,6 @@ dependencies {
     // UI
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigationcompose)
-    implementation(libs.androidx.navigation.runtime.ktx)
 
     // Testing Unitario
     testImplementation(libs.junit)

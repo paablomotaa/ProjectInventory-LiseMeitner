@@ -15,7 +15,8 @@ class InventoryListViewModel : ViewModel() {
     var state by mutableStateOf<InventoryListState>(InventoryListState.Loading)
     private set
 
-
+    var stateexpanded by mutableStateOf(InventoryDropMenuState())
+    private set
 
     var listinvent: List<Inventory> by mutableStateOf(emptyList())
     private set
@@ -39,7 +40,7 @@ class InventoryListViewModel : ViewModel() {
         }
     }
     fun onExpandedChange(expanded:Boolean){
-        state.expanded = expanded
+        stateexpanded = stateexpanded.copy(expanded = expanded)
     }
     fun onViewInventory(navigateView:()->Unit){
         navigateView()

@@ -1,4 +1,5 @@
-package app.domain.navigation
+
+/*package app.domain.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -35,4 +36,4 @@ private fun NavGraphBuilder.categoryCreate(navController: NavController) {
             goBack = { navController.popBackStack() }
         )
     }
-}
+}*/
