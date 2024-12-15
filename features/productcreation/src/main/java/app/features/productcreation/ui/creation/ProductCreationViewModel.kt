@@ -26,16 +26,13 @@ class ProductCreationViewModel() : ViewModel() {
 
 
     fun getList(){
+        reset()
         viewModelScope.launch {
             ProductRepository.getStatus().collect{ products ->
                 if(products.isNotEmpty())
                     state = state.copy(listStatus = products)
             }
         }
-    }
-
-    fun restoreState() {
-        state = state.copy(isLoading = false, isExitsError = false, isEmpty = false, isError = false, success = false)
     }
 
     //region onChange
@@ -213,7 +210,7 @@ class ProductCreationViewModel() : ViewModel() {
             return
         }
         if (hasValidationErrors()){
-            state = state.copy(isError = false)
+            state = state.copy(isError = true)
             return
         }
         state = state.copy(isLoading = true)
@@ -254,6 +251,7 @@ class ProductCreationViewModel() : ViewModel() {
     fun onDismissDialog(){
         state = state.copy(
             isEmpty = false,
+            isError = false,
             isExitsError = false
         )
     }
@@ -264,6 +262,97 @@ class ProductCreationViewModel() : ViewModel() {
 
     private fun hasValidationErrors(): Boolean {
         return state.codeError || state.nameError || state.shortNameError || state.descriptionError || state.numSerialError || state.sectionError || state.categoryError || state.codModelError || state.typeProductError || state.tagsError || state.imageError || state.notesError || state.statusError || state.priceError || state.amountError || state.cancellationDateError || state.acquisitionDateError
+    }
+
+    fun reset() {
+        state = ProductCreationState(
+            id = 0,
+            code = "",
+            name = "",
+            shortName = "",
+            description = "",
+            numSerial = 0.0,
+            codModel = "",
+            typeProduct = "",
+            category = "",
+            section = "",
+            status = Status.NEW,
+            amount = 0,
+            price = 0.0,
+            image = "",
+            acquisitionDate = LocalDate.now(),
+            cancellationDate = LocalDate.now(),
+            notes = "",
+            tags = "",
+
+            expandedTipoState = false,
+            expandedCategoriaState = false,
+            expandedSeccionState = false,
+            expandedEstadoState = false,
+            showDialogAcquisition = false,
+            showDialogCancellation = false,
+
+            listTipoProducto = emptyList(),
+            listCategoria = emptyList(),
+            listSeccion = emptyList(),
+            listStatus = emptyList(),
+
+            // region Errors
+            codeError = false,
+            codeFormatError = null,
+
+            nameError = false,
+            nameFormatError = null,
+
+            shortNameError = false,
+            shortNameFormatError = null,
+
+            descriptionError = false,
+            descriptionFormatError = null,
+
+            numSerialError = false,
+            numSerialFormatError = null,
+
+            codModelError = false,
+            codModelFormatError = null,
+
+            typeProductError = false,
+            typeProductFormatError = null,
+            categoryError = false,
+            categoryFormatError = null,
+            sectionError = false,
+            sectionFormatError = null,
+
+            statusError = false,
+            statusFormatError = null,
+
+            amountError = false,
+            amountFormatError = null,
+
+            priceError = false,
+            priceFormatError = null,
+
+            imageError = false,
+            imageFormatError = null,
+
+            acquisitionDateError = false,
+            acquisitionDateFormatError = null,
+            cancellationDateError = false,
+            cancellationDateFormatError = null,
+
+            notesError = false,
+            notesFormatError = null,
+
+            tagsError = false,
+            tagsFormatError = null,
+            //endregion
+
+            isError = false,
+            isExitsError = false,
+            isEmpty = false,
+            isOffline = false,
+            isLoading = false,
+            success = false,)
     }
 
     //producto listado de todo productos añadir recoger datos dependencias no hace falta(secciones)

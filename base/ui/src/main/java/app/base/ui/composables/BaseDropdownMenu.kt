@@ -67,7 +67,7 @@ fun <T> BaseDropdownMenuAnyTypes(
     option: List<T>
 ) {
     ExposedDropdownMenuBox(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxWidth(),
         expanded = expandeValue,
         onExpandedChange = {onExpandeValueChange(true)}) {
 
