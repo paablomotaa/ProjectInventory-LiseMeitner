@@ -67,12 +67,8 @@ object InventoryRepository {
         )
         inventario = inventario2
     }
-    suspend fun isDuplicate(code:String):BaseResult<Inventory>{
-        val inventory = dataSet.firstOrNull { it.code == code }
-        val result: BaseResult<Inventory> = inventory?.let {
-            BaseResult.Success(inventory)
-        } ?: BaseResult.Error(InventoryException.TakenCode)
-        return result
+    suspend fun isDuplicate(code:String):Boolean{
+        return dataSet.any{it.code == code}
     }
     suspend fun existInventory(inventory: Inventory):Boolean{
         return dataSet.any{it.code == inventory.code}

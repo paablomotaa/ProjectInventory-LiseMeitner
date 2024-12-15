@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.base.utils.BaseResult
 import app.domain.ddd.repository.InventoryRepository
 import app.domain.invoicing.inventory.Inventory
 import kotlinx.coroutines.flow.map
@@ -13,6 +14,8 @@ import kotlinx.coroutines.launch
 class InventoryListViewModel : ViewModel() {
     var state by mutableStateOf<InventoryListState>(InventoryListState.Loading)
     private set
+
+
 
     var listinvent: List<Inventory> by mutableStateOf(emptyList())
     private set

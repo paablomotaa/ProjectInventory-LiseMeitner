@@ -70,17 +70,24 @@ class InventoryCreationViewModel : ViewModel() {
         if(isErrorFields()){
             return
         }
+
         viewModelScope.launch {
             val inventory = Inventory(2,state.code,state.name,state.shortName,state.description,state.type,state.dateActive,state.dateProgress,state.dateHistory)
-            val response = InventoryRepository.add(inventory)
-            when(response){
-                is BaseResult.Error ->{state = state.copy(isCodeError = state.isCodeError)}
-                is BaseResult.Success ->{
-                    state = state.copy(Success = true)
-                    navController.popBackStack()
+
+            if(InventoryRepository.existInventory(inventory)){
+                state = state.copy(isCodeError = true, ErrorCodeFormat = "Inventario duplicado, por favor elige otro codigo")
+                return@launch
+            }
+            else{
+                val response = InventoryRepository.add(inventory)
+                when(response){
+                    is BaseResult.Error ->{state = state.copy(isCodeError = state.isCodeError)}
+                    is BaseResult.Success ->{
+                        state = state.copy(Success = true)
+                        navController.popBackStack()
+                    }
                 }
             }
-
         }
     }
 
