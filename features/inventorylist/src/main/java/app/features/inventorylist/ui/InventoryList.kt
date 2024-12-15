@@ -38,7 +38,7 @@ import app.base.ui.components.NoDataScreen
 
 data class eventInventoryList(
     val onViewInventory: (()->Unit) -> Unit,
-    val onExpandeChange: () -> Unit,
+    val onExpandeChange: (Boolean) -> Unit,
     val onAddInventory: (() ->Unit) -> Unit,
     val onEditInventory:(Inventory,()->Unit) -> Unit,
     val onFilterInventory:(String) -> Unit,

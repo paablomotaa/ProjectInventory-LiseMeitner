@@ -20,4 +20,5 @@
     <string name="save">Guardar</string>
     <string name="createProduct">Crear producto</string>
     <string name="editProduct">Editar producto</string>
+    <string name="shortName">Nombre corto</string>
 </resources>

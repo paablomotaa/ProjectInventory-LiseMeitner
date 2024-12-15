@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import app.base.utils.Status
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.repository.ProductRepository
@@ -47,11 +48,11 @@ class ProductCreationViewModel() : ViewModel() {
         if (codModel.contains(' ') || codModel.contains(especialExpresion)) return
 
 
-        if (codModel.count() < 3)
+        if (codModel.isEmpty())
             state = state.copy(
                 codModel = codModel,
                 codModelError = true,
-                codModelFormatError = "El codModel debe tener al menos 3 caracteres"
+                codModelFormatError = "Error de formato codModel"
             )
         else
             state =
@@ -98,7 +99,7 @@ class ProductCreationViewModel() : ViewModel() {
         state = state.copy(typeProduct = typeProduct)
     }
 
-    fun onCategoryChange(category: Category?) {
+    fun onCategoryChange(category: String) {
         state = state.copy(category = category)
     }
 
@@ -196,7 +197,7 @@ class ProductCreationViewModel() : ViewModel() {
     }
     //endregion
 
-    fun onClickCreateProduct() {
+    fun onClickCreateProduct(goBack: () -> Unit) {
         if (areFieldEmpty()) {
             state = state.copy(isEmpty = true)
             return
@@ -221,7 +222,7 @@ class ProductCreationViewModel() : ViewModel() {
                     numSerial = state.numSerial,
                     codModel = state.codModel,
                     typeProduct = state.typeProduct,
-                    category = state.category!!,
+                    category = state.category,
                     section = state.section,
                     status = state.status,
                     amount = state.amount,
@@ -233,7 +234,8 @@ class ProductCreationViewModel() : ViewModel() {
                     notes = state.notes
                 )
                 if (product) {
-                    state = state.copy(isLoading = false, success = true)
+                    state = state.copy(success = true)
+                    goBack()
                 }
             }
         }

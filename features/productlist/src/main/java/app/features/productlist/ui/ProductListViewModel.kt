@@ -14,8 +14,12 @@ class ProductListViewModel: ViewModel(){
     var state by mutableStateOf<ProductListState>(ProductListState.Loading)
         private set
 
+    var _list: List<Product> by mutableStateOf(emptyList())
+        private set
+
     var list: List<Product> by mutableStateOf(emptyList())
         private set
+
 
     var listTags: List<String> by mutableStateOf(listOf("Sin Tags"))
 
@@ -24,9 +28,10 @@ class ProductListViewModel: ViewModel(){
             state = ProductListState.Loading
             ProductRepository.getProduct().collect{ products ->
                 if(products.isNotEmpty()){
-                    list = products
+                    _list = products
+                    list = _list
+                    listTags = list.map { it.tags.ifEmpty { "Sin Tags" } }
                     state = ProductListState.Success(list)
-                    listTags = list.map { it.tags } + ("Sin Tags")
                 }
                 else
                     state = ProductListState.NoData
@@ -35,8 +40,8 @@ class ProductListViewModel: ViewModel(){
         }
     }
 
-    fun onExpandedChange(){
-        state.expanded = !state.expanded
+    fun onExpandedChange(expanded: Boolean){
+        state.expanded
     }
 
     fun onViewProduct(product: Product, navigateView: () -> Unit){
@@ -49,6 +54,7 @@ class ProductListViewModel: ViewModel(){
     }
 
     fun onAddProduct(navigateAdd: () -> Unit){
+        state = ProductListState.Loading
         navigateAdd()
     }
 
