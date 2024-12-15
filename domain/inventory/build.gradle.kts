@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.base.utils)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlin.coroutines.core)
+    implementation(project(":base:utils"))
 
 }
