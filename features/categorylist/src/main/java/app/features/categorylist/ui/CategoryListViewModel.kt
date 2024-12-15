@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.model.category.CategoryRepository
-import app.features.categorylist.R
 import kotlinx.coroutines.launch
 
 class CategoryListViewModel : ViewModel() {
@@ -20,45 +19,52 @@ class CategoryListViewModel : ViewModel() {
 
     // Obtener categorías desde el repositorio
     fun fetchCategories() {
-        state = state.copy(isLoading = true, isError = false)
+        state = state.copy(isLoading = true, isError = false, isEmpty = false)
         viewModelScope.launch {
             try {
+                // Aseguramos que el repositorio esté devolviendo correctamente los datos
                 CategoryRepository.getAllCategories().collect { categories ->
                     if (categories.isEmpty()) {
+                        // Si no hay categorías, lo manejamos así
                         state = state.copy(
                             categories = categories,
                             isLoading = false,
                             isEmpty = true,
-                            errorMessage = "empty"
+                            errorMessage = "No categories available"
                         )
                     } else {
+                        // Si hay categorías, actualizamos el estado sin error
                         state = state.copy(
                             categories = categories,
                             isLoading = false,
-                            isEmpty = false
+                            isEmpty = false,
+                            errorMessage = "" // Limpiamos cualquier mensaje de error previo
                         )
                     }
                 }
             } catch (e: Exception) {
+                // En caso de error, actualizamos el estado para reflejarlo
                 state = state.copy(
                     isLoading = false,
                     isError = true,
-                    errorMessage = "error_loading"
+                    errorMessage = "Error loading categories"
                 )
+                println("Error fetching categories: ${e.message}")
             }
         }
     }
+
 
     // Eliminar una categoría
     fun deleteCategory(category: Category) {
         viewModelScope.launch {
             try {
                 CategoryRepository.deleteCategory(category)
-                fetchCategories() // Actualizar la lista después de eliminar
+                fetchCategories() // Refresca la lista después de eliminar
             } catch (e: Exception) {
                 state = state.copy(
                     isError = true,
-                    errorMessage = "error_deleting_category"
+                    errorMessage = "Error deleting category"
                 )
             }
         }

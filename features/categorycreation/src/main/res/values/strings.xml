@@ -19,4 +19,9 @@
     <string name="error_description_format">ERROR. Campo vacío</string>
     <string name="error_image_url_format">ERROR. URL no válida</string>
     <string name="empty_fields">Algunos campos están vacíos</string>
+    <string name="error_title">Error</string>
+    <string name="error_category_creation">Por favor corrige los errores en el formulario antes de guardar.</string>
+    <string name="success_title">Éxito</string>
+    <string name="success_message">La categoría se ha creado exitosamente.</string>
+    <string name="ok_button">OK</string>
 </resources>

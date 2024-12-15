@@ -18,6 +18,7 @@ object CategoryRepository {
 
     private fun initialize() {
         if (dataSet.isEmpty()) {
+            // Se inicializan las categorías predeterminadas
             dataSet.add(Category(
                 id = "1",
                 name = "Bebidas",
@@ -42,36 +43,19 @@ object CategoryRepository {
         }
     }
 
-    suspend fun getData(): Flow<List<Category>> {
-        delay(2000)  // Simula un retraso en la obtención de los datos
-        return flow { emit(dataSet) }
-    }
-
     suspend fun addCategory(category: Category) {
-        dataSet.add(category)
+        dataSet.add(category) // Se agrega la categoría a la lista
     }
 
-    suspend fun delete(category: Category) {
-        dataSet.remove(category)
+    suspend fun deleteCategory(category: Category) {
+        dataSet.remove(category) // Se elimina la categoría de la lista
+        delay(100)
     }
 
-    suspend fun edit(
-        id: String,
-        name: String,
-        shortName: String,
-        description: String,
-        imageUrl: String,
-        type: CategoryType,
-        isFungible: Boolean
-    ) {
-        val category = dataSet.firstOrNull { it.id == id }
-        category?.let {
-            it.name = name
-            it.shortName = shortName
-            it.description = description
-            it.imageUrl = imageUrl
-            it.type = type
-            it.isFungible = isFungible
+    suspend fun editCategory(category: Category) {
+        val index = dataSet.indexOfFirst { it.id == category.id }
+        if (index != -1) {
+            dataSet[index] = category // Se actualiza la categoría en la lista
         }
     }
 
@@ -84,13 +68,12 @@ object CategoryRepository {
         }
     }
 
-    suspend fun getAllCategories(): Flow<List<Category>> {
-        delay(2000) // Simulación de carga
-        return flow { emit(dataSet) }
-    }
-
-    suspend fun deleteCategory(category: Category) {
-        dataSet.remove(category)
+    // Este método devuelve un Flow de las categorías para que la UI pueda recolectarlas
+    fun getAllCategories(): Flow<List<Category>> {
+        return flow {
+            delay(2000) // Simulamos un retraso en la carga de los datos
+            emit(dataSet) // Emitimos las categorías actuales
+        }
     }
 
 }

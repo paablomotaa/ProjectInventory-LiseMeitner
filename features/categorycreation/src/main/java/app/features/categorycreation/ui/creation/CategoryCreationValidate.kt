@@ -17,7 +17,7 @@ object CategoryCreationValidate {
     fun validateShortName(shortName: String, context: Context): Int? {
         return when {
             shortName.isEmpty() -> R.string.error_short_name
-            shortName.length < 3 -> R.string.error_short_name_format
+            shortName.length != 3 -> R.string.error_short_name_format
             shortName.contains(' ') -> R.string.error_short_name_format
             else -> null // No hay error
         }

@@ -23,70 +23,78 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import app.domain.invoicing.category.Category
+import app.domain.navigation.CategoryGraph
 import app.features.categorylist.R
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import app.domain.navigation.categoryGraph
+
 
 @Composable
-fun CategoryListScreen(viewModel: CategoryListViewModel) {
+fun CategoryListScreen(
+    viewModel: CategoryListViewModel,
+    navController: NavController
+) {
     val state = viewModel.state
 
-    when {
-        state.isLoading -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+    if (state.isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
         }
-        state.isError -> {
-
-            AlertDialog(
-                onDismissRequest = { viewModel.fetchCategories() },
-                confirmButton = {
-                    TextButton(onClick = { viewModel.fetchCategories() }) {
-                        Text(stringResource(id = R.string.accept))
-                    }
-                },
-                title = {
-                    Text(text = stringResource(id = R.string.error))
-                },
-                text = {
-                    Text(text = state.errorMessage ?: stringResource(id = R.string.unknown_error))
+    }
+    // Error al cargar
+    else if (state.isError) {
+        AlertDialog(
+            onDismissRequest = { viewModel.fetchCategories() },  // Recargar categorías
+            confirmButton = {
+                TextButton(onClick = { viewModel.fetchCategories() }) {
+                    Text(stringResource(id = R.string.accept))
                 }
-            )
-
-        }
-        state.isEmpty -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = stringResource(id = R.string.no_categories_available), style = MaterialTheme.typography.headlineSmall)
+            },
+            title = {
+                Text(text = stringResource(id = R.string.error))
+            },
+            text = {
+                Text(text = state.errorMessage ?: stringResource(id = R.string.unknown_error))
             }
-        }
-        else -> {
-            CategoryListContent(
-                categories = state.categories,
-                onCategoryClick = { category ->
-                    println("Clic en la categoría: ${category.name}")
-                },
-                onFabClick = {
-                    println("FAB clickeado")
-                },
-                onDeleteClick = { category ->
-                    viewModel.deleteCategory(category)
-                },
-
-                onEditClick = { category ->
-                    viewModel.editCategory(category)
-                },
+        )
+    }
+    // No hay categorías disponibles
+    else if (state.isEmpty) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(id = R.string.no_categories_available),
+                style = MaterialTheme.typography.headlineSmall
             )
         }
+    }
+    // Mostrar lista de categorías
+    else {
+        CategoryListContent(
+            categories = state.categories,
+            onCategoryClick = { category ->
+                print("Boton de Details")
+            },
+            onFabClick = {
+                // Navegar a la pantalla para crear categoría
+                navController.navigate(CategoryGraph.categoryCreate())
+            },
+            onDeleteClick = { category ->
+                // Lógica para eliminar la categoría
+                viewModel.deleteCategory(category)
+            },
+            onEditClick = { category ->
+                // Navegar a la pantalla de editar categoría
+                print("Boton de Edit")
+            }
+        )
     }
 }
 
@@ -106,7 +114,6 @@ fun CategoryListContent(
                     onClick = { onCategoryClick(category) },
                     onDeleteClick = { onDeleteClick(category) },
                     onEditClick = { onEditClick(category) }
-
                 )
             }
         }
@@ -134,11 +141,11 @@ fun CategoryItem(
 ) {
     val imagePainter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(category.imageUrl.ifEmpty { null }) // Si la URL está vacía, pasa null
+            .data(category.imageUrl.ifEmpty { null })
             .apply {
-                crossfade(true) // Habilitar la animación de carga
-                error(app.base.ui.R.drawable.ic_cactus) // Si hay un error, se carga el cactus
-                placeholder(app.base.ui.R.drawable.ic_cactus) // Mientras carga, muestra el cactus
+                crossfade(true)
+                error(app.base.ui.R.drawable.ic_cactus)
+                placeholder(app.base.ui.R.drawable.ic_cactus)
             }
             .build()
     )
@@ -201,11 +208,19 @@ fun CategoryItem(
 }
 
 
+
 @Preview
 @Composable
 fun PreviewCategoryListScreen() {
-    val viewModel = CategoryListViewModel()
-    CategoryListScreen(viewModel = viewModel)
+    val navController = rememberNavController()
+
+    // Asegúrate de envolver en un NavHost para que las rutas funcionen
+    NavHost(
+        navController = navController,
+        startDestination = CategoryGraph.categoryList()
+    ) {
+        categoryGraph(navController) // Llamar al gráfico de navegación
+    }
 }
 
 
