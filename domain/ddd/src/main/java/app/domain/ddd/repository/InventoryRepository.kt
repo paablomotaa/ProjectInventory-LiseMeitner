@@ -28,7 +28,6 @@ object InventoryRepository {
         )
     }
     suspend fun getData(): Flow<List<Inventory>> {
-        delay(2000)
         return flow{emit(dataSet)}
     }
     suspend fun add(
