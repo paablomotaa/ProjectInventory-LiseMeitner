@@ -3,4 +3,10 @@
     <string name="fab_create_category">Crear categoría</string>
     <string name="category_logo_content_description">Logo de la categoría</string>
     <string name="edit_category_content_description">Editar categoría</string>
+    <string name="delete_category_content_description">Eliminar categoría</string>
+    <string name="error">Error</string>
+    <string name="no_categories_available">No hay categorías disponibles</string>
+    <string name="unknown_error">Error desconocido</string>
+    <string name="accept">Aceptar</string>
+    <string name="error_deleting_category">Error al eliminar la categoría</string>
 </resources>

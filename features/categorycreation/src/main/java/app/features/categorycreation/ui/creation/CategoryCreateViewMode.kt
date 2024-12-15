@@ -1,5 +1,6 @@
 package app.features.categorycreation.ui.creation
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,39 +18,41 @@ class CategoryCreateViewModel : ViewModel() {
     var state by mutableStateOf(CategoryCreateState())
         private set
 
-    fun onNameChange(name: String) {
-        if (name.contains(' ')) return
-        if (name.isEmpty()) {
-            state = state.copy(name = name, isNameError = true, errorNameFormat = "ERROR. Campo vacío")
-        } else {
-            state = state.copy(name = name, isNameError = false)
-        }
+    // Funciones para actualizar el estado al cambiar los campos de entrada
+    fun onNameChange(name: String, context: Context) {
+        val error = CategoryCreationValidate.validateName(name, context)
+        state = state.copy(
+            name = name,
+            isNameError = error != null,
+            errorNameFormat = error?.let { context.getString(it) }
+        )
     }
 
-    fun onShortNameChange(shortName: String) {
-        if (shortName.contains(' ')) return
-        if (shortName.isEmpty() || shortName.length < 3) {
-            state = state.copy(shortName = shortName, errorShortNameFormat = "ERROR. Nombre corto incorrecto", isShortNameError = true)
-        } else {
-            state = state.copy(shortName = shortName, isShortNameError = false)
-        }
+    fun onShortNameChange(shortName: String, context: Context) {
+        val error = CategoryCreationValidate.validateShortName(shortName, context)
+        state = state.copy(
+            shortName = shortName,
+            isShortNameError = error != null,
+            errorShortNameFormat = error?.let { context.getString(it) }
+        )
     }
 
-    fun onDescriptionChange(description: String) {
-        if (description.contains(' ')) return
-        if (description.isEmpty()) {
-            state = state.copy(description = description, errorDescriptionFormat = "ERROR. Campo vacío", isDescriptionError = true)
-        } else {
-            state = state.copy(description = description, isDescriptionError = false)
-        }
+    fun onDescriptionChange(description: String, context: Context) {
+        val error = CategoryCreationValidate.validateDescription(description, context)
+        state = state.copy(
+            description = description,
+            isDescriptionError = error != null,
+            errorDescriptionFormat = error?.let { context.getString(it) }
+        )
     }
 
-    fun onImageUrlChange(imageUrl: String) {
-        if (imageUrl.isEmpty() || !isValidUrl(imageUrl)) {
-            state = state.copy(imageUrl = imageUrl, errorImageUrlFormat = "ERROR. URL no válida", isImageUrlError = true)
-        } else {
-            state = state.copy(imageUrl = imageUrl, isImageUrlError = false)
-        }
+    fun onImageUrlChange(imageUrl: String, context: Context) {
+        val error = CategoryCreationValidate.validateImageUrl(imageUrl, context)
+        state = state.copy(
+            imageUrl = imageUrl,
+            isImageUrlError = error != null,
+            errorImageUrlFormat = error?.let { context.getString(it) }
+        )
     }
 
     fun onTypeChange(type: CategoryType) {
@@ -60,20 +63,35 @@ class CategoryCreateViewModel : ViewModel() {
         state = state.copy(isFungible = isFungible)
     }
 
-    fun onCreationClick() {
-        if (isEmptyFields()) {
-            state = state.copy(isEmpty = "Algunos campos están vacíos")
-            return
-        }
-        if (isErrorFields()) {
-            return
-        }
+    // Función para manejar el clic del botón de creación de categoría
+    fun onCreationClick(context: Context) {
+        // Validar los campos
+        val nameError = CategoryCreationValidate.validateName(state.name, context)
+        val shortNameError = CategoryCreationValidate.validateShortName(state.shortName, context)
+        val descriptionError = CategoryCreationValidate.validateDescription(state.description, context)
+        val imageUrlError = CategoryCreationValidate.validateImageUrl(state.imageUrl, context)
+
+        // Actualizar el estado con los errores
+        state = state.copy(
+            isNameError = nameError != null,
+            errorNameFormat = nameError?.let { context.getString(it) },
+            isShortNameError = shortNameError != null,
+            errorShortNameFormat = shortNameError?.let { context.getString(it) },
+            isDescriptionError = descriptionError != null,
+            errorDescriptionFormat = descriptionError?.let { context.getString(it) },
+            isImageUrlError = imageUrlError != null,
+            errorImageUrlFormat = imageUrlError?.let { context.getString(it) }
+        )
+
+        // Si hay errores, no proceder
+        if (nameError != null || shortNameError != null || descriptionError != null || imageUrlError != null) return
+
+        // Si no hay errores, proceder con la creación
         viewModelScope.launch {
-            // Llamada al repositorio para verificar duplicados o crear la categoría
             val response = CategoryRepository.isDuplicate(state.name)
             when (response) {
                 is BaseResult.Error -> {
-                    state = state.copy(isNameError = true, errorNameFormat = "Ya existe una categoría con ese nombre")
+                    state = state.copy(isNameError = true, errorNameFormat = "error_duplicate_name")
                 }
                 is BaseResult.Success -> {
                     CategoryRepository.addCategory(
@@ -92,40 +110,5 @@ class CategoryCreateViewModel : ViewModel() {
                 }
             }
         }
-    }
-
-    private fun isEmptyFields(): Boolean {
-        var hasEmptyFields = false
-
-        if (state.name.isBlank()) {
-            hasEmptyFields = true
-            state = state.copy(isNameError = true, errorNameFormat = "El nombre no puede estar vacío")
-        }
-
-        if (state.description.isBlank()) {
-            hasEmptyFields = true
-            state = state.copy(isDescriptionError = true, errorDescriptionFormat = "La descripción no puede estar vacía")
-        }
-
-        if (state.shortName.isBlank()) {
-            hasEmptyFields = true
-            state = state.copy(isShortNameError = true, errorShortNameFormat = "El nombre corto no puede estar vacío")
-        }
-
-        if (state.imageUrl.isBlank()) {
-            hasEmptyFields = true
-            state = state.copy(isImageUrlError = true, errorImageUrlFormat = "La URL de la imagen no puede estar vacía")
-        }
-
-        return hasEmptyFields
-    }
-
-    private fun isErrorFields(): Boolean {
-        return state.isNameError || state.isDescriptionError || state.isShortNameError || state.isImageUrlError
-    }
-
-    private fun isValidUrl(url: String): Boolean {
-        val regex = "^(https?|ftp)://[^\\s/$.?#].[\\S]*$"
-        return url.matches(regex.toRegex())
     }
 }

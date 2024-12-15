@@ -9,4 +9,19 @@
     <string name="save_button">Save</string>
     <string name="update_button">Update</string>
     <string name="category_type_dropdown">Select Type</string>
+    <string name="error_field_empty">The field cannot be empty</string>
+    <string name="error_invalid_url">Invalid URL</string>
+    <string name="error_duplicate_category">A category with that name already exists</string>
+    <string name="error_short_name">The short name cannot be empty</string>
+    <string name="error_description">The description cannot be empty</string>
+    <string name="error_name_format">ERROR. Empty field</string>
+    <string name="error_short_name_format">ERROR. Incorrect short name</string>
+    <string name="error_description_format">ERROR. Empty field</string>
+    <string name="error_image_url_format">ERROR. Invalid URL</string>
+    <string name="empty_fields">Some fields are empty</string>
+    <string name="error_title">Error</string>
+    <string name="error_category_creation">Please fix the errors in the form before saving.</string>
+    <string name="success_title">Success</string>
+    <string name="success_message">The category has been successfully created.</string>
+    <string name="ok_button">OK</string>
 </resources>

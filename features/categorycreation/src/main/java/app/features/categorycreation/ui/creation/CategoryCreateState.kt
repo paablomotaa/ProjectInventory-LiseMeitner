@@ -25,12 +25,12 @@ data class CategoryCreateState(
     val isSuccess: Boolean = false,
     val isNoData: Boolean = false,
 
+    val errorNameFormat: String? = null,
+    val errorShortNameFormat: String? = null,
+    val errorDescriptionFormat: String? = null,
+    val errorImageUrlFormat: String? = null,
+    val isEmpty: String? = null,
 
-    val errorNameFormat: String = "",
-    val errorShortNameFormat: String = "",
-    val errorDescriptionFormat: String = "",
-    val errorImageUrlFormat: String = "",
-    val isEmpty: String = "",
 )
 // Verificar que los campos sean correctos
 fun CategoryCreateState.isValidForm(): Boolean {
