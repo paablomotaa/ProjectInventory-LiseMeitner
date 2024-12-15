@@ -220,7 +220,7 @@ class ProductCreationViewModel() : ViewModel() {
                     codModel = state.codModel,
                     typeProduct = state.typeProduct,
                     category = state.category!!,
-                    section = state.section!!,
+                    section = state.section!!.toString(),
                     status = state.status,
                     amount = state.amount,
                     price = state.price,
