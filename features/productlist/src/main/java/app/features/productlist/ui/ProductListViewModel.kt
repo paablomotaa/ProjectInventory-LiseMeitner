@@ -41,7 +41,7 @@ class ProductListViewModel: ViewModel(){
 
     fun onViewProduct(product: Product, navigateView: () -> Unit){
         viewModelScope.launch {
-            val result = ProductRepository.existProduct(product.id)
+            val result = ProductRepository.existProduct(product.code)
             if(result)
                 //TODO("Implementar Navegación a vista producto")
                 navigateView()
