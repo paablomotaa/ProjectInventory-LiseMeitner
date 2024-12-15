@@ -24,7 +24,6 @@ import app.base.ui.composables.DialogDate
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
 import app.base.utils.Status
-import app.domain.invoicing.category.Category
 import app.features.productcreation.R
 import java.time.LocalDate
 
@@ -102,10 +101,10 @@ data class ProductCreationEvent(
     val onNotesChange: (String) -> Unit = {},
     val onTagsChange: (String) -> Unit = {},
 
-    val onExpandedTipoState: () -> Unit = {},
-    val onExpandedCategoriaState: () -> Unit = {},
-    val onExpandedSeccionState: () -> Unit = {},
-    val onExpandedEstadoState: () -> Unit = {},
+    val onExpandedTipoState: (Boolean) -> Unit = {},
+    val onExpandedCategoriaState: (Boolean) -> Unit = {},
+    val onExpandedSeccionState: (Boolean) -> Unit = {},
+    val onExpandedEstadoState: (Boolean) -> Unit = {},
 
     val onShowDialogAcquisitionDate: () -> Unit = {},
     val onShowDialogCancellationDate: () -> Unit = {},

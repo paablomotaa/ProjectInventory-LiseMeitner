@@ -38,7 +38,7 @@ object ProductRepository {
                 acquisitionDate = LocalDate.now(),
                 cancellationDate = LocalDate.now(),
                 notes = "",
-                tags = ""
+                tags = "dad"
             )
         )
     }
@@ -49,9 +49,9 @@ object ProductRepository {
         return flow { emit(productsSet) }
     }
 
-    suspend fun getStatus(): List<Status> {
+    suspend fun getStatus(): Flow<List<Status>> {
         delay(1000)
-        return Status.entries
+        return flow { emit(Status.entries)}
     }
 
     suspend fun existProduct(code: String): Boolean {

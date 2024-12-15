@@ -36,7 +36,7 @@ fun ProductListScreen(
         )){
     var nameInventory = rememberSaveable { mutableStateOf("Inventario") }
 
-    TopAppBarComplete(title = nameInventory.value, viewModel.state.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, event.onAccountView) {
+    TopAppBarComplete(title = nameInventory.value, viewModel.viewState.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, event.onAccountView) {
         when(viewModel.state){
             is ProductListState.NoData ->{NoDataScreen(modifier)}
             is ProductListState.Loading ->{

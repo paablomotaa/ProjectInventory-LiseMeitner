@@ -21,11 +21,21 @@ class ProductCreationViewModel() : ViewModel() {
     var listCategory: List<Category> = emptyList()
         private set
 
+    var listSection: List<String> = emptyList()
+        private set
+
 
     fun getList(){
         viewModelScope.launch {
-            state = state.copy(listStatus = ProductRepository.getStatus())
+            ProductRepository.getStatus().collect{ products ->
+                if(products.isNotEmpty())
+                    state = state.copy(listStatus = products)
+            }
         }
+    }
+
+    fun restoreState() {
+        state = state.copy(isLoading = false, isExitsError = false, isEmpty = false, isError = false, success = false)
     }
 
     //region onChange
@@ -170,20 +180,20 @@ class ProductCreationViewModel() : ViewModel() {
     //endregion
 
     //region onExpanded
-    fun onExpandedTipoState() {
-        state = state.copy(expandedTipoState = !state.expandedTipoState)
+    fun onExpandedTipoState(expanded: Boolean) {
+        state = state.copy(expandedTipoState = expanded)
     }
 
-    fun onExpandedCategoriaState() {
-        state = state.copy(expandedCategoriaState = !state.expandedCategoriaState)
+    fun onExpandedCategoriaState(expanded: Boolean) {
+        state = state.copy(expandedCategoriaState = expanded)
     }
 
-    fun onExpandedSeccionState() {
-        state = state.copy(expandedSeccionState = !state.expandedSeccionState)
+    fun onExpandedSeccionState(expanded: Boolean) {
+        state = state.copy(expandedSeccionState = expanded)
     }
 
-    fun onExpandedEstadoState() {
-        state = state.copy(expandedEstadoState = !state.expandedEstadoState)
+    fun onExpandedEstadoState(expanded: Boolean) {
+        state = state.copy(expandedEstadoState = expanded)
     }
     //endregion
 
