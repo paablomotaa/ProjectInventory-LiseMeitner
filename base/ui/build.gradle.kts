@@ -5,6 +5,7 @@ plugins {
 
 android {
     namespace = "app.base.ui"
+
 }
 
 dependencies {

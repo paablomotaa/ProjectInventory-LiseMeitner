@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,19 +17,32 @@ import java.util.*
 
 @Composable
 fun CategoryFormScreen(viewModel: CategoryCreateViewModel, onSave: (Category) -> Unit) {
+    val context = LocalContext.current
     val state = viewModel.state
 
     CategoryForm(
         state = state,
-        onNameChange = { viewModel.onNameChange(it) },
-        onShortNameChange = { viewModel.onShortNameChange(it) },
-        onDescriptionChange = { viewModel.onDescriptionChange(it) },
-        onTypeChange = { viewModel.onTypeChange(it) },
-        onFungibleChange = { viewModel.onFungibleChange(it) }
+        onNameChange = { name -> viewModel.onNameChange(name, context) },
+        onShortNameChange = { shortName -> viewModel.onShortNameChange(shortName, context) },
+        onDescriptionChange = { description -> viewModel.onDescriptionChange(description, context) },
+        onTypeChange = { type -> viewModel.onTypeChange(type) },
+        onFungibleChange = { fungible -> viewModel.onFungibleChange(fungible) }
     )
 
     Button(
-        onClick = {},
+        onClick = {
+            val category = Category(
+                id = UUID.randomUUID().toString(),
+                name = state.name,
+                shortName = state.shortName,
+                description = state.description,
+                imageUrl = state.imageUrl,
+                createdDate = Date(),
+                type = state.type,
+                isFungible = state.isFungible
+            )
+            onSave(category)
+        },
         modifier = Modifier.fillMaxWidth(),
         enabled = state.isValidForm()
     ) {
@@ -77,7 +91,6 @@ fun CategoryForm(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Dropdown menu for category type
         Box(modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = { isDropdownExpanded = !isDropdownExpanded },

@@ -83,4 +83,14 @@ object CategoryRepository {
             BaseResult.Error(CategoryException.DuplicateCategory)
         }
     }
+
+    suspend fun getAllCategories(): Flow<List<Category>> {
+        delay(2000) // Simulación de carga
+        return flow { emit(dataSet) }
+    }
+
+    suspend fun deleteCategory(category: Category) {
+        dataSet.remove(category)
+    }
+
 }

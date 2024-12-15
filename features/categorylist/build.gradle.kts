@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(projects.domain.inventory)
+    implementation(libs.coil.compose)
 }

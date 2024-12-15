@@ -9,4 +9,14 @@
     <string name="save_button">Guardar</string>
     <string name="update_button">Actualizar</string>
     <string name="category_type_dropdown">Seleccionar tipo</string>
+    <string name="error_field_empty">El campo no puede estar vacío</string>
+    <string name="error_invalid_url">URL no válida</string>
+    <string name="error_duplicate_category">Ya existe una categoría con ese nombre</string>
+    <string name="error_short_name">El nombre corto no puede estar vacío</string>
+    <string name="error_description">La descripción no puede estar vacía</string>
+    <string name="error_name_format">ERROR. Campo vacío</string>
+    <string name="error_short_name_format">ERROR. Nombre corto incorrecto</string>
+    <string name="error_description_format">ERROR. Campo vacío</string>
+    <string name="error_image_url_format">ERROR. URL no válida</string>
+    <string name="empty_fields">Algunos campos están vacíos</string>
 </resources>

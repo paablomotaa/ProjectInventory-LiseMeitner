@@ -6,34 +6,108 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.domain.invoicing.category.Category
-import app.domain.invoicing.category.CategoryType
 import app.features.categorylist.R
-import java.util.Date
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @Composable
-fun CategoryListScreen(
+fun CategoryListScreen(viewModel: CategoryListViewModel) {
+    val state = viewModel.state
+
+    when {
+        state.isLoading -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        state.isError -> {
+
+            AlertDialog(
+                onDismissRequest = { viewModel.fetchCategories() },
+                confirmButton = {
+                    TextButton(onClick = { viewModel.fetchCategories() }) {
+                        Text(stringResource(id = R.string.accept))
+                    }
+                },
+                title = {
+                    Text(text = stringResource(id = R.string.error))
+                },
+                text = {
+                    Text(text = state.errorMessage ?: stringResource(id = R.string.unknown_error))
+                }
+            )
+
+        }
+        state.isEmpty -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = stringResource(id = R.string.no_categories_available), style = MaterialTheme.typography.headlineSmall)
+            }
+        }
+        else -> {
+            CategoryListContent(
+                categories = state.categories,
+                onCategoryClick = { category ->
+                    println("Clic en la categoría: ${category.name}")
+                },
+                onFabClick = {
+                    println("FAB clickeado")
+                },
+                onDeleteClick = { category ->
+                    viewModel.deleteCategory(category)
+                },
+
+                onEditClick = { category ->
+                    viewModel.editCategory(category)
+                },
+            )
+        }
+    }
+}
+
+@Composable
+fun CategoryListContent(
     categories: List<Category>,
     onCategoryClick: (Category) -> Unit,
-    onFabClick: () -> Unit
+    onFabClick: () -> Unit,
+    onDeleteClick: (Category) -> Unit,
+    onEditClick: (Category) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(categories) { category ->
-                CategoryItem(category = category, onClick = { onCategoryClick(category) })
+                CategoryItem(
+                    category = category,
+                    onClick = { onCategoryClick(category) },
+                    onDeleteClick = { onDeleteClick(category) },
+                    onEditClick = { onEditClick(category) }
+
+                )
             }
         }
 
@@ -51,9 +125,24 @@ fun CategoryListScreen(
     }
 }
 
-
 @Composable
-fun CategoryItem(category: Category, onClick: () -> Unit) {
+fun CategoryItem(
+    category: Category,
+    onClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    onEditClick: (Category) -> Unit
+) {
+    val imagePainter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(category.imageUrl.ifEmpty { null }) // Si la URL está vacía, pasa null
+            .apply {
+                crossfade(true) // Habilitar la animación de carga
+                error(app.base.ui.R.drawable.ic_cactus) // Si hay un error, se carga el cactus
+                placeholder(app.base.ui.R.drawable.ic_cactus) // Mientras carga, muestra el cactus
+            }
+            .build()
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,11 +154,11 @@ fun CategoryItem(category: Category, onClick: () -> Unit) {
             modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = app.base.ui.R.drawable.ic_cactus),
+                painter = imagePainter,
                 contentDescription = stringResource(id = R.string.category_logo_content_description),
                 modifier = Modifier
                     .size(48.dp)
-                    .padding(end = 16.dp),
+                    .padding(end = 16.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
 
@@ -92,8 +181,19 @@ fun CategoryItem(category: Category, onClick: () -> Unit) {
                 contentDescription = stringResource(id = R.string.edit_category_content_description),
                 modifier = Modifier
                     .size(24.dp)
+                    .padding(end = 16.dp)
                     .clickable {
-                        // TODO acceso a details
+                        onEditClick(category)
+                    }
+            )
+
+            Icon(
+                imageVector = androidx.compose.material.icons.Icons.Default.Delete,
+                contentDescription = stringResource(id = R.string.delete_category_content_description),
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable {
+                        onDeleteClick()
                     }
             )
         }
@@ -103,68 +203,11 @@ fun CategoryItem(category: Category, onClick: () -> Unit) {
 
 @Preview
 @Composable
-fun PreviewCategoryListWithScroll() {
-    // Lista de ejemplo
-    val sampleCategories = listOf(
-        Category(
-            id = "1", name = "Electrónica", shortName = "ELE",
-            description = "Electrodomésticos y gadgets", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.PREMIUM, isFungible = false
-        ),
-        Category(
-            id = "2", name = "Oficina", shortName = "OFI",
-            description = "Suministros de oficina y papelería", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.BASICO, isFungible = true
-        ),
-        Category(
-            id = "3", name = "Hogar", shortName = "HOG",
-            description = "Artículos para el hogar", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.ECOLOGICO, isFungible = true
-        ),
-        Category(
-            id = "4", name = "Deportes", shortName = "DEP",
-            description = "Artículos deportivos", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.ECONOMICO, isFungible = true
-        ),
-        Category(
-            id = "5", name = "Moda", shortName = "MOD",
-            description = "Ropa y accesorios", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.PREMIUM, isFungible = false
-        ),
-        Category(
-            id = "6", name = "Alimentos", shortName = "ALI",
-            description = "Productos alimenticios", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.BASICO, isFungible = true
-        ),
-        Category(
-            id = "7", name = "Juguetes", shortName = "JUG",
-            description = "Juegos y juguetes para niños", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.ECOLOGICO, isFungible = true
-        ),
-        Category(
-            id = "8", name = "Tecnología", shortName = "TEC",
-            description = "Productos tecnológicos avanzados", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.PREMIUM, isFungible = false
-        ),
-        Category(
-            id = "9", name = "Salud", shortName = "SAL",
-            description = "Productos para el bienestar", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.BASICO, isFungible = true
-        ),
-        Category(
-            id = "10", name = "Viajes", shortName = "VIA",
-            description = "Accesorios y servicios para viajeros", imageUrl = "https://image.url",
-            createdDate = Date(), type = CategoryType.ECONOMICO, isFungible = true
-        )
-    )
-    CategoryListScreen(
-        categories = sampleCategories,
-        onCategoryClick = { category ->
-            println("Clic en la categoría: ${category.name}")
-        },
-        onFabClick = { }
-    )
+fun PreviewCategoryListScreen() {
+    val viewModel = CategoryListViewModel()
+    CategoryListScreen(viewModel = viewModel)
 }
+
 
 
 
