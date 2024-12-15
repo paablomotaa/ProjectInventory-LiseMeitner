@@ -41,45 +41,29 @@ class ProductListViewModel: ViewModel(){
 
     fun onViewProduct(product: Product, navigateView: () -> Unit){
         viewModelScope.launch {
-            val result = ProductRepository.existProduct(product.id)
+            val result = ProductRepository.existProduct(product.code)
             if(result)
                 //TODO("Implementar Navegación a vista producto")
                 navigateView()
         }
     }
 
-    fun onAddProduct(navigateBack: () -> Unit){
-        navigateBack()
-    }
-
-    fun onEditProduct(product: Product, navigateBack: () -> Unit){
-        viewModelScope.launch {
-            val result = ProductRepository.existProduct(product.id)
-            if(result)
-                navigateBack()
-        }
-
-    }
-
-    fun onDeleteProduct(product: Product){
-        viewModelScope.launch {
-            ProductRepository.deleteProduct(product)
-        }
+    fun onAddProduct(navigateAdd: () -> Unit){
+        navigateAdd()
     }
 
     fun onFilterProduct(string: String){
-        if(string == "Sin Tags"){
-            val result = list.filter { it.tags.contains(string) }
-            if(result.isNotEmpty())
-                state = ProductListState.Success(result)
-            else
-                state = ProductListState.NoData
-        }
-        else{
-            state = ProductListState.Success(list)
+        val result = if (string != "Sin Tags") {
+            list.filter { it.tags.contains(string) }
+        } else {
+            list
         }
 
-
+        state = if (result.isNotEmpty()) {
+            ProductListState.Success(result)
+        } else {
+            ProductListState.NoData
+        }
     }
 
     fun onBackProduct(navigateBack: () -> Unit){

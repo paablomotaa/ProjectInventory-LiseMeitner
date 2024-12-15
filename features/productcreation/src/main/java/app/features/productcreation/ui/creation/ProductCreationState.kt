@@ -15,9 +15,9 @@ data class ProductCreationState(
     val codModel: String = "",
     val typeProduct: String = "",
     val category: Category? = null,
-    val section: Section? = null,
+    val section: String = "",
     val status: Status = Status.NEW,
-    val amount: Int = 1,
+    val amount: Int = 0,
     val price: Double = 0.0,
     val image: String = "",
     val acquisitionDate: LocalDate = LocalDate.now(),
@@ -34,7 +34,7 @@ data class ProductCreationState(
 
     val listTipoProducto: List<String> = emptyList(),
     val listCategoria: List<Category> = emptyList(),
-    val listSeccion: List<Section> = emptyList(),
+    val listSeccion: List<String> = emptyList(),
     val listStatus: List<Status> = emptyList(),
 
     //region Errors
@@ -87,6 +87,7 @@ data class ProductCreationState(
     val tagsFormatError: String? = null,
     //endregion
 
+    val isError:Boolean = false,
     val isExitsError:Boolean = false,
     val isEmpty:Boolean = false,
     val isOffline: Boolean = false,
