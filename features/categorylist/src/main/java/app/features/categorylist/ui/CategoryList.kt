@@ -19,107 +19,82 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import app.domain.invoicing.category.Category
-//import app.domain.navigation.CategoryGraph
 import app.features.categorylist.R
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-//import app.domain.navigation.categoryGraph
+
+
 
 
 @Composable
-fun CategoryListScreen(
-    viewModel: CategoryListViewModel,
-    navController: NavController
-) {
-    val state = viewModel.state
+fun CategoryListScreen(goAdd: () -> Unit, viewModel: CategoryListViewModel, modifier: Modifier = Modifier) {
+    val events = CategoryListEvents(
+        onCategoryClick = { },
+        onFabClick = { goAdd() },
+        onDeleteClick = { category -> viewModel.onDeleteCategory(category) },
+        onEditClick = {  },
+        onRetry = { viewModel.fetchCategories() }
+    )
 
-    if (state.isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    }
-    // Error al cargar
-    else if (state.isError) {
-        AlertDialog(
-            onDismissRequest = { viewModel.fetchCategories() },  // Recargar categorías
-            confirmButton = {
-                TextButton(onClick = { viewModel.fetchCategories() }) {
-                    Text(stringResource(id = R.string.accept))
-                }
-            },
-            title = {
-                Text(text = stringResource(id = R.string.error))
-            },
-            text = {
-                Text(text = state.errorMessage ?: stringResource(id = R.string.unknown_error))
+    when (val state = viewModel.state) {
+        is CategoryListState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
             }
-        )
-    }
-    // No hay categorías disponibles
-    else if (state.isEmpty) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = stringResource(id = R.string.no_categories_available),
-                style = MaterialTheme.typography.headlineSmall
+        }
+        is CategoryListState.Error -> {
+            AlertDialog(
+                onDismissRequest = events.onRetry,
+                confirmButton = {
+                    TextButton(onClick = events.onRetry) {
+                        Text(stringResource(id = R.string.accept))
+                    }
+                },
+                title = { Text(text = stringResource(id = R.string.error)) },
+                text = { Text(text = state.errorMessage ?: stringResource(id = R.string.unknown_error)) }
             )
         }
-    }
-    // Mostrar lista de categorías
-    else {
-        CategoryListContent(
-            categories = state.categories,
-            onCategoryClick = { category ->
-                print("Boton de Details")
-            },
-            onFabClick = {
-                // Navegar a la pantalla para crear categoría
-                //navController.navigate(CategoryGraph.categoryCreate())
-            },
-            onDeleteClick = { category ->
-                // Lógica para eliminar la categoría
-                viewModel.deleteCategory(category)
-            },
-            onEditClick = { category ->
-                // Navegar a la pantalla de editar categoría
-                print("Boton de Edit")
+        is CategoryListState.NoData -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.no_categories_available),
+                    style = MaterialTheme.typography.headlineSmall
+                )
             }
-        )
+        }
+        is CategoryListState.Success -> {
+            CategoryListContent(
+                goAdd,
+                categories = state.categories,
+                events = events
+            )
+        }
     }
 }
 
 @Composable
-fun CategoryListContent(
-    categories: List<Category>,
-    onCategoryClick: (Category) -> Unit,
-    onFabClick: () -> Unit,
-    onDeleteClick: (Category) -> Unit,
-    onEditClick: (Category) -> Unit
-) {
+fun CategoryListContent(goAdd: () -> Unit, categories: List<Category>, events: CategoryListEvents) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(categories) { category ->
                 CategoryItem(
                     category = category,
-                    onClick = { onCategoryClick(category) },
-                    onDeleteClick = { onDeleteClick(category) },
-                    onEditClick = { onEditClick(category) }
+                    onClick = { events.onCategoryClick(category) },
+                    onDeleteClick = { events.onDeleteClick(category) },
+                    onEditClick = { events.onEditClick(category) }
                 )
             }
         }
 
         FloatingActionButton(
-            onClick = onFabClick,
+            onClick = events.onFabClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
@@ -133,22 +108,12 @@ fun CategoryListContent(
 }
 
 @Composable
-fun CategoryItem(
-    category: Category,
-    onClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-    onEditClick: (Category) -> Unit
-) {
-    val imagePainter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(category.imageUrl.ifEmpty { null })
-            .apply {
-                crossfade(true)
-                error(app.base.ui.R.drawable.ic_cactus)
-                placeholder(app.base.ui.R.drawable.ic_cactus)
-            }
-            .build()
-    )
+fun CategoryItem(category: Category, onClick: () -> Unit, onDeleteClick: () -> Unit, onEditClick: (Category) -> Unit) {
+    val image = if (category.imageUrl.isNotEmpty()) {
+        app.base.ui.R.drawable.ic_cactus
+    } else {
+        app.base.ui.R.drawable.ic_cactus
+    }
 
     Card(
         modifier = Modifier
@@ -161,7 +126,7 @@ fun CategoryItem(
             modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = imagePainter,
+                painter = painterResource(id = image),
                 contentDescription = stringResource(id = R.string.category_logo_content_description),
                 modifier = Modifier
                     .size(48.dp)
@@ -187,41 +152,31 @@ fun CategoryItem(
                 imageVector = androidx.compose.material.icons.Icons.Default.Edit,
                 contentDescription = stringResource(id = R.string.edit_category_content_description),
                 modifier = Modifier
-                    .size(24.dp)
+                    .size(40.dp)
                     .padding(end = 16.dp)
-                    .clickable {
-                        onEditClick(category)
-                    }
+                    .clickable { onEditClick(category) }
             )
 
             Icon(
                 imageVector = androidx.compose.material.icons.Icons.Default.Delete,
                 contentDescription = stringResource(id = R.string.delete_category_content_description),
                 modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        onDeleteClick()
-                    }
+                    .size(30.dp)
+                    .clickable { onDeleteClick() }
             )
         }
     }
 }
 
-
-
 @Preview
 @Composable
 fun PreviewCategoryListScreen() {
     val navController = rememberNavController()
-
-    // Asegúrate de envolver en un NavHost para que las rutas funcionen
-    /*NavHost(
-        navController = navController,
-        startDestination = CategoryGraph.categoryList()
-    ) {
-        categoryGraph(navController) // Llamar al gráfico de navegación
-    }*/
+    val viewModel = CategoryListViewModel()
+    CategoryListScreen({}, viewModel)
 }
+
+
 
 
 

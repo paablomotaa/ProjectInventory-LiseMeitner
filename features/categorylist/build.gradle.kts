@@ -10,4 +10,6 @@ android {
 dependencies {
     implementation(projects.domain.inventory)
     implementation(libs.coil.compose)
+    implementation(project(":features:inventorycreation"))
+    implementation(project(":features:categorycreation"))
 }

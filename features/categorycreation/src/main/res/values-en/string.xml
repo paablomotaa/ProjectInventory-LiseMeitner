@@ -7,6 +7,7 @@
     <string name="category_is_fungible_label">Is Fungible</string>
     <string name="category_creation_date_label">Creation Date</string>
     <string name="save_button">Save</string>
+    <string name="title_category_create">Create Category</string>
     <string name="update_button">Update</string>
     <string name="category_type_dropdown">Select Type</string>
     <string name="error_field_empty">The field cannot be empty</string>
