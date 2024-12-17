@@ -7,6 +7,7 @@
     <string name="category_is_fungible_label">Es fungible</string>
     <string name="category_creation_date_label">Fecha de creación</string>
     <string name="save_button">Guardar</string>
+    <string name="title_category_create">Crear categoría</string>
     <string name="update_button">Actualizar</string>
     <string name="category_type_dropdown">Seleccionar tipo</string>
     <string name="error_field_empty">El campo no puede estar vacío</string>

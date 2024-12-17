@@ -2,14 +2,9 @@ package app.features.categorylist.ui
 
 import app.domain.invoicing.category.Category
 
-data class CategoryListState(
-    // Variables
-    val categories: List<Category> = emptyList(),
-
-    // Estados
-    val isLoading: Boolean = false,
-    val isError: Boolean = false,
-    val errorMessage: String = "",
-    val isEmpty: Boolean = false,
-    val isSuccess: Boolean = false,
-)
+sealed class CategoryListState(var expanded: Boolean = false) {
+    data object NoData : CategoryListState()
+    data object Loading : CategoryListState()
+    data class Success(val categories: List<Category>) : CategoryListState()
+    data class Error(val errorMessage: String) : CategoryListState()
+}
