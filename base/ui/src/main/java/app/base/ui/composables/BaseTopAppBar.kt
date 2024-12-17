@@ -141,7 +141,7 @@ fun <T> TopAppBarComplete(
     onFilter: (T) -> Unit,
     onAdd: (() -> Unit) -> Unit,
     goAdd: () -> Unit,
-    onAccount:() -> Unit,
+    onOpenDrawer: () -> Unit,
     content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
@@ -170,7 +170,7 @@ fun <T> TopAppBarComplete(
                         )
                     }
                     IconDropDownMenuAnyType(expandeValue = expandedValue, onExpandeValueChange = onExpandedChange, menuItemData = listFilter, function = onFilter)
-                    IconButton(onClick = onAccount) {
+                    IconButton(onClick = onOpenDrawer) {
                         Icon(
                             imageVector = Icons.Filled.AccountCircle,
                             contentDescription = "Cuenta"

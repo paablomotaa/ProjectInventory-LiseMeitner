@@ -46,7 +46,7 @@ data class eventInventoryList(
 )
 
 @Composable
-fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,modifier:Modifier = Modifier){
+fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,onOpenDrawer: () -> Unit,modifier:Modifier = Modifier){
     val events = eventInventoryList(
         onViewInventory = viewModel::onViewInventory,
         onAddInventory = viewModel::onAddInventory,
@@ -64,7 +64,8 @@ fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,modi
                 goAdd,
                 viewmodel = viewModel,
                 events = events,
-                inventories = (viewModel.state as InventoryListState.Succes).data
+                inventories = (viewModel.state as InventoryListState.Succes).data,
+                onOpenDrawer = onOpenDrawer
             )
         }
         InventoryListState.Loading->{
@@ -74,7 +75,7 @@ fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,modi
 }
 
 @Composable
-fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmodel:InventoryListViewModel,events:eventInventoryList,inventories:List<Inventory>) {
+fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmodel:InventoryListViewModel,events:eventInventoryList,inventories:List<Inventory>, onOpenDrawer: () -> Unit) {
 
 
     TopAppBarNormal(
@@ -83,9 +84,9 @@ fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmode
         goAdd = goAdd,
         onAdd = events.onAddInventory,
         listFilter = viewmodel.listtypes,
-        onAccount = events.onAccountView,
+        onAccount = onOpenDrawer,
         onExpandedChange = events.onExpandeChange,
-        onFilter = events.onFilterInventory
+        onFilter = events.onFilterInventory,
     ) {
         Box(
             modifier = Modifier.padding(WindowInsets.systemBars.asPaddingValues()).fillMaxSize()
@@ -132,5 +133,5 @@ fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmode
 @Composable
 fun InventoryListPreview(){
     val viewModel = InventoryListViewModel()
-    InventoryListScreen({},viewModel)
+    InventoryListScreen({},viewModel,{})
 }
