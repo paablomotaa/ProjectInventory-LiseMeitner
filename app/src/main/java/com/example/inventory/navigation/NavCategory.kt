@@ -21,18 +21,23 @@ object CategoryGraph {
 fun NavGraphBuilder.categoryGraph(
     navController: NavController,
     categoryListViewModel: CategoryListViewModel,
-    categoryCreateViewModel: CategoryCreateViewModel
+    categoryCreateViewModel: CategoryCreateViewModel,
+    onOpenDrawer: () -> Unit
 ) {
     navigation(startDestination = CategoryGraph.categoryList(), route = CategoryGraph.ROUTE) {
-        categoryList(navController, categoryListViewModel)
+        categoryList(navController, categoryListViewModel,onOpenDrawer)
         categoryCreate(navController, categoryCreateViewModel)
     }
 }
 
-private fun NavGraphBuilder.categoryList(navController: NavController, categoryListViewModel: CategoryListViewModel) {
+private fun NavGraphBuilder.categoryList(
+    navController: NavController,
+    categoryListViewModel: CategoryListViewModel,
+    onOpenDrawer: () -> Unit
+) {
     composable(route = CategoryGraph.categoryList()) {
         CategoryListScreen(
-            goAdd = { navController.navigate(CategoryGraph.categoryCreate())}, categoryListViewModel)
+            goAdd = { navController.navigate(CategoryGraph.categoryCreate())}, categoryListViewModel, onOpenDrawer = onOpenDrawer)
 
     }
 }

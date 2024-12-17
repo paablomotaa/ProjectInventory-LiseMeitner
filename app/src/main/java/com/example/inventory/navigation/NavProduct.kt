@@ -20,15 +20,17 @@ object ProductGraph {
     fun productEdit() = "$ROUTE/productEdit"
 }
 
-fun NavGraphBuilder.productGraph(navController: NavController, productCreationViewModel: ProductCreationViewModel,
-                                 productListViewModel: ProductListViewModel,
-                                 productEditViewModel: ProductEditionViewModel,
-                                 productDetailsViewModel: ProductDetailsViewModel
+fun NavGraphBuilder.productGraph(
+    navController: NavController, productCreationViewModel: ProductCreationViewModel,
+    productListViewModel: ProductListViewModel,
+    productEditViewModel: ProductEditionViewModel,
+    productDetailsViewModel: ProductDetailsViewModel,
+    onOpenDrawer: () -> Unit
 ) {
 
     navigation(startDestination = ProductGraph.productList(), route = ProductGraph.ROUTE) {
         productCreate(navController, productCreationViewModel)
-        productList(navController, productListViewModel)
+        productList(navController, productListViewModel,onOpenDrawer)
         productView(navController, productDetailsViewModel)
         productEdit(navController, productEditViewModel)
     }
@@ -45,7 +47,11 @@ private fun NavGraphBuilder.productCreate(navController: NavController, productC
     }
 }
 
-private fun NavGraphBuilder.productList(navController: NavController, productListViewModel: ProductListViewModel) {
+private fun NavGraphBuilder.productList(
+    navController: NavController,
+    productListViewModel: ProductListViewModel,
+    onOpenDrawer: () -> Unit
+) {
     composable(route = ProductGraph.productList()) {
         productListViewModel.getList()
         ProductListScreen(
@@ -53,6 +59,7 @@ private fun NavGraphBuilder.productList(navController: NavController, productLis
             goAdd = {navController.navigate(ProductGraph.productCreate())},
             goView = {navController.navigate(ProductGraph.productView())},
             productListViewModel,
+            onOpenDrawer
         )
 
     }

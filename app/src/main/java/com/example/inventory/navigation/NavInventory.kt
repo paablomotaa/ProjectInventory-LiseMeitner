@@ -18,11 +18,12 @@ object InventoryGraph{
 
     fun NavGraphBuilder.inventoryGraph(
         navController: NavController,
-        inventorylistviewmodel:InventoryListViewModel,
-        inventorycreateviewmodel:InventoryCreationViewModel
+        inventorylistviewmodel: InventoryListViewModel,
+        inventorycreateviewmodel: InventoryCreationViewModel,
+        onOpenDrawer: () -> Unit
     ){
         navigation(startDestination = InventoryGraph.inventoryList(), route = InventoryGraph.ROUTE){
-            inventoryList(navController, inventorylistviewmodel)
+            inventoryList(navController, inventorylistviewmodel,onOpenDrawer)
             inventoryCreation(navController, inventorycreateviewmodel)
         }
     }
@@ -35,10 +36,14 @@ object InventoryGraph{
             )
         }
     }
-    private fun NavGraphBuilder.inventoryList(navController: NavController,inventorylistviewmodel: InventoryListViewModel){
+    private fun NavGraphBuilder.inventoryList(
+        navController: NavController,
+        inventorylistviewmodel: InventoryListViewModel,
+        onOpenDrawer: () -> Unit
+    ){
         composable(route = InventoryGraph.inventoryList()){
             InventoryListScreen(
-                goAdd = {navController.navigate(InventoryGraph.inventoryCreate())},inventorylistviewmodel
+                goAdd = {navController.navigate(InventoryGraph.inventoryCreate())},onOpenDrawer = onOpenDrawer, viewModel = inventorylistviewmodel
             )
         }
     }

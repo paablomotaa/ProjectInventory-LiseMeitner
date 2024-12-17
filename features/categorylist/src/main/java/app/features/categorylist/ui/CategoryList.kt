@@ -31,7 +31,7 @@ import app.features.categorylist.R
 
 
 @Composable
-fun CategoryListScreen(goAdd: () -> Unit, viewModel: CategoryListViewModel, modifier: Modifier = Modifier) {
+fun CategoryListScreen(goAdd: () -> Unit, viewModel: CategoryListViewModel, modifier: Modifier = Modifier, onOpenDrawer: () -> Unit) {
     val events = CategoryListEvents(
         onCategoryClick = { },
         onFabClick = { goAdd() },
@@ -173,7 +173,7 @@ fun CategoryItem(category: Category, onClick: () -> Unit, onDeleteClick: () -> U
 fun PreviewCategoryListScreen() {
     val navController = rememberNavController()
     val viewModel = CategoryListViewModel()
-    CategoryListScreen({}, viewModel)
+    CategoryListScreen({}, viewModel,onOpenDrawer = {})
 }
 
 

@@ -27,6 +27,7 @@ fun ProductListScreen(
     goAdd: () -> Unit,
     goView: () -> Unit,
     viewModel: ProductListViewModel,
+    onOpenDrawer: () -> Unit ,
     modifier: Modifier = Modifier, event: EventProductList = EventProductList(
             onViewProduct = viewModel::onViewProduct,
             onAddProduct = viewModel::onAddProduct,
@@ -36,7 +37,7 @@ fun ProductListScreen(
         )){
     var nameInventory = rememberSaveable { mutableStateOf("Inventario") }
 
-    TopAppBarComplete(title = nameInventory.value, viewModel.viewState.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, event.onAccountView) {
+    TopAppBarComplete(title = nameInventory.value, viewModel.viewState.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, onOpenDrawer) {
         when(viewModel.state){
             is ProductListState.NoData ->{NoDataScreen(modifier)}
             is ProductListState.Loading ->{
@@ -110,6 +111,6 @@ fun MessageList(viewModel: ProductListViewModel, product: List<Product>, goView:
 private fun Preview() {
     val viewModel = remember{ProductListViewModel()}
     viewModel.getList()
-    ProductListScreen({}, {}, {}, viewModel)
+    ProductListScreen({}, {}, {}, viewModel,{})
 
 }

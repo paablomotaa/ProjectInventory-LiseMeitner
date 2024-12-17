@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Facturación</string>
+    <string name="principal_menu">Main Menu</string>
+    <string name="inventory">Inventory</string>
+    <string name="category">Category</string>
+    <string name="product">Product</string>
+</resources>

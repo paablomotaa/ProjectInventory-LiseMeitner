@@ -8,6 +8,10 @@
     <string name="menu_settings">Configuración</string>
     <string name="section_others">Otros</string>
     <string name="section_business">Negocio</string>
+    <string name="principal_menu">Menu Principal</string>
+    <string name="inventory">Inventario</string>
+    <string name="category">Categoria</string>
+    <string name="product">Producto</string>
 
 
 </resources>
