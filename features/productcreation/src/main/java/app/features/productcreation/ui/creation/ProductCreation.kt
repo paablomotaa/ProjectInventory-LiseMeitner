@@ -11,6 +11,7 @@ import app.base.ui.components.LoadingUi
 import app.base.ui.composables.BaseAlertDialog
 import app.base.ui.composables.BaseDropdownMenu
 import app.base.ui.composables.BaseDropdownMenuAnyTypes
+import app.base.ui.composables.BaseDropdownMenuAnyTypesList
 import app.base.ui.composables.BaseImageBig
 import app.base.ui.composables.BaseRow
 import app.base.ui.composables.BaseStructureColumnPaddingUpSide
@@ -142,7 +143,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                             Modifier.weight(5f),
                             state.listTipoProducto
                         )
-                        BaseDropdownMenuAnyTypes(
+                        BaseDropdownMenuAnyTypesList(
                             state.expandedCategoriaState,
                             event.onExpandedCategoriaState,
                             state.category,

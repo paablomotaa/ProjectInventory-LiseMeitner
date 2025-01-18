@@ -57,6 +57,49 @@ fun BaseDropdownMenu(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun <T> BaseDropdownMenuAnyTypesList(
+    expandeValue: Boolean,
+    onExpandeValueChange: (Boolean) -> Unit,
+    text: String,
+    onValueChange: (String) -> Unit,
+    title: String,
+    modifier: Modifier = Modifier,
+    option: List<T>
+) {
+    ExposedDropdownMenuBox(
+        modifier = modifier.fillMaxWidth(),
+        expanded = expandeValue,
+        onExpandedChange = {onExpandeValueChange(true)}) {
+
+        TextField(
+            modifier = modifier.menuAnchor(),
+            label = { Text(text = (title)) },
+            singleLine = true,
+            value = text.toString(),
+            onValueChange = {},
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandeValue) },
+            readOnly = true,
+        )
+
+        ExposedDropdownMenu(modifier = modifier.exposedDropdownSize(),
+            expanded = expandeValue,
+            onDismissRequest = { onExpandeValueChange(false) }) {
+            option.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(text = option.toString()) },
+                    onClick = {
+                        onValueChange(option.toString())
+                        onExpandeValueChange(false)
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun <T> BaseDropdownMenuAnyTypes(
     expandeValue: Boolean,
     onExpandeValueChange: (Boolean) -> Unit,
