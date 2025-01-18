@@ -8,8 +8,10 @@ import androidx.activity.viewModels
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.core.view.WindowCompat
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.features.categorycreation.ui.creation.CategoryCreateViewModel
 import app.features.categorylist.ui.CategoryListViewModel
@@ -44,11 +46,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             val scope = rememberCoroutineScope()
             val navController = rememberNavController()
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
             InventoryTheme {
                 Surface {
-                    AppDrawer(navController = navController, drawerState = drawerState) {
+                    AppDrawer(navController = navController, navBackStackEntry = navBackStackEntry,drawerState = drawerState, scope = scope) {
                         HomeScreen(
                             navController = navController,
                             inventoryListViewModel,

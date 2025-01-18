@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import app.base.utils.Status
+import app.domain.ddd.repository.CategoryRepository
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.repository.ProductRepository
 import kotlinx.coroutines.launch
@@ -31,6 +31,10 @@ class ProductCreationViewModel() : ViewModel() {
             ProductRepository.getStatus().collect{ products ->
                 if(products.isNotEmpty())
                     state = state.copy(listStatus = products)
+            }
+            CategoryRepository.getAllCategories().collect{ categories ->
+                if(categories.isNotEmpty())
+                    state = state.copy(listCategoria = categories)
             }
         }
     }
@@ -257,7 +261,7 @@ class ProductCreationViewModel() : ViewModel() {
     }
 
     private fun areFieldEmpty(): Boolean {
-        return state.code.isEmpty() || state.name.isEmpty() || state.shortName.isEmpty() || state.description.isEmpty()
+        return state.code.isEmpty() || state.name.isEmpty() || state.shortName.isEmpty() || state.description.isEmpty() || state.category.isEmpty() || state.section.isEmpty() || state.typeProduct.isEmpty()
     }
 
     private fun hasValidationErrors(): Boolean {

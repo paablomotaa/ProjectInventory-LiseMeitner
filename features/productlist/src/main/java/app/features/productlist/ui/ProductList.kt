@@ -35,7 +35,8 @@ fun ProductListScreen(
             onAccountView = viewModel::onAccountView,
             onExpandadChange = viewModel::onExpandedChange
         )){
-    var nameInventory = rememberSaveable { mutableStateOf("Inventario") }
+    //TODO("Cambiar el titulo por el nombre del inventario)
+    var nameInventory = rememberSaveable { mutableStateOf("Producto") }
 
     TopAppBarComplete(title = nameInventory.value, viewModel.viewState.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, onOpenDrawer) {
         when(viewModel.state){

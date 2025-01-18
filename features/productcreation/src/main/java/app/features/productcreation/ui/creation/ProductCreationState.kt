@@ -1,6 +1,7 @@
 package app.features.productcreation.ui.creation
 
 import app.base.utils.Status
+import app.domain.invoicing.category.Category
 import java.time.LocalDate
 
 data class ProductCreationState(
@@ -31,7 +32,7 @@ data class ProductCreationState(
     val showDialogCancellation: Boolean = false,
 
     val listTipoProducto: List<String> = emptyList(),
-    val listCategoria: List<String> = emptyList(),
+    val listCategoria: List<Category> = emptyList(),
     val listSeccion: List<String> = emptyList(),
     val listStatus: List<Status> = emptyList(),
 
