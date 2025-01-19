@@ -1,4 +1,9 @@
 # PROYECTO INVENTORY
+
+# CHANGELOG
+
+[Cambios en inventory](###Cambios)
+
 # Proyecto Inventory - Módulo Category 📦
 
 La siguiente información corresponde al apartado **Categoría** de la aplicación. Se implementaron las interfaces de creación y edición, lista y consulta de detalles de las mismas.
@@ -91,6 +96,10 @@ Desde esta vista, los usuarios podrán editar los inventarios ya existentes de n
 ### 5. **Vista: Detalles de Inventario**
 
 En esta vista, los usuarios podrán ver las propiedades del inventario. Con unos campos de solo lectura.
+
+### Cambios🆕
+
+Añadido el ViewModel de crear y listar, navegación interna del módulo inventory y navegación entre los distintos módulos desde un drawer.
 
 ---
 
