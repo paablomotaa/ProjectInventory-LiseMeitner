@@ -2,7 +2,7 @@
 
 # CHANGELOG
 
-[Cambios en inventory](###Cambios)
+[Cambios en inventory](#Cambios)
 
 # Proyecto Inventory - Módulo Category 📦
 
