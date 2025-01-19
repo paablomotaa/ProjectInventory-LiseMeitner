@@ -70,6 +70,12 @@ Añade un AppBar con el titulo siendo el nombre del producto y un _ActionButton_
 
 # Proyecto Inventory - Módulo Inventory 📦
 
+### Cambios🆕
+
+Añadido el ViewModel de crear y listar, navegación interna del módulo inventory y navegación entre los distintos módulos desde un drawer.
+
+---
+
 ### 1. **Clase `Inventario`**
 La clase `Inventory` representa el inventario o inventarios de nuestra aplicación.
 
@@ -97,9 +103,7 @@ Desde esta vista, los usuarios podrán editar los inventarios ya existentes de n
 
 En esta vista, los usuarios podrán ver las propiedades del inventario. Con unos campos de solo lectura.
 
-### Cambios🆕
 
-Añadido el ViewModel de crear y listar, navegación interna del módulo inventory y navegación entre los distintos módulos desde un drawer.
 
 ---
 
