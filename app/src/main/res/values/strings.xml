@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App Facturación</string>
+    <string name="app_name">App Inventario</string>
 
     <string name="menu_invoices">Facturas</string>
     <string name="menu_estimates">Estimaciones</string>
