@@ -1,4 +1,35 @@
 # PROYECTO INVENTORY
+
+# Versions
+
+* [Version 0.2.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-020)
+  * [Navegacion entre pantallas](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#1navegacion-entre-pantallas)
+  * [Implementación de MVVM en creates y list](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#2implementaci%C3%B3n-de-mvvm-en-creates-y-list)
+  * [Implementación de repositorios](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#3implementaci%C3%B3n-de-repositorios)
+* [Version 0.1.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-010)
+  * [Proyecto Inventory - Módulo Category 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-category-)
+  * [Proyecto Inventory - Módulo Product 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-product-)
+  * [Proyecto Inventory - Módulo Inventory 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-inventory-)
+  * [Bases](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#bases)
+
+---
+---
+# Version 0.2.0
+## 1.`Navegacion` entre pantallas
+
+Se a implementado la navegación entre pantallas con un `drawer` que aparece al tocar el icono de usuario para las pantallas principales (Inventory, Product, Category) y en cada modulo una navegación (del list al create).
+
+---
+## 2.Implementación de `MVVM` en `creates` y `list`
+Se ha cambiado las variables que tenian remember y se a creado los `view models` para cada vista con su `state` correspondiente.
+
+---
+## 3.Implementación de `repositorios`
+Se ha implementado los repositorios en cada modulo para poder crear y ver las listas de los productos, listas...
+
+---
+---
+# Version 0.1.0
 # Proyecto Inventory - Módulo Category 📦
 
 La siguiente información corresponde al apartado **Categoría** de la aplicación. Se implementaron las interfaces de creación y edición, lista y consulta de detalles de las mismas.
@@ -18,7 +49,7 @@ Esta vista muestra todas las categorías existentes en una lista con desplazamie
 ---
 
 ### 3. **Vista: Crear Categoría (`CategoryCreate`)**
-Esta vista permite a los usuarios añadir nuevas categorías al inventario mediante un formulario con campos obligatorios, un menú desplegable , un checkbox, una fecha de creación y un botón Guardar.
+Esta vista permite a los usuarios añadir nuevas categorías al inventario mediante un formulario con campos obligatorios, un menú desplegable, un checkbox, una fecha de creación y un botón Guardar.
 
 ---
 
