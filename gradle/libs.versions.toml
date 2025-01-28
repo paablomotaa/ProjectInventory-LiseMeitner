@@ -18,6 +18,11 @@ runtimeAndroid = "1.7.5"
 lottieVersion = "6.0.0"
 navigationCommonKtx = "2.8.5"
 navigationRuntimeKtxVersion = "2.8.5"
+coreKtx = "1.15.0"
+junit = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.6.1"
+material = "1.10.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -35,6 +40,7 @@ app-android-library-compose = { id = "app.android.library.compose", version = "u
 app-android-hilt = { id = "app.android.hilt", version = "unspecified" }
 app-android-feature = { id = "app.android.feature", version = "unspecified" }
 app-jvm-library = { id = "app.jvm.library", version = "unspecified" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [libraries]
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTestCore" }
@@ -77,3 +83,8 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 androidx-navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigationCommonKtx" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }

@@ -45,6 +45,34 @@ fun BaseStructureCompletePadding(
 }
 
 @Composable
+fun BaseStructureCompletePaddingNoCenter(
+    modifier: Modifier,
+    separations: Dp,
+    scrolleable: Boolean = false,
+    content: @Composable () -> Unit
+) {
+    val scrollState = rememberScrollState()
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(
+                Separations.Medium,
+            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(separations)
+                .then(if (scrolleable) Modifier.verticalScroll(state = scrollState) else Modifier),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            content()
+        }
+    }
+}
+
+@Composable
 fun BaseStructureCompletePaddingUpSide(
     modifier: Modifier,
     separations: Dp,

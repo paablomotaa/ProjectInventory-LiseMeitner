@@ -19,4 +19,5 @@
     <string name="createProduct">Create product</string>
     <string name="editProduct">Edit product</string>
     <string name="shortName">Short name</string>
+    <string name="descriptionDelete">Remove the product</string>
 </resources>

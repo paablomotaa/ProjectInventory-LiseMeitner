@@ -2,15 +2,28 @@
 
 # Versions
 
-* [Version 0.2.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-020)
-  * [Navegacion entre pantallas](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#1navegacion-entre-pantallas)
-  * [Implementación de MVVM en creates y list](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#2implementaci%C3%B3n-de-mvvm-en-creates-y-list)
-  * [Implementación de repositorios](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#3implementaci%C3%B3n-de-repositorios)
-* [Version 0.1.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-010)
+* [Version 0.2.1](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.2.1)
+  * [Implementación del icono de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#navegacion-entre-pantallas)
+* [Version 0.2.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.2.0)
+  * [Navegacion entre pantallas](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#navegacion-entre-pantallas)
+  * [Implementación de MVVM en creates y list](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#implementacion-de-mvvm-en-create-y-list)
+  * [Implementación de repositorios](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#implementación-de-repositorios)
+* [Version 0.1.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.1.0)
   * [Proyecto Inventory - Módulo Category 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-category-)
   * [Proyecto Inventory - Módulo Product 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-product-)
   * [Proyecto Inventory - Módulo Inventory 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-inventory-)
   * [Bases](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#bases)
+
+---
+---
+# Version 0.2.1
+## 1.Implementación del `icono` de la aplicación
+
+![Imagen completa](resources/FullImage.jpg)
+![Imagen desde cerca](resources/CloseLookImage.jpg)
+![Icono](resources/Icono.ppg)
+Creditos a [FJVidalG](https://github.com/FJVidalG) y [Azureart](https://www.instagram.com/__azureart__?igsh=MWY1NjJ6b3FraW5yaw==)
+
 
 ---
 ---

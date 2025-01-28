@@ -17,6 +17,7 @@ import app.base.ui.components.LoadingUi
 import app.base.ui.components.NoDataScreen
 import app.base.ui.composables.BaseImageSmall
 import app.base.ui.composables.BaseStructureCompletePadding
+import app.base.ui.composables.BaseStructureCompletePaddingNoCenter
 import app.base.ui.composables.CardRow
 import app.base.ui.composables.TopAppBarComplete
 import app.domain.invoicing.product.Product
@@ -72,7 +73,7 @@ fun ProductList(
 
     //TODO:  Cambiar el titulo
 
-    BaseStructureCompletePadding(modifier, Separations.Zero, scrolleable = false) {
+    BaseStructureCompletePaddingNoCenter(modifier, Separations.Zero, scrolleable = false) {
         MessageList(viewModel, listProduct, goView, event)
     }
 }

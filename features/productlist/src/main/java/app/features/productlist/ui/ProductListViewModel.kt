@@ -26,6 +26,8 @@ class ProductListViewModel: ViewModel(){
 
     var listTags: List<String> by mutableStateOf(emptyList())
 
+    var idProduct: Long = 0
+
     fun getList(){
         viewModelScope.launch {
             state = ProductListState.Loading
@@ -45,6 +47,7 @@ class ProductListViewModel: ViewModel(){
         listTags = list.map { it.tags.ifEmpty { "Sin Tags" } }.distinct()
     }
 
+
     fun onExpandedChange(expanded: Boolean) {
         viewState = viewState.copy(expanded = expanded)
     }
@@ -52,9 +55,11 @@ class ProductListViewModel: ViewModel(){
     fun onViewProduct(product: Product, navigateView: () -> Unit){
         viewModelScope.launch {
             val result = ProductRepository.existProduct(product.code)
-            if(result)
-                //TODO("Implementar Navegación a vista producto")
+            idProduct = product.id
+            if(result) {
+                state = ProductListState.Loading
                 navigateView()
+            }
         }
     }
 

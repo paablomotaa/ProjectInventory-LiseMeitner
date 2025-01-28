@@ -73,7 +73,7 @@ fun TopAppBarFloating(title: String,onBack: () -> Unit, funtion: () -> Unit, con
         },
 
         floatingActionButton = {
-            FloatingActionButton(onClick = { TODO() }) {
+            FloatingActionButton(onClick = { funtion() }) {
                 Icon(Icons.Default.Add, contentDescription = "Añadir")
             }
         }
@@ -83,6 +83,51 @@ fun TopAppBarFloating(title: String,onBack: () -> Unit, funtion: () -> Unit, con
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBarFloatingAction(title: String,onBack: () -> Unit, floating: () -> Unit, iconFloating : ImageVector = Icons.Default.Add, action: () ->Unit, iconAction : ImageVector,content: @Composable () -> Unit) {
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    TitleText(title)
+                },
+                navigationIcon = {
+                    IconButton(onClick = {onBack() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Localized description"
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {action()}) {
+                        Icon(
+                            imageVector = iconAction,
+                            contentDescription = "Filtrar"
+                        )
+                    }
+                },
+                )
+        },
+
+        floatingActionButton = {
+            FloatingActionButton(onClick = { floating() }) {
+                Icon(iconFloating, contentDescription = "Añadir")
+            }
+        }
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            content()
+        }
+    }
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -113,7 +158,7 @@ fun TopAppBarOneAction(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { funtion }) {
+                    IconButton(onClick = { funtion() }) {
                         Icon(
                             imageVector = icon,
                             contentDescription = description
