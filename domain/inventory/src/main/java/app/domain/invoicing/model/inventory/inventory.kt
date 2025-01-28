@@ -3,7 +3,7 @@ package app.domain.invoicing.inventory
 import java.util.Date
 
 data class Inventory(
-    val id:Long,
+    val id:Int,
     val code:String,
     val name:String,
     val shortName:String,

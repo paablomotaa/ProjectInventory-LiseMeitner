@@ -43,12 +43,12 @@ fun BaseTextFieldNoError(text: String, value: String, onValueChange: (String) ->
 }
 
 @Composable
-fun BaseTextFieldRead(text: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier) {
+fun BaseTextFieldRead(text: String, value: String, modifier: Modifier = Modifier) {
     TextField(
         modifier = modifier,
         singleLine = true,
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = {},
         label = { Text(text) },
         readOnly = true
     )

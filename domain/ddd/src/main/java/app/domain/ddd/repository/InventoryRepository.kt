@@ -2,7 +2,6 @@ package app.domain.ddd.repository
 
 import app.base.utils.BaseResult
 import app.domain.invoicing.inventory.Inventory
-import app.domain.invoicing.model.inventory.InventoryException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -43,7 +42,7 @@ object InventoryRepository {
         dataSet.remove(inventario)
     }
     suspend fun edit(
-        id:Long,
+        id:Int,
         code:String,
         name:String,
         description:String,
@@ -72,5 +71,8 @@ object InventoryRepository {
     }
     suspend fun existInventory(inventory: Inventory):Boolean{
         return dataSet.any{it.code == inventory.code}
+    }
+    suspend fun findInventory(id: Int?):Inventory?{
+        return dataSet.find { it.id == id }
     }
 }

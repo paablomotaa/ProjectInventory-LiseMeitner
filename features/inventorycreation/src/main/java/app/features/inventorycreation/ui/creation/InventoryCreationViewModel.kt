@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import app.base.utils.BaseResult
 import app.base.utils.isValidShortName
 import app.domain.ddd.repository.InventoryRepository
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 class InventoryCreationViewModel : ViewModel() {
     var state by mutableStateOf(InventoryCreationState())
     private set
-
+    var code = 1
 
     fun onCodeChange(code:String){
         if(code.contains(' '))
@@ -29,8 +28,6 @@ class InventoryCreationViewModel : ViewModel() {
         }
     }
     fun onNameChange(name:String){
-        if (name.contains(' '))
-            return
         if(name == null || name.isEmpty()){
             state = state.copy(name = name, ErrorNameFormat = "ERROR. Campo vacío", isNameError = true)
             return
@@ -40,9 +37,6 @@ class InventoryCreationViewModel : ViewModel() {
         }
     }
     fun onDescriptionChange(description:String){
-        if(description.contains(' ')){
-            return
-        }
         if(description == null || description.isEmpty()){
             state = state.copy(description = description, ErrorDescriptionFormat = "ERROR. Campo vacío", isDescriptionError = true)
         }
@@ -68,7 +62,7 @@ class InventoryCreationViewModel : ViewModel() {
         state = state.copy(type = tipo)
     }
 
-    fun onCreationClick(navController: NavController){
+    fun onCreationClick(onBack:() -> Unit){
         if(isEmptyFields()){
             state = state.copy(isEmpty = "a")
         }
@@ -77,7 +71,10 @@ class InventoryCreationViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            val inventory = Inventory(2,state.code,state.name,state.shortName,state.description,state.type,state.dateActive,state.dateProgress,state.dateHistory)
+
+            code += 1
+            state = state.copy(id = code)
+            val inventory = Inventory(state.id,state.code,state.name,state.shortName,state.description,state.type,state.dateActive,state.dateProgress,state.dateHistory)
 
             if(InventoryRepository.existInventory(inventory)){
                 state = state.copy(isCodeError = true, ErrorCodeFormat = "Inventario duplicado, por favor elige otro codigo")
@@ -89,7 +86,7 @@ class InventoryCreationViewModel : ViewModel() {
                     is BaseResult.Error ->{state = state.copy(isCodeError = state.isCodeError)}
                     is BaseResult.Success ->{
                         state = state.copy(Success = true, code = "",name = "", description = "", shortName = "")
-                        navController.popBackStack()
+                        onBack()
                     }
                 }
             }

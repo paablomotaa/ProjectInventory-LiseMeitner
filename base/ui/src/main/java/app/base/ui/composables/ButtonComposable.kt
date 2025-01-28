@@ -18,7 +18,6 @@ fun NormalButton(text: String, onClick: () -> Unit) {
             contentColor = Color.White,
             containerColor = Color.Black
         ),
-        border = BorderStroke(3.dp, Color.Green)
     ) {
         Text(text = text)
     }

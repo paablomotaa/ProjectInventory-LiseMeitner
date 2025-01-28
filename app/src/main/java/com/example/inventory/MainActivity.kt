@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import app.features.categorycreation.ui.creation.CategoryCreateViewModel
 import app.features.categorylist.ui.CategoryListViewModel
 import app.features.inventorycreation.ui.creation.InventoryCreationViewModel
+import app.features.inventorydetail.ui.InventoryDetailsViewModel
 import app.features.inventorylist.ui.InventoryListViewModel
 import app.features.productcreation.ui.creation.ProductCreationViewModel
 import app.features.productcreation.ui.edition.ProductEditionViewModel
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
 
     val inventoryListViewModel: InventoryListViewModel by viewModels()
     val inventoryCreationViewModel: InventoryCreationViewModel by viewModels()
+    val inventoryDetailsViewModel: InventoryDetailsViewModel by viewModels()
     val productListViewModel: ProductListViewModel by viewModels()
     val productCreationViewModel: ProductCreationViewModel by viewModels()
     val productDetailsViewModel: ProductDetailsViewModel by viewModels()
@@ -56,6 +58,7 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             inventoryListViewModel,
                             inventoryCreationViewModel,
+                            inventoryDetailsViewModel,
                             productListViewModel,
                             productCreationViewModel,
                             productEditionViewModel,

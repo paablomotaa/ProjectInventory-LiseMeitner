@@ -8,6 +8,7 @@ import app.domain.navigation.categoryGraph
 import app.features.categorycreation.ui.creation.CategoryCreateViewModel
 import app.features.categorylist.ui.CategoryListViewModel
 import app.features.inventorycreation.ui.creation.InventoryCreationViewModel
+import app.features.inventorydetail.ui.InventoryDetailsViewModel
 import app.features.inventorylist.ui.InventoryListViewModel
 import app.features.productcreation.ui.creation.ProductCreationViewModel
 import app.features.productcreation.ui.edition.ProductEditionViewModel
@@ -22,6 +23,7 @@ fun HomeScreen(
     navController: NavHostController,
     inventoryListViewModel: InventoryListViewModel,
     inventoryCreationViewModel: InventoryCreationViewModel,
+    inventoryDetailsViewModel: InventoryDetailsViewModel,
 
     productListViewModel: ProductListViewModel,
     productCreationViewModel: ProductCreationViewModel,
@@ -37,6 +39,7 @@ fun HomeScreen(
             navController,
             inventoryListViewModel,
             inventoryCreationViewModel,
+            inventoryDetailsViewModel,
             onOpenDrawer
         )
         productGraph(

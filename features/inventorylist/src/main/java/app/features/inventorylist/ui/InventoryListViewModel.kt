@@ -1,5 +1,6 @@
 package app.features.inventorylist.ui
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,6 +15,8 @@ import kotlinx.coroutines.launch
 class InventoryListViewModel : ViewModel() {
     var state by mutableStateOf<InventoryListState>(InventoryListState.Loading)
     private set
+
+    var inventoryid by mutableStateOf<Int?>(null)
 
     var stateexpanded by mutableStateOf(InventoryDropMenuState())
     private set
@@ -42,9 +45,12 @@ class InventoryListViewModel : ViewModel() {
     fun onExpandedChange(expanded:Boolean){
         stateexpanded = stateexpanded.copy(expanded = expanded)
     }
-    fun onViewInventory(navigateView:()->Unit){
-        navigateView()
+    fun onViewInventory(inventory: Inventory,navigateView:(Inventory)->Unit){
+        inventoryid = inventory.id
+        Log.e("PENE",inventory.toString())
+        navigateView(inventory)
     }
+
     fun onAddInventory(navigateAdd: () -> Unit){
         navigateAdd()
     }

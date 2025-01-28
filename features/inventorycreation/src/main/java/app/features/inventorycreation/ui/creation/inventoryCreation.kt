@@ -30,13 +30,13 @@ data class RegisterEvents(
     val onDescriptionChange: (String) -> Unit = {},
     val onShortNameChange: (String) -> Unit,
     //val onTypeChange:(String)-> Unit
-    val onCreationClick:(NavController) -> Unit,
+    val onCreationClick:(() -> Unit) -> Unit,
     val onExpandedChange:(Boolean) -> Unit,
     val onValueChange:(String) -> Unit,
 )
 
 @Composable
-fun inventoryCreationScreen(modifier:Modifier = Modifier,viewmodel:InventoryCreationViewModel,goBack:() -> Unit,navController: NavController){
+fun inventoryCreationScreen(modifier:Modifier = Modifier,viewmodel:InventoryCreationViewModel,goBack:() -> Unit){
 val eventos = RegisterEvents(
     onCodeChange =viewmodel::onCodeChange,
     onNameChange = viewmodel::onNameChange,
@@ -46,11 +46,11 @@ val eventos = RegisterEvents(
     onExpandedChange = viewmodel::onExpandeChange,
     onValueChange = viewmodel::onValueChange
 )
-    inventoryCreationContent(goBack,modifier,viewmodel.state,eventos,navController)
+    inventoryCreationContent(goBack,modifier,viewmodel.state,eventos)
 }
 
 @Composable
-fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,state:InventoryCreationState,events: RegisterEvents,navController: NavController) {
+fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,state:InventoryCreationState,events: RegisterEvents) {
 
     val items = listOf("Semestral", "Anual", "Bianual")
 
@@ -102,7 +102,7 @@ fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,stat
                     modifier = modifier,
                     option = items,
                 )
-            NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = { events.onCreationClick(navController) })
+            NormalButton(text = stringResource(app.base.ui.R.string.ok_button), onClick = { events.onCreationClick(onBack) })
 
         }
     }
@@ -116,6 +116,5 @@ fun inventoryCreationPreview(){
     inventoryCreationScreen(
         viewmodel = viewmodel,
         goBack = {},
-        navController = navController
     )
 }
