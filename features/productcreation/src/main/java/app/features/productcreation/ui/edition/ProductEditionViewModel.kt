@@ -1,6 +1,5 @@
 package app.features.productcreation.ui.edition
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,14 +10,16 @@ import app.domain.ddd.repository.CategoryRepository
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.product.Product
 import app.domain.invoicing.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-
+import javax.inject.Inject
 
 
 private const val especialExpresion = "*/%!?()[]{}=+-_\":;,.;:|&%#@~*^`\'"
 
-class ProductEditionViewModel: ViewModel() {
+@HiltViewModel
+class ProductEditionViewModel @Inject constructor(private val provideProductRepository: ProductRepository) : ViewModel() {
     var state by mutableStateOf(ProductEditionState())
         private set
 
@@ -33,7 +34,7 @@ class ProductEditionViewModel: ViewModel() {
     fun importProduct(id: Long){
         viewModelScope.launch {
             stateView = ProductEditionStateView.Loading
-            ProductRepository.findProduct(id).collect{ product ->
+            provideProductRepository.findProduct(id).collect{ product ->
                 if(product != null){
                     state = state.copy(
                         id = product.id,
@@ -62,7 +63,7 @@ class ProductEditionViewModel: ViewModel() {
 
     fun getList(){
         viewModelScope.launch {
-            ProductRepository.getStatus().collect{ products ->
+            provideProductRepository.getStatus().collect{ products ->
                 if(products.isNotEmpty())
                     state = state.copy(listStatus = products)
             }

@@ -209,7 +209,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    val viewModel = remember{ProductCreationViewModel()}
-    viewModel.getList()
-    ProductCreationScreen(goBack = {}, viewModel)
+    //val viewModel = remember{ProductCreationViewModel()}
+    //viewModel.getList()
+    //ProductCreationScreen(goBack = {}, viewModel)
 }

@@ -9,9 +9,13 @@ import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
 import app.domain.invoicing.product.Product
 import app.domain.invoicing.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductListViewModel: ViewModel(){
+@HiltViewModel
+class ProductListViewModel
+@Inject constructor(private val provideProductRepository: ProductRepository) : ViewModel(){
     var state by mutableStateOf<ProductListState>(ProductListState.Loading)
         private set
 
@@ -31,10 +35,14 @@ class ProductListViewModel: ViewModel(){
     fun getList(){
         viewModelScope.launch {
             state = ProductListState.Loading
-            ProductRepository.getProduct().collect{ products ->
+            provideProductRepository.getProduct().collect{ products ->
                 if(products.isNotEmpty()){
+
+                    Log.d("ProductList","Entra")
                     _list = products
                     list = _list
+
+                    Log.d("ProductList", list.joinToString(","))
                     state = ProductListState.Success(list)
                 }
                 else
@@ -43,7 +51,6 @@ class ProductListViewModel: ViewModel(){
             }
         }
 
-        Log.d("Lista", list.map { it.tags }. toString())
         listTags = list.map { it.tags.ifEmpty { "Sin Tags" } }.distinct()
     }
 
@@ -54,7 +61,7 @@ class ProductListViewModel: ViewModel(){
 
     fun onViewProduct(product: Product, navigateView: () -> Unit){
         viewModelScope.launch {
-            val result = ProductRepository.existProduct(product.code)
+            val result = provideProductRepository.existProduct(product.code)
             idProduct = product.id
             if(result) {
                 state = ProductListState.Loading

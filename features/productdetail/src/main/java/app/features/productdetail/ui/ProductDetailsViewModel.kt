@@ -6,9 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.domain.invoicing.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductDetailsViewModel: ViewModel() {
+@HiltViewModel
+class ProductDetailsViewModel @Inject constructor(val provideProductRepository: ProductRepository) : ViewModel() {
     var state by mutableStateOf(ProductDetailsState())
         private set
 
@@ -20,7 +23,7 @@ class ProductDetailsViewModel: ViewModel() {
 
     fun importProduct(id: Long) {
         viewModelScope.launch {
-            ProductRepository.findProduct(id).collect{ product ->
+            provideProductRepository.findProduct(id).collect{ product ->
                 if(product != null){
                     state = state.copy(
                         id = product.id,
@@ -52,7 +55,7 @@ class ProductDetailsViewModel: ViewModel() {
     fun onGoEdit(goEdit: () -> Unit) {
         viewModelScope.launch {
             viewState = ProductDetailsStateView.Loading
-            val result = ProductRepository.existProduct(state.code)
+            val result = provideProductRepository.existProduct(state.code)
             idProduct = state.id
             if(result){
                 goEdit()
@@ -66,7 +69,7 @@ class ProductDetailsViewModel: ViewModel() {
     fun removeProduct(goBack: () -> Unit) {
         viewModelScope.launch {
             viewState = ProductDetailsStateView.Loading
-            ProductRepository.deleteProduct(state.id)
+            provideProductRepository.deleteProduct(state.id)
             goBack()
         }
 

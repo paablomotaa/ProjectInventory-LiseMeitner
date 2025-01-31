@@ -111,8 +111,8 @@ fun MessageList(viewModel: ProductListViewModel, product: List<Product>, goView:
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    val viewModel = remember{ProductListViewModel()}
-    viewModel.getList()
-    ProductListScreen({}, {}, {}, viewModel,{})
+    //val viewModel = remember{ProductListViewModel()}
+    //viewModel.getList()
+    //ProductListScreen({}, {}, {}, viewModel,{})
 
 }

@@ -9,12 +9,15 @@ import app.base.utils.Status
 import app.domain.ddd.repository.CategoryRepository
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
 private const val especialExpresion = "*/%!?()[]{}=+-_\":;,.;:|&%#@~*^`\'"
 
-class ProductCreationViewModel() : ViewModel() {
+@HiltViewModel
+class ProductCreationViewModel @Inject constructor(private val provideProductRepository: ProductRepository) : ViewModel() {
     var state by mutableStateOf(ProductCreationState())
         private set
 
@@ -28,7 +31,7 @@ class ProductCreationViewModel() : ViewModel() {
     fun getList(){
         reset()
         viewModelScope.launch {
-            ProductRepository.getStatus().collect{ products ->
+            provideProductRepository.getStatus().collect{ products ->
                 if(products.isNotEmpty())
                     state = state.copy(listStatus = products)
             }
@@ -219,12 +222,12 @@ class ProductCreationViewModel() : ViewModel() {
         }
         state = state.copy(isLoading = true)
         viewModelScope.launch {
-            val responde = ProductRepository.existProduct(state.code)
+            val responde = provideProductRepository.existProduct(state.code)
             if (responde) {
                 state = state.copy(isLoading = false, isExitsError = true)
             }
             else{
-                val product = ProductRepository.createProduct(
+                val product = provideProductRepository.createProduct(
                     id = state.id,
                     code = state.code,
                     name = state.name,
@@ -261,7 +264,7 @@ class ProductCreationViewModel() : ViewModel() {
     }
 
     private fun areFieldEmpty(): Boolean {
-        return state.code.isEmpty() || state.name.isEmpty() || state.shortName.isEmpty() || state.description.isEmpty() || state.category.isEmpty() || state.section.isEmpty() || state.typeProduct.isEmpty()
+        return state.code.isEmpty() || state.name.isEmpty() || state.shortName.isEmpty() || state.description.isEmpty() 
     }
 
     private fun hasValidationErrors(): Boolean {

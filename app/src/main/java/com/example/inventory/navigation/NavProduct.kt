@@ -1,5 +1,6 @@
 package com.example.inventory.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -12,6 +13,7 @@ import app.features.productcreation.ui.creation.ProductCreationViewModel
 import app.features.productcreation.ui.edition.ProductEditionScreen
 import app.features.productcreation.ui.edition.ProductEditionViewModel
 import app.features.productdetail.ui.ProductDetailsScreen
+import app.features.productdetail.ui.ProductDetailsStateView
 import app.features.productdetail.ui.ProductDetailsViewModel
 import app.features.productlist.ui.ProductListScreen
 import app.features.productlist.ui.ProductListViewModel
@@ -26,38 +28,37 @@ object ProductGraph {
 }
 
 fun NavGraphBuilder.productGraph(
-    navController: NavController, productCreationViewModel: ProductCreationViewModel,
-    productListViewModel: ProductListViewModel,
-    productEditViewModel: ProductEditionViewModel,
-    productDetailsViewModel: ProductDetailsViewModel,
+    navController: NavController,
     onOpenDrawer: () -> Unit
 ) {
 
     navigation(startDestination = ProductGraph.productList(), route = ProductGraph.ROUTE) {
-        productCreate(navController, productCreationViewModel)
-        productList(navController, productListViewModel,onOpenDrawer)
-        productView(navController, productDetailsViewModel)
-        productEdit(navController, productEditViewModel)
+        productCreate(navController)
+        productList(navController, onOpenDrawer)
+        productView(navController)
+        productEdit(navController)
     }
 }
 
-private fun NavGraphBuilder.productCreate(navController: NavController, productCreationViewModel: ProductCreationViewModel) {
+private fun NavGraphBuilder.productCreate(navController: NavController) {
     composable(route = ProductGraph.productCreate()) {
+
+        val productCreationViewModel = hiltViewModel<ProductCreationViewModel>()
         productCreationViewModel.reset()
         productCreationViewModel.getList()
         ProductCreationScreen(
             goBack = {navController.popBackStack()},
-            productCreationViewModel
+            viewModel = productCreationViewModel
         )
     }
 }
 
 private fun NavGraphBuilder.productList(
     navController: NavController,
-    productListViewModel: ProductListViewModel,
     onOpenDrawer: () -> Unit
 ) {
     composable(route = ProductGraph.productList()) {
+        val productListViewModel = hiltViewModel<ProductListViewModel>()
         productListViewModel.getList()
         ProductListScreen(
             goBack = {navController.popBackStack()},
@@ -69,11 +70,13 @@ private fun NavGraphBuilder.productList(
     }
 }
 
-private fun NavGraphBuilder.productEdit(navController: NavController, productEditViewModel: ProductEditionViewModel) {
+private fun NavGraphBuilder.productEdit(navController: NavController) {
     composable(
         route = ProductGraph.productEdit(),
         arguments = listOf(navArgument("idProduct") { type = NavType.StringType })) { backStackEntry ->
         val idProduct = backStackEntry.arguments?.getString("idProduct") ?: ""
+
+        val productEditViewModel = hiltViewModel<ProductEditionViewModel>()
         productEditViewModel.importProduct(idProduct.toLong())
         productEditViewModel.getList()
         ProductEditionScreen(
@@ -84,11 +87,12 @@ private fun NavGraphBuilder.productEdit(navController: NavController, productEdi
     }
 }
 
-private fun NavGraphBuilder.productView(navController: NavController, productDetailsViewModel: ProductDetailsViewModel) {
+private fun NavGraphBuilder.productView(navController: NavController) {
     composable(
         route = ProductGraph.productView(),
         arguments = listOf(navArgument("idProduct") { type = NavType.StringType })) { backStackEntry ->
         val idProduct = backStackEntry.arguments?.getString("idProduct") ?: ""
+        val productDetailsViewModel = hiltViewModel<ProductDetailsViewModel>()
         productDetailsViewModel.importProduct(idProduct.toLong())
         ProductDetailsScreen(
             goBack = {navController.popBackStack()},
