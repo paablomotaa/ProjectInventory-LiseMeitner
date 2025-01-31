@@ -21,7 +21,8 @@
 
 ![Imagen completa](resources/FullImage.jpg)
 ![Imagen desde cerca](resources/CloseLookImage.jpg)
-![Icono](resources/Icono.ppg)
+![Icono](resources/Icono.png)
+
 
 Creditos a [FJVidalG](https://github.com/FJVidalG) y [Azureart](https://www.instagram.com/__azureart__?igsh=MWY1NjJ6b3FraW5yaw==)
 
