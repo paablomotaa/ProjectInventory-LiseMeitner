@@ -3,6 +3,7 @@ package com.example.inventory.home
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 import app.domain.navigation.CategoryGraph
@@ -15,6 +16,7 @@ sealed class NavigationDrawerItemSealed (val route: String, val icon: ImageVecto
     data object Inventory: NavigationDrawerItemSealed(InventoryGraph.ROUTE, Icons.Default.AccountBox, R.string.inventory)
     data object Product: NavigationDrawerItemSealed(ProductGraph.ROUTE , Icons.Default.ShoppingCart,R.string.product)
     data object Category: NavigationDrawerItemSealed(CategoryGraph.ROUTE, Icons.Default.Info, R.string.category)
+    data object Settings: NavigationDrawerItemSealed(CategoryGraph.ROUTE, Icons.Default.Settings, R.string.settings)
 
     companion object{
         fun list() = listOf(Inventory,Product,Category)

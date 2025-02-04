@@ -1,11 +1,7 @@
 package app.features.productcreation.ui.edition
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,13 +22,11 @@ import app.base.ui.composables.BaseTextFieldNoError
 import app.base.ui.composables.BaseTextFieldRead
 import app.base.ui.composables.DateField
 import app.base.ui.composables.DialogDate
+import app.base.ui.composables.MediumTitleText
 import app.base.ui.composables.NormalButton
-import app.base.ui.composables.TopAppBarOneAction
 import app.base.ui.composables.TopAppBarTitle
 import app.base.utils.Status
 import app.features.productcreation.R
-import app.features.productcreation.ui.creation.ProductCreationState
-import app.features.productcreation.ui.creation.ProductCreationViewModel
 import java.time.LocalDate
 
 @Composable
@@ -184,6 +178,7 @@ fun ProductEdition(modifier: Modifier = Modifier, accept: () -> Unit, state: Pro
                             state.listStatus
                         )
                     }
+                    MediumTitleText(stringResource(R.string.date))
                     BaseRow(Separations.Small) {
                         DateField(
                             event.onShowDialogAcquisitionDate,

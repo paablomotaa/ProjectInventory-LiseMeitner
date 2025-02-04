@@ -12,9 +12,9 @@
     <string name="category">Categoria</string>
     <string name="section">Sección</string>
     <string name="status">Estado</string>
-    <string name="acquisitionDate">Fecha adquisicion</string>
+    <string name="acquisitionDate">Adquisicion</string>
     <string name="create">Crear</string>
-    <string name="cancellationDate">Fecha baja</string>
+    <string name="cancellationDate">Baja</string>
     <string name="notes">Notas</string>
     <string name="tags" translatable="false">Tags</string>
     <string name="save">Guardar</string>
@@ -22,4 +22,5 @@
     <string name="editProduct">Editar producto</string>
     <string name="shortName">Nombre corto</string>
     <string name="descriptionDelete">Elimina el producto</string>
+    <string name="date">Fecha</string>
 </resources>

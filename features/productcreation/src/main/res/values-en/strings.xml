@@ -11,13 +11,14 @@
     <string name="category">Category</string>
     <string name="section">Section</string>
     <string name="status">Status</string>
-    <string name="acquisitionDate">Acquisition date</string>
+    <string name="acquisitionDate">Acquisition</string>
     <string name="create">Create</string>
-    <string name="cancellationDate">Cancellation date</string>
+    <string name="cancellationDate">Cancellation</string>
     <string name="notes">Notes</string>
     <string name="save">Save</string>
     <string name="createProduct">Create product</string>
     <string name="editProduct">Edit product</string>
     <string name="shortName">Short name</string>
     <string name="descriptionDelete">Remove the product</string>
+    <string name="date">Date</string>
 </resources>

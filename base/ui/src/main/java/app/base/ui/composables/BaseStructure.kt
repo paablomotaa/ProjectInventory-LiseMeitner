@@ -156,9 +156,9 @@ fun BaseStructureCollumnPadding(
 }
 
 @Composable
-fun BaseRow(separetion: Dp, content: @Composable () -> Unit) {
+fun BaseRow(separetion: Dp, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(separetion)
     ) {

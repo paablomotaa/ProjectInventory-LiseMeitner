@@ -264,7 +264,7 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
     }
 
     private fun areFieldEmpty(): Boolean {
-        return state.code.isEmpty() || state.name.isEmpty() || state.shortName.isEmpty() || state.description.isEmpty() 
+        return state.code.isEmpty() || state.name.isEmpty() || state.shortName.isEmpty() || state.description.isEmpty()
     }
 
     private fun hasValidationErrors(): Boolean {
