@@ -6,6 +6,7 @@ import java.util.Date
 data class InventoryCreationState (
 
     //Variables
+    val id:Int=1,
     val code:String = "",
     val name:String = "",
     val shortName:String = "",

@@ -48,7 +48,7 @@ fun BaseTextFieldRead(text: String, value: String, modifier: Modifier = Modifier
         modifier = modifier,
         singleLine = true,
         value = value,
-        onValueChange = { },
+        onValueChange = {},
         label = { Text(text) },
         readOnly = true
     )

@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,13 +30,11 @@ import app.base.ui.composables.TopAppBarNormal
 import app.domain.invoicing.inventory.Inventory
 import app.features.inventorylist.R
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Surface
-import androidx.compose.ui.modifier.modifierLocalMapOf
 import app.base.ui.components.LoadingUi
 import app.base.ui.components.NoDataScreen
 
 data class eventInventoryList(
-    val onViewInventory: (()->Unit) -> Unit,
+    val onViewInventory: (Inventory,(Inventory)->Unit) -> Unit,
     val onExpandeChange: (Boolean) -> Unit,
     val onAddInventory: (() ->Unit) -> Unit,
     val onEditInventory:(Inventory,()->Unit) -> Unit,
@@ -46,7 +43,13 @@ data class eventInventoryList(
 )
 
 @Composable
-fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,onOpenDrawer: () -> Unit,modifier:Modifier = Modifier){
+fun InventoryListScreen(
+    goAdd: () -> Unit,
+    viewModel: InventoryListViewModel,
+    onOpenDrawer: () -> Unit,
+    modifier: Modifier = Modifier,
+    goDetails: (Inventory) -> Unit
+){
     val events = eventInventoryList(
         onViewInventory = viewModel::onViewInventory,
         onAddInventory = viewModel::onAddInventory,
@@ -65,7 +68,8 @@ fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,onOp
                 viewmodel = viewModel,
                 events = events,
                 inventories = (viewModel.state as InventoryListState.Succes).data,
-                onOpenDrawer = onOpenDrawer
+                onOpenDrawer = onOpenDrawer,
+                goDetails = goDetails
             )
         }
         InventoryListState.Loading->{
@@ -75,9 +79,16 @@ fun InventoryListScreen(goAdd: () -> Unit, viewModel:InventoryListViewModel,onOp
 }
 
 @Composable
-fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmodel:InventoryListViewModel,events:eventInventoryList,inventories:List<Inventory>, onOpenDrawer: () -> Unit) {
-
-
+fun InventoryListContent(
+    goAdd:() -> Unit,
+    modifier: Modifier = Modifier,
+    viewmodel:InventoryListViewModel,
+    events:eventInventoryList,
+    inventories:List<Inventory>,
+    onOpenDrawer: () -> Unit,
+    goDetails: (Inventory) -> Unit
+)
+{
     TopAppBarNormal(
         title = stringResource(R.string.Titulo),
         expandedValue = viewmodel.state.expanded,
@@ -100,7 +111,7 @@ fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmode
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
                                     .fillMaxSize(),
                                 shape = RoundedCornerShape(16.dp),
-                                onClick = {}
+                                onClick = { events.onViewInventory(inventario,{goDetails(inventario)}) }
                             ) {
                                 Row {
                                     Image(
@@ -132,6 +143,5 @@ fun InventoryListContent(goAdd:() -> Unit,modifier: Modifier = Modifier,viewmode
 @Preview
 @Composable
 fun InventoryListPreview(){
-    val viewModel = InventoryListViewModel()
-    InventoryListScreen({},viewModel,{})
+
 }
