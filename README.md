@@ -3,7 +3,7 @@
 # Versions
 
 * [Version 0.2.1](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.2.1)
-  * [Implementación del icono de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#1implementaci%C3%B3n-del-icono-de-la-aplicaci%C3%B3n)
+  * [Implementación del icono de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#1implementaci%C3%B3n-del-icono-de-la-aplicaci%C3%B3n)
 * [Version 0.2.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.2.0)
   * [Navegacion entre pantallas](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#navegacion-entre-pantallas)
   * [Implementación de MVVM en creates y list](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#implementacion-de-mvvm-en-create-y-list)
