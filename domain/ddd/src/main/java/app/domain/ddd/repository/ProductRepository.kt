@@ -43,6 +43,12 @@ object ProductRepository {
         )
     }
 
+    suspend fun findProduct(id:Long): Flow<Product?> {
+        delay(500)
+        val product = productsSet.find { it.id == id }
+        return flow { emit(product) }
+    }
+
     suspend fun getProduct(): Flow<List<Product>> {
         delay(1000)
 
@@ -59,8 +65,24 @@ object ProductRepository {
         return productsSet.any {it.code == code }
     }
 
-    suspend fun createProduct(
+    suspend fun editProduct(id: Long, productEdit: Product): Boolean {
+        delay(500)
+        val product = productsSet.find { it.id == id }
 
+        if (product != null) {
+            productsSet.remove(product)
+            productsSet.add(productEdit) // Agregamos el producto actualizado
+            return true
+        }
+        return false
+    }
+
+    suspend fun deleteProduct(id: Long): Boolean {
+        delay(500)
+        return productsSet.removeIf { it.id == id }
+    }
+
+    suspend fun createProduct(
         id: Long,
         code: String,
         name: String,
@@ -125,7 +147,7 @@ object ProductRepository {
         tags: String,
         notes: String
     ): Boolean {
-        delay(2000)
+        delay(1000)
         val index = productsSet.indexOfFirst { it.id == id }
         return if (index != -1) {
             productsSet[index] = Product(
@@ -152,11 +174,6 @@ object ProductRepository {
         }else{
             false
         }
-    }
-
-    suspend fun deleteProduct(product: Product): Boolean {
-        delay(2000)
-        return productsSet.remove(product)
     }
 
 }

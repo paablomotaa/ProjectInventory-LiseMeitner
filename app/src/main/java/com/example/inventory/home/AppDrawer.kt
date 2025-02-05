@@ -16,6 +16,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import app.base.ui.Separations
+import app.base.ui.composables.ProfileDrawer
 import app.base.ui.composables.SmallSpace
 import app.domain.navigation.CategoryGraph
 import com.example.inventory.R
@@ -46,6 +47,7 @@ fun AppDrawer(
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(Separations.Medium)
                     )
+                    ProfileDrawer()
                     NavigationDrawerItemSealed.list().forEach {
                         NavigationDrawerItem(
                             selected = it.route == currentDestination?.route,

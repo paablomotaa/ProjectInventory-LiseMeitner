@@ -33,10 +33,6 @@ class MainActivity : ComponentActivity() {
     val inventoryListViewModel: InventoryListViewModel by viewModels()
     val inventoryCreationViewModel: InventoryCreationViewModel by viewModels()
     val inventoryDetailsViewModel: InventoryDetailsViewModel by viewModels()
-    val productListViewModel: ProductListViewModel by viewModels()
-    val productCreationViewModel: ProductCreationViewModel by viewModels()
-    val productDetailsViewModel: ProductDetailsViewModel by viewModels()
-    val productEditionViewModel: ProductEditionViewModel by viewModels()
     val categoryListViewModel: CategoryListViewModel by viewModels()
     val categoryCreateViewModel: CategoryCreateViewModel by viewModels()
 
@@ -59,10 +55,6 @@ class MainActivity : ComponentActivity() {
                             inventoryListViewModel,
                             inventoryCreationViewModel,
                             inventoryDetailsViewModel,
-                            productListViewModel,
-                            productCreationViewModel,
-                            productEditionViewModel,
-                            productDetailsViewModel,
                             categoryListViewModel,
                             categoryCreateViewModel,
                             onOpenDrawer = { scope.launch { drawerState.open() } }
