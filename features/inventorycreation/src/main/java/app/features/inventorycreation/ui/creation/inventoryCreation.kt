@@ -1,12 +1,9 @@
 package app.features.inventorycreation.ui.creation
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,14 +11,12 @@ import app.base.ui.composables.TopAppBarTitle
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import app.base.ui.composables.BaseDropdownMenu
 import app.base.ui.composables.BaseDropdownMenuAnyTypes
 import app.base.ui.composables.BaseTextField
 import app.base.ui.composables.NormalButton
+import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.features.inventorycreation.R
 
 data class RegisterEvents(
@@ -55,8 +50,7 @@ fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,stat
     val items = listOf("Semestral", "Anual", "Bianual")
 
     TopAppBarTitle(
-        title = stringResource(R.string.Registrar),
-        onBack = onBack
+        navigation = NavigationTopAppBar.BackPage( onBack, stringResource(R.string.Registrar))
     ) {
         Column(
             modifier = Modifier.padding(13.dp),
