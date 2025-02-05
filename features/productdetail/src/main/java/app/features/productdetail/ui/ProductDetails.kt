@@ -1,109 +1,116 @@
 package app.features.productdetail.ui
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import app.base.ui.Separations
+import app.base.ui.components.LoadingUi
 import app.base.ui.composables.BaseImageBig
 import app.base.ui.composables.BaseRow
 import app.base.ui.composables.BaseStructureColumnPaddingUpSide
 import app.base.ui.composables.BaseStructureCompletePadding
 import app.base.ui.composables.BaseTextFieldRead
-import app.base.ui.composables.TopAppBarOneAction
+import app.base.ui.composables.TopAppBarFloatingAction
 import app.features.productdetail.R
 
-@Composable
-fun ProductDetails(modifier: Modifier = Modifier) {
-/*
-    var codigo = rememberSaveable { mutableStateOf("") }
-    var nombre = rememberSaveable { mutableStateOf("") }
-    var descripcion = rememberSaveable { mutableStateOf("") }
-    var numSerie = rememberSaveable { mutableStateOf("") }
-    var codModelo = rememberSaveable { mutableStateOf("") }
-    var numCantidad = rememberSaveable { mutableStateOf("") }
-    var precio = rememberSaveable { mutableStateOf("") }
-    var tipoSelected = rememberSaveable { mutableStateOf("") }
-    var seccionSelected = rememberSaveable { mutableStateOf("") }
-    var estadoSelected = rememberSaveable { mutableStateOf("") }
-    var selectedDate = rememberSaveable { mutableStateOf("") }
-    var notas = rememberSaveable { mutableStateOf("") }
-    var tags = rememberSaveable { mutableStateOf("") }
 
-    TopAppBarOneAction(title = nombre.value, Icons.Default.Edit, stringResource(R.string.edit), funtion = {}) {
+@Composable
+fun ProductDetailsScreen(
+    goBack: () -> Unit,
+    goEdit: () -> Unit,
+    viewModel: ProductDetailsViewModel,
+    modifier: Modifier = Modifier,
+    event: ProductDetailsEvent = ProductDetailsEvent(
+    onGoEdit = viewModel::onGoEdit,
+    onRemove = viewModel::removeProduct
+    ))
+{
+    TopAppBarFloatingAction(title = viewModel.state.shortName.ifEmpty { stringResource(R.string.detailsProduct) }, goBack, {event.onGoEdit(goEdit)}, action = {event.onRemove(goBack)}, iconAction = Icons.Filled.Delete, iconFloating = Icons.Default.Edit) {
+        when{
+            viewModel.viewState is ProductDetailsStateView.Loading -> LoadingUi()
+            else -> ProductDetails(modifier, goBack, goEdit, viewModel.state, ProductDetailsEvent(
+                onGoEdit = viewModel::onGoEdit,
+                onRemove = viewModel::removeProduct
+            ))
+        }
+    }
+}
+
+data class ProductDetailsEvent(
+    val onGoEdit: (() -> Unit) -> Unit = {},
+    val onRemove: (() -> Unit) -> Unit = {}
+)
+
+@Composable
+fun ProductDetails(modifier: Modifier = Modifier, goBack: () -> Unit, goEdit: ()-> Unit, state: ProductDetailsState, event: ProductDetailsEvent) {
+
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {
                     BaseImageBig()
-                    BaseTextFieldRead(stringResource(R.string.code), codigo)
-                    BaseTextFieldRead(stringResource(R.string.name), nombre)
-                    BaseTextFieldRead(stringResource(R.string.description), descripcion)
-                    BaseTextFieldRead(stringResource(R.string.numSerial), numSerie)
-                    BaseTextFieldRead(stringResource(R.string.codModel), codModelo)
+                    BaseTextFieldRead(stringResource(R.string.code), state.code)
+                    BaseTextFieldRead(stringResource(R.string.name), state.name)
+                    BaseTextFieldRead(stringResource(R.string.shortName), state.shortName)
+                    BaseTextFieldRead(stringResource(R.string.description), state.description )
+                    BaseTextFieldRead(stringResource(R.string.numSerial), state.numSerial.toString())
+                    BaseTextFieldRead(stringResource(R.string.codModel), state.codModel)
                     BaseRow(Separations.Small) {
-                        BaseTextFieldRead(
-                            stringResource(R.string.amount),
-                            numCantidad,
-                            Modifier.weight(1f)
-                        )
-                        BaseTextFieldRead(
-                            stringResource(R.string.price),
-                            precio,
-                            Modifier.weight(1f)
-                        )
+                        BaseTextFieldRead(stringResource(R.string.amount), state.amount.toString(), Modifier.weight(1f))
+                        BaseTextFieldRead(stringResource(R.string.price), state.price.toString(), Modifier.weight(1f))
                     }
                     BaseRow(Separations.Small) {
                         BaseTextFieldRead(
                             stringResource(R.string.typeProduct),
-                            tipoSelected,
-                            Modifier.weight(5f)
+                            state.typeProduct,
+                            Modifier.weight(5f),
                         )
                         BaseTextFieldRead(
                             stringResource(R.string.category),
-                            tipoSelected,
-                            Modifier.weight(4f)
+                            state.category,
+                            Modifier.weight(4f),
                         )
                     }
                     BaseRow(Separations.Small) {
                         BaseTextFieldRead(
                             stringResource(R.string.section),
-                            seccionSelected,
-                            Modifier.weight(1f)
+                            state.section,
+                            Modifier.weight(1f),
                         )
                         BaseTextFieldRead(
+
                             stringResource(R.string.status),
-                            estadoSelected,
-                            Modifier.weight(1f)
+                            state.status.toString(),
+                            Modifier.weight(1f),
                         )
                     }
                     BaseRow(Separations.Small) {
                         BaseTextFieldRead(
                             stringResource(R.string.acquisitionDate),
-                            selectedDate,
+                            state.acquisitionDate.toString(),
                             Modifier.weight(1f)
                         )
+
                         BaseTextFieldRead(
                             stringResource(R.string.cancellationDate),
-                            selectedDate,
+                            state.cancellationDate.toString(),
                             Modifier.weight(1f)
                         )
                     }
-                    BaseTextFieldRead(stringResource(R.string.notes), notas)
-                    BaseTextFieldRead(stringResource(R.string.tags), tags)
+                    BaseTextFieldRead(stringResource(R.string.notes), state.notes)
+
+                    BaseTextFieldRead(stringResource(R.string.tags), state.tags)
                 }
             }
-
         }
-    }*/
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    ProductDetails()
+    //ProductDetails()
 }

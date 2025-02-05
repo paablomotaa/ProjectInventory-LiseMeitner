@@ -2,7 +2,6 @@ package app.features.productcreation.ui.creation
 
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +21,7 @@ import app.base.ui.composables.BaseTextFieldInt
 import app.base.ui.composables.BaseTextFieldNoError
 import app.base.ui.composables.DateField
 import app.base.ui.composables.DialogDate
+import app.base.ui.composables.MediumTitleText
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
 import app.base.utils.Status
@@ -173,6 +173,7 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                             state.listStatus
                         )
                     }
+                    MediumTitleText(stringResource(R.string.date))
                     BaseRow(Separations.Small) {
                         DateField(
                             event.onShowDialogAcquisitionDate,
@@ -180,7 +181,8 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                             state.acquisitionDateError,
                             stringResource(R.string.acquisitionDate),
                             state.acquisitionDateFormatError,
-                            Modifier.weight(1f)
+                            Modifier
+                                .weight(1f)
                         )
 
                         DialogDate(state.showDialogAcquisition, event.onShowDialogAcquisitionDate, event.onAcquisitionDateChange)
@@ -190,7 +192,8 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
                             state.cancellationDateError,
                             stringResource(R.string.cancellationDate),
                             state.cancellationDateFormatError,
-                            Modifier.weight(1f)
+                            Modifier
+                                .weight(1f)
                         )
                         DialogDate(state.showDialogCancellation, event.onShowDialogCancellationDate, event.onCancellationDateChange)
                     }
@@ -209,7 +212,8 @@ fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: Pr
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    val viewModel = remember{ProductCreationViewModel()}
+    /*val viewModel = remember{ProductCreationViewModel()}
     viewModel.getList()
     ProductCreationScreen(goBack = {}, viewModel)
+     */
 }

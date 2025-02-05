@@ -23,10 +23,6 @@ fun HomeScreen(
     inventoryListViewModel: InventoryListViewModel,
     inventoryCreationViewModel: InventoryCreationViewModel,
 
-    productListViewModel: ProductListViewModel,
-    productCreationViewModel: ProductCreationViewModel,
-    productEditionViewModel: ProductEditionViewModel,
-    productDetailsViewModel: ProductDetailsViewModel,
 
     categoryListViewModel: CategoryListViewModel,
     categoryCreateViewModel: CategoryCreateViewModel,
@@ -41,10 +37,6 @@ fun HomeScreen(
         )
         productGraph(
             navController,
-            productCreationViewModel,
-            productListViewModel,
-            productEditionViewModel,
-            productDetailsViewModel,
             onOpenDrawer
         )
         categoryGraph(
