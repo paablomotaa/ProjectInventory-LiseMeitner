@@ -24,6 +24,7 @@ import app.base.ui.composables.DialogDate
 import app.base.ui.composables.MediumTitleText
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
+import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.base.utils.Status
 import app.features.productcreation.R
 import java.time.LocalDate
@@ -118,7 +119,7 @@ data class ProductCreationEvent(
 @Composable
 fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: ProductCreationState,event: ProductCreationEvent) {
 
-    TopAppBarTitle(title = stringResource(R.string.createProduct),goBack) {
+    TopAppBarTitle( navigation = NavigationTopAppBar.BackPage({goBack()}, stringResource(R.string.createProduct))) {
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {

@@ -13,6 +13,7 @@ import app.base.ui.components.LoadingUi
 import app.base.ui.components.NoDataScreen
 import app.base.ui.composables.BaseTextFieldRead
 import app.base.ui.composables.TopAppBarTitle
+import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.domain.invoicing.inventory.Inventory
 import app.features.inventorydetail.R
 import kotlin.reflect.KFunction1
@@ -44,8 +45,7 @@ fun InventoryDetails(onBack:() -> Unit, inventoryId: Int?, viewModel:InventoryDe
 @Composable
 fun DetailsScreen(onBack: () -> Unit,inventory: Inventory){
     TopAppBarTitle(
-        title = stringResource(R.string.Detalles),
-        onBack = onBack,
+        navigation = NavigationTopAppBar.BackPage({onBack()}, stringResource(R.string.Detalles)),
         content = {Column(
             modifier = Modifier.padding(13.dp),
             horizontalAlignment = Alignment.CenterHorizontally,

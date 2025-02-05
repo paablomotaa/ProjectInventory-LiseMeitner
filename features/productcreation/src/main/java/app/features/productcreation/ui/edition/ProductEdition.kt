@@ -25,6 +25,7 @@ import app.base.ui.composables.DialogDate
 import app.base.ui.composables.MediumTitleText
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
+import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.base.utils.Status
 import app.features.productcreation.R
 import java.time.LocalDate
@@ -60,8 +61,7 @@ fun ProductEditionScreen(goBack: () -> Unit, accept:() -> Unit, viewModel: Produ
                               onClickEditProduct = viewModel::onClickEditProduct
                           )){
     TopAppBarTitle(
-        title = stringResource(R.string.editProduct),
-        goBack
+        navigation = NavigationTopAppBar.BackPage({goBack()}, stringResource(R.string.editProduct))
     ) {
         when{
             viewModel.stateView is ProductEditionStateView.Loading -> LoadingUi()

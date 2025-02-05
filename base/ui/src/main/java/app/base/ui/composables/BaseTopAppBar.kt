@@ -7,7 +7,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -19,10 +18,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import app.base.ui.composables.topappbar.NavigationTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarTitle(title: String, onBack: () -> Unit, content: @Composable () -> Unit) {
+fun TopAppBarTitle(navigation:NavigationTopAppBar, content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -31,12 +31,12 @@ fun TopAppBarTitle(title: String, onBack: () -> Unit, content: @Composable () ->
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    TitleText(title)
+                    TitleText(navigation.label)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { onBack() }) {
+                    IconButton(onClick = { navigation.func() }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            imageVector = navigation.icon,
                             contentDescription = "Localized description"
                         )
                     }
