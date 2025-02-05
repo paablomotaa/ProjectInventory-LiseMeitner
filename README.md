@@ -2,13 +2,13 @@
 
 # Versions
 
-* [Version 0.2.1](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.2.1)
+* [Version 0.2.1](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#version-021)
   * [Implementación del icono de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#1implementaci%C3%B3n-del-icono-de-la-aplicaci%C3%B3n)
-* [Version 0.2.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.2.0)
-  * [Navegacion entre pantallas](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#navegacion-entre-pantallas)
-  * [Implementación de MVVM en creates y list](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#implementacion-de-mvvm-en-create-y-list)
-  * [Implementación de repositorios](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#implementación-de-repositorios)
-* [Version 0.1.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-0.1.0)
+* [Version 0.2.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-020)
+  * [Navegacion entre pantallas](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#1navegacion-entre-pantallas)
+  * [Implementación de MVVM en creates y list](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#2implementaci%C3%B3n-de-mvvm-en-creates-y-list)
+  * [Implementación de repositorios](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#3implementaci%C3%B3n-de-repositorios)
+* [Version 0.1.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-010)
   * [Proyecto Inventory - Módulo Category 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-category-)
   * [Proyecto Inventory - Módulo Product 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-product-)
   * [Proyecto Inventory - Módulo Inventory 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-inventory-)
