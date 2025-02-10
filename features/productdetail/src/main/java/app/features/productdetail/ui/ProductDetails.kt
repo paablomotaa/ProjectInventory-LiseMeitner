@@ -1,8 +1,10 @@
 package app.features.productdetail.ui
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +18,9 @@ import app.base.ui.composables.BaseStructureColumnPaddingUpSide
 import app.base.ui.composables.BaseStructureCompletePadding
 import app.base.ui.composables.BaseTextFieldRead
 import app.base.ui.composables.TopAppBarFloatingAction
+import app.base.ui.composables.TopAppBarTitle
+import app.base.ui.composables.topappbar.Action
+import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.features.productdetail.R
 
 
@@ -30,7 +35,25 @@ fun ProductDetailsScreen(
     onRemove = viewModel::removeProduct
     ))
 {
-    TopAppBarFloatingAction(title = viewModel.state.shortName.ifEmpty { stringResource(R.string.detailsProduct) }, goBack, {event.onGoEdit(goEdit)}, action = {event.onRemove(goBack)}, iconAction = Icons.Filled.Delete, iconFloating = Icons.Default.Edit) {
+    TopAppBarTitle(
+        navigation = NavigationTopAppBar.BackPage(
+            {goBack()},
+            viewModel.state.shortName.ifEmpty { stringResource(R.string.detailsProduct) },
+            listOf(
+                Action.SimpleAction(
+                    Icons.Filled.Delete,
+                    stringResource(id = R.string.delete),
+                    {event.onRemove(goBack)}
+                )
+            ),
+            Action.ComplexAction(
+                Icons.Default.Edit,
+                stringResource(id = R.string.editProduct),
+                event.onGoEdit,
+                goEdit
+            )
+        )
+    ) {
         when{
             viewModel.viewState is ProductDetailsStateView.Loading -> LoadingUi()
             else -> ProductDetails(modifier, goBack, goEdit, viewModel.state, ProductDetailsEvent(

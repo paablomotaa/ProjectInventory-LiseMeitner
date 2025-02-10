@@ -1,5 +1,8 @@
 package app.features.productcreation.ui.edition
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,6 +28,7 @@ import app.base.ui.composables.DialogDate
 import app.base.ui.composables.MediumTitleText
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
+import app.base.ui.composables.topappbar.Action
 import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.base.utils.Status
 import app.features.productcreation.R

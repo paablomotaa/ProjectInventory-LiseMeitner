@@ -2,13 +2,19 @@ package app.features.productlist.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import app.base.ui.Dimensions
@@ -20,7 +26,12 @@ import app.base.ui.composables.BaseStructureCompletePadding
 import app.base.ui.composables.BaseStructureCompletePaddingNoCenter
 import app.base.ui.composables.CardRow
 import app.base.ui.composables.TopAppBarComplete
+import app.base.ui.composables.TopAppBarTitle
+import app.base.ui.composables.topappbar.Action
+import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.domain.invoicing.product.Product
+import app.features.productlist.R
+import com.example.login.base.icon_composable.filter
 
 @Composable
 fun ProductListScreen(
@@ -39,7 +50,32 @@ fun ProductListScreen(
     //TODO("Cambiar el titulo por el nombre del inventario)
     var nameInventory = rememberSaveable { mutableStateOf("Producto") }
 
-    TopAppBarComplete(title = nameInventory.value, viewModel.viewState.expanded, event.onExpandadChange, viewModel.listTags, goBack, event.onFilterProduct, event.onAddProduct, goAdd, onOpenDrawer) {
+    TopAppBarTitle(
+        navigation = NavigationTopAppBar.OptDrawer(
+            {onOpenDrawer()},
+            nameInventory.value,
+            listOf(
+                Action.SimpleAction(
+                    filter(),
+                    stringResource(id = R.string.filter),
+                    {event.onExpandadChange(true)}
+                ),
+                Action.DropDown(
+                    viewModel.viewState.expanded,
+                    event.onExpandadChange,
+                    viewModel.listTags,
+                    event.onFilterProduct)
+            ),
+            Action.ComplexAction(
+                Icons.Default.Add,
+                stringResource(id = R.string.add),
+                event.onAddProduct,
+                goAdd
+            )
+        )
+    )
+    {
+
         when(viewModel.state){
             is ProductListState.NoData ->{NoDataScreen(modifier)}
             is ProductListState.Loading ->{
@@ -49,6 +85,7 @@ fun ProductListScreen(
                 ProductList(goView, viewModel.list, viewModel, modifier, event)
             }
         }
+
     }
 }
 
