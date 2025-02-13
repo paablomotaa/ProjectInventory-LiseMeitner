@@ -20,11 +20,12 @@ import app.features.productlist.ui.ProductListViewModel
 
 object ProductGraph {
     const val ROUTE = "account_graph"
+    const val IDPRODUCT = "idProduct"
 
     fun productCreate() = "$ROUTE/productCreate"
     fun productList() = "$ROUTE/productList"
-    fun productView() = "$ROUTE/productView/{idProduct}"
-    fun productEdit() = "$ROUTE/productEdit/{idProduct}"
+    fun productView() = "$ROUTE/productView/$IDPRODUCT={idProduct}"
+    fun productEdit() = "$ROUTE/productEdit/$IDPRODUCT={idProduct}"
 }
 
 fun NavGraphBuilder.productGraph(
@@ -59,7 +60,6 @@ private fun NavGraphBuilder.productList(
 ) {
     composable(route = ProductGraph.productList()) {
         val productListViewModel = hiltViewModel<ProductListViewModel>()
-        productListViewModel.getList()
         ProductListScreen(
             goBack = {navController.popBackStack()},
             goAdd = {navController.navigate(ProductGraph.productCreate())},
@@ -73,12 +73,17 @@ private fun NavGraphBuilder.productList(
 private fun NavGraphBuilder.productEdit(navController: NavController) {
     composable(
         route = ProductGraph.productEdit(),
-        arguments = listOf(navArgument("idProduct") { type = NavType.StringType })) { backStackEntry ->
-        val idProduct = backStackEntry.arguments?.getString("idProduct") ?: ""
+        arguments = listOf(
+            navArgument(ProductGraph.IDPRODUCT) {
+            type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        val idProduct = backStackEntry.arguments?.getString(ProductGraph.IDPRODUCT)?: ""
 
         val productEditViewModel = hiltViewModel<ProductEditionViewModel>()
+        productEditViewModel.idProduct = idProduct.toLong()
         productEditViewModel.importProduct(idProduct.toLong())
-        productEditViewModel.getList()
         ProductEditionScreen(
             goBack = {navController.popBackStack()},
             accept = {navController.navigate(ProductGraph.productList())},
@@ -90,10 +95,15 @@ private fun NavGraphBuilder.productEdit(navController: NavController) {
 private fun NavGraphBuilder.productView(navController: NavController) {
     composable(
         route = ProductGraph.productView(),
-        arguments = listOf(navArgument("idProduct") { type = NavType.StringType })) { backStackEntry ->
-        val idProduct = backStackEntry.arguments?.getString("idProduct") ?: ""
+        arguments = listOf(
+            navArgument(ProductGraph.IDPRODUCT) {
+            type = NavType.StringType
+        }
+        )
+    ) { backStackEntry ->
+        val idProduct = backStackEntry.arguments?.getString(ProductGraph.IDPRODUCT)?: ""
         val productDetailsViewModel = hiltViewModel<ProductDetailsViewModel>()
-        productDetailsViewModel.importProduct(idProduct.toLong())
+        productDetailsViewModel.idProduct = idProduct.toLong()
         ProductDetailsScreen(
             goBack = {navController.popBackStack()},
             goEdit = {navController.navigate(ProductGraph.productEdit().replace("{idProduct}", productDetailsViewModel.idProduct.toString()))},

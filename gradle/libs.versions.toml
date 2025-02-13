@@ -23,6 +23,8 @@ junit = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.6.1"
 material = "1.10.0"
+datastoreCoreAndroid = "1.1.2"
+datastorePreferencesCoreJvm = "1.1.2"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -88,3 +90,5 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
+androidx-datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferencesCoreJvm" }

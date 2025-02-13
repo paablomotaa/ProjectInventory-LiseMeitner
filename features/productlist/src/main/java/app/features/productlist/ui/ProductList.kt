@@ -4,14 +4,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,10 +19,9 @@ import app.base.ui.Separations
 import app.base.ui.components.LoadingUi
 import app.base.ui.components.NoDataScreen
 import app.base.ui.composables.BaseImageSmall
-import app.base.ui.composables.BaseStructureCompletePadding
 import app.base.ui.composables.BaseStructureCompletePaddingNoCenter
 import app.base.ui.composables.CardRow
-import app.base.ui.composables.TopAppBarComplete
+import app.base.ui.composables.DeleteObjectDialog
 import app.base.ui.composables.TopAppBarTitle
 import app.base.ui.composables.topappbar.Action
 import app.base.ui.composables.topappbar.NavigationTopAppBar
@@ -44,11 +40,15 @@ fun ProductListScreen(
             onViewProduct = viewModel::onViewProduct,
             onAddProduct = viewModel::onAddProduct,
             onFilterProduct = viewModel::onFilterProduct,
-            onAccountView = viewModel::onAccountView,
-            onExpandadChange = viewModel::onExpandedChange
+            onExpandadChange = viewModel::onExpandedChange,
+            onDelete = viewModel::onDeleteProduct
         )){
     //TODO("Cambiar el titulo por el nombre del inventario)
     var nameInventory = rememberSaveable { mutableStateOf("Producto") }
+
+    LaunchedEffect(Unit){
+        viewModel.getList()
+    }
 
     TopAppBarTitle(
         navigation = NavigationTopAppBar.OptDrawer(
@@ -95,8 +95,8 @@ data class EventProductList(
     val onAddProduct: (() -> Unit) -> Unit = {},
     val onFilterProduct: (String) -> Unit = {},
     val onBackProduct: (()-> Unit) -> Unit = {},
-    val onAccountView: () -> Unit = {},
-    val onExpandadChange: (Boolean) -> Unit = {}
+    val onExpandadChange: (Boolean) -> Unit = {},
+    val onDelete: (Product) -> Unit = {}
 )
 
 @Composable
@@ -116,8 +116,8 @@ fun ProductList(
 }
 
 @Composable
-fun ProductItem(product: Product, goView: () -> Unit, event: EventProductList) {
-    CardRow(onClick = {event.onViewProduct(product, goView)}) {
+fun ProductItem(product: Product, goView: () -> Unit, goDelete: (Product)-> Unit, event: EventProductList) {
+    CardRow(onClick = {event.onViewProduct(product, goView)}, onLongClick = {goDelete(product)}) {
         BaseImageSmall()
         Text(
             text = product.name,
@@ -137,10 +137,26 @@ fun MessageList(viewModel: ProductListViewModel, product: List<Product>, goView:
     LazyColumn {
         product.forEach { product ->
             item {
-                ProductItem(product, goView, event)
+                ProductItem(
+                    product,
+                    goView,
+                    goDelete = { selectedproduct ->
+                        viewModel.productDelete = selectedproduct
+                    },
+                    event)
             }
         }
-
+    }
+    if(viewModel.productDelete != null){
+        DeleteObjectDialog(
+            obj = viewModel.productDelete!!,
+            onConfirm = {
+                event.onDelete(viewModel.productDelete!!)
+                viewModel.productDelete = null //Aqui ya se ha eliminado
+            },
+            onDismiss = {viewModel.productDelete = null }, //Anulo la operación onLongClick
+            name = stringResource(id = R.string.product)
+        )
     }
 }
 

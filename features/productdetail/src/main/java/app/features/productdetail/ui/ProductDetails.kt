@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,9 @@ fun ProductDetailsScreen(
     onRemove = viewModel::removeProduct
     ))
 {
+    LaunchedEffect(Unit){
+        viewModel.importProduct(viewModel.idProduct)
+    }
     TopAppBarTitle(
         navigation = NavigationTopAppBar.BackPage(
             {goBack()},

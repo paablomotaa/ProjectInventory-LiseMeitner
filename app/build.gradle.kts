@@ -68,6 +68,8 @@ dependencies {
     // UI
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigationcompose)
+    implementation(libs.androidx.datastore.core.android)
+    implementation(libs.androidx.datastore.preferences.core.jvm)
 
     // Testing Unitario
     testImplementation(libs.junit)
