@@ -26,7 +26,7 @@ fun NoDataScreenPreview(){
 @Composable
 fun NoDataScreen(modifier: Modifier){
 
-    /*val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_preloader))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_nodata))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = LottieConstants.IterateForever,
@@ -43,5 +43,5 @@ fun NoDataScreen(modifier: Modifier){
                 progress = { progress },
             )
         }
-    }*/
+    }
 }

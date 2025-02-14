@@ -29,8 +29,10 @@ class ProductListViewModel
         private set
 
     var listTags: List<String> by mutableStateOf(emptyList())
+        private set
 
     var idProduct: Long = 0
+    var productDelete by mutableStateOf<Product?>(null)
 
     fun getList(){
         viewModelScope.launch {
@@ -61,11 +63,14 @@ class ProductListViewModel
 
     fun onViewProduct(product: Product, navigateView: () -> Unit){
         viewModelScope.launch {
+            state = ProductListState.Loading
             val result = provideProductRepository.existProduct(product.code)
             idProduct = product.id
             if(result) {
-                state = ProductListState.Loading
                 navigateView()
+            }
+            else{
+                getList()
             }
         }
     }
@@ -91,8 +96,11 @@ class ProductListViewModel
         }
     }
 
-    fun onAccountView(){
-        //TODO("Implementar Navegación a la vista de cuenta cuando este")
-
+    fun onDeleteProduct(product: Product){
+        viewModelScope.launch {
+            state = ProductListState.Loading
+            provideProductRepository.deleteProduct(product.id)
+            getList()
+        }
     }
 }

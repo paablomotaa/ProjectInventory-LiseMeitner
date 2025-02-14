@@ -39,6 +39,7 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
                 if(categories.isNotEmpty())
                     state = state.copy(listCategoria = categories)
             }
+            state = state.copy(isLoading = false)
         }
     }
 

@@ -1,5 +1,7 @@
 package app.base.ui.composables
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import app.base.ui.Separations
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CardRow(
     onClick: () -> Unit,
+    onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -21,7 +25,11 @@ fun CardRow(
         modifier = modifier
             .padding(Separations.Small)
             .height(Separations.SuperLarge)
-            .fillMaxWidth(), onClick = onClick
+            .fillMaxWidth()
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick,
+            )
     ) {
 
         Row(

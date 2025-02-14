@@ -2,6 +2,7 @@ package app.features.productcreation.ui.edition
 
 import app.base.utils.Status
 import app.domain.invoicing.category.Category
+import app.domain.invoicing.section.Section
 import java.time.LocalDate
 
 data class ProductEditionState(
@@ -33,7 +34,7 @@ data class ProductEditionState(
 
     val listTipoProducto: List<String> = emptyList(),
     val listCategoria: List<Category> = emptyList(),
-    val listSeccion: List<String> = emptyList(),
+    val listSeccion: List<Section> = emptyList(),
     val listStatus: List<Status> = emptyList(),
 
     //region Errors

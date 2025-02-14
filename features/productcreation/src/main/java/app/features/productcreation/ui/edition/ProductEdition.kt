@@ -1,7 +1,11 @@
 package app.features.productcreation.ui.edition
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +29,7 @@ import app.base.ui.composables.DialogDate
 import app.base.ui.composables.MediumTitleText
 import app.base.ui.composables.NormalButton
 import app.base.ui.composables.TopAppBarTitle
+import app.base.ui.composables.topappbar.Action
 import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.base.utils.Status
 import app.features.productcreation.R
@@ -60,6 +65,10 @@ fun ProductEditionScreen(goBack: () -> Unit, accept:() -> Unit, viewModel: Produ
                               onDismissDialog = viewModel::onDismissDialog,
                               onClickEditProduct = viewModel::onClickEditProduct
                           )){
+    LaunchedEffect(Unit){
+        viewModel.importProduct(viewModel.idProduct)
+        viewModel.getList()
+    }
     TopAppBarTitle(
         navigation = NavigationTopAppBar.BackPage({goBack()}, stringResource(R.string.editProduct))
     ) {
@@ -159,7 +168,7 @@ fun ProductEdition(modifier: Modifier = Modifier, accept: () -> Unit, state: Pro
                         )
                     }
                     BaseRow(Separations.Small) {
-                        BaseDropdownMenu(
+                        BaseDropdownMenuAnyTypesList(
                             state.expandedSeccionState,
                             event.onExpandedSeccionState,
                             state.section,

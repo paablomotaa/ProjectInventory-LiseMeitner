@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="add">Añadir</string>
+    <string name="filter">Filtrar</string>
+    <string name="product">Producto</string>
 </resources>

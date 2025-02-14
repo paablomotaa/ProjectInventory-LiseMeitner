@@ -90,6 +90,6 @@ data class ProductCreationState(
     val isExitsError:Boolean = false,
     val isEmpty:Boolean = false,
     val isOffline: Boolean = false,
-    var isLoading: Boolean = false,
+    var isLoading: Boolean = true,
     var success: Boolean = false
 )

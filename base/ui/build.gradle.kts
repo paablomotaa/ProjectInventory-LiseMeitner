@@ -13,4 +13,5 @@ dependencies {
     implementation(projects.domain.ddd)
     implementation(libs.kotlinx.datetime)
     implementation(libs.android.lottie)
+    implementation(libs.androidx.appcompat)
 }

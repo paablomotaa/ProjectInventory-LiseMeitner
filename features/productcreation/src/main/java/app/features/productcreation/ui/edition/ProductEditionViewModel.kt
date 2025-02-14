@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
 import app.domain.ddd.repository.CategoryRepository
+import app.domain.ddd.repository.SectionRepository
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.product.Product
 import app.domain.invoicing.repository.ProductRepository
@@ -25,11 +26,7 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
 
     var stateView by mutableStateOf<ProductEditionStateView>(ProductEditionStateView.Loading)
 
-    var listCategory: List<Category> = emptyList()
-        private set
-
-    var listSection: List<String> = emptyList()
-        private set
+    var idProduct: Long = 0
 
     fun importProduct(id: Long){
         viewModelScope.launch {
@@ -70,6 +67,10 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
             CategoryRepository.getAllCategories().collect{ categories ->
                 if(categories.isNotEmpty())
                     state = state.copy(listCategoria = categories)
+            }
+            SectionRepository.getSections().collect{ sections ->
+                if(sections.isNotEmpty())
+                    state = state.copy(listSeccion = sections)
             }
             stateView = ProductEditionStateView.Success
         }
