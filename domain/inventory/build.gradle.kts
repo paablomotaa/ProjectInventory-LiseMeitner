@@ -8,5 +8,7 @@ dependencies {
     implementation(project(":base:utils"))
     implementation(project(":base:utils"))
     implementation(project(":base:utils"))
+    testImplementation(libs.jupiter.junit.jupiter)
+    testImplementation(libs.junit)
 
 }

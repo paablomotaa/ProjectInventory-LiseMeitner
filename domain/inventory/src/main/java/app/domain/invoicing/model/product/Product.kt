@@ -41,6 +41,4 @@ data class Product(
     override fun toString(): String {
         return name
     }
-
-
 }
