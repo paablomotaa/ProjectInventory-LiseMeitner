@@ -99,8 +99,8 @@ object ProductRepository {
         image: String,
         acquisitionDate: LocalDate,
         cancellationDate: LocalDate,
+        notes: String,
         tags: String,
-        notes: String
     ): Boolean {
         delay(2000)
         return productsSet.add(
@@ -121,8 +121,8 @@ object ProductRepository {
                 image,
                 acquisitionDate,
                 cancellationDate,
+                notes,
                 tags,
-                notes
             )
         )
     }

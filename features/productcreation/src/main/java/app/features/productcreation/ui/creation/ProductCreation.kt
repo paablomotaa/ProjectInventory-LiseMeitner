@@ -119,7 +119,7 @@ data class ProductCreationEvent(
 @Composable
 fun ProductCreation(modifier: Modifier = Modifier, goBack: () -> Unit, state: ProductCreationState,event: ProductCreationEvent) {
 
-    TopAppBarTitle( navigation = NavigationTopAppBar.BackPage({goBack()}, stringResource(R.string.createProduct))) {
+    TopAppBarTitle<Nothing>( navigation = NavigationTopAppBar.BackPage({goBack()}, stringResource(R.string.createProduct))) {
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {

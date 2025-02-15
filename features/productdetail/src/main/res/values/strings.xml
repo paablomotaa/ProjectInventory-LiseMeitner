@@ -7,7 +7,7 @@
     <string name="codModel">Código del modelo</string>
     <string name="amount">Cantidad</string>
     <string name="price">Precio</string>
-    <string name="typeProduct">Tipo producto</string>
+    <string name="typeProduct">Tipo prod.</string>
     <string name="category">Categoria</string>
     <string name="section">Sección</string>
     <string name="status">Estado</string>

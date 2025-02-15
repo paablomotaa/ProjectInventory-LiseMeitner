@@ -114,4 +114,170 @@ class ProductTest {
 
         assertEquals("Laptop", product.toString())
     }
+
+    @Test
+    fun `equals debe devolver true cuando se compara con el mismo objeto`() {
+        val product = Product(
+            id = 1L,
+            code = "P123",
+            name = "Laptop",
+            shortName = "LT",
+            description = "High-end laptop",
+            numSerial = 123456789.0,
+            codModel = "LT123",
+            typeProduct = "Electronics",
+            category = "Computers",
+            section = "IT",
+            status = Status.NEW,
+            amount = 10,
+            price = 1500.0,
+            image = "image_url",
+            acquisitionDate = LocalDate.of(2023, 1, 1),
+            cancellationDate = LocalDate.of(2025, 1, 1),
+            notes = "Some notes",
+            tags = "Tech"
+        )
+        assertTrue(product.equals(product))
+    }
+
+    @Test
+    fun `equals debe devolver true cuando los ids son iguales`() {
+        val product1 = Product(
+            id = 1L,
+            code = "P123",
+            name = "Laptop",
+            shortName = "LT",
+            description = "High-end laptop",
+            numSerial = 123456789.0,
+            codModel = "LT123",
+            typeProduct = "Electronics",
+            category = "Computers",
+            section = "IT",
+            status = Status.NEW,
+            amount = 10,
+            price = 1500.0,
+            image = "image_url",
+            acquisitionDate = LocalDate.of(2023, 1, 1),
+            cancellationDate = LocalDate.of(2025, 1, 1),
+            notes = "Some notes",
+            tags = "Tech"
+        )
+        val product2 = Product(
+            id = 1L,
+            code = "P123",
+            name = "Laptop",
+            shortName = "LT",
+            description = "High-end laptop",
+            numSerial = 123456789.0,
+            codModel = "LT123",
+            typeProduct = "Electronics",
+            category = "Computers",
+            section = "IT",
+            status = Status.NEW,
+            amount = 10,
+            price = 1500.0,
+            image = "image_url",
+            acquisitionDate = LocalDate.of(2023, 1, 1),
+            cancellationDate = LocalDate.of(2025, 1, 1),
+            notes = "Some notes",
+            tags = "Tech"
+        )
+        assertTrue(product1.equals(product2))
+    }
+
+    @Test
+    fun `equals debe devolver false cuando los ids son diferentes`() {
+        val product1 = Product(
+            id = 1L,
+            code = "P123",
+            name = "Laptop",
+            shortName = "LT",
+            description = "High-end laptop",
+            numSerial = 123456789.0,
+            codModel = "LT123",
+            typeProduct = "Electronics",
+            category = "Computers",
+            section = "IT",
+            status = Status.NEW,
+            amount = 10,
+            price = 1500.0,
+            image = "image_url",
+            acquisitionDate = LocalDate.of(2023, 1, 1),
+            cancellationDate = LocalDate.of(2025, 1, 1),
+            notes = "Some notes",
+            tags = "Tech"
+        )
+        val product2 = Product(
+            id = 2,
+            code = "P123",
+            name = "Laptop",
+            shortName = "LT",
+            description = "High-end laptop",
+            numSerial = 123456789.0,
+            codModel = "LT123",
+            typeProduct = "Electronics",
+            category = "Computers",
+            section = "IT",
+            status = Status.NEW,
+            amount = 10,
+            price = 1500.0,
+            image = "image_url",
+            acquisitionDate = LocalDate.of(2023, 1, 1),
+            cancellationDate = LocalDate.of(2025, 1, 1),
+            notes = "Some notes",
+            tags = "Tech"
+        )
+        assertFalse(product1.equals(product2))
+    }
+
+    @Test
+    fun `equals debe devolver false cuando se compara con null`() {
+        val product = Product(
+            id = 1L,
+            code = "P123",
+            name = "Laptop",
+            shortName = "LT",
+            description = "High-end laptop",
+            numSerial = 123456789.0,
+            codModel = "LT123",
+            typeProduct = "Electronics",
+            category = "Computers",
+            section = "IT",
+            status = Status.NEW,
+            amount = 10,
+            price = 1500.0,
+            image = "image_url",
+            acquisitionDate = LocalDate.of(2023, 1, 1),
+            cancellationDate = LocalDate.of(2025, 1, 1),
+            notes = "Some notes",
+            tags = "Tech"
+        )
+        assertFalse(product.equals(null))
+    }
+
+    @Test
+    fun `equals debe devolver false cuando se compara con otro tipo de objeto`() {
+        val product = Product(
+            id = 1L,
+            code = "P123",
+            name = "Laptop",
+            shortName = "LT",
+            description = "High-end laptop",
+            numSerial = 123456789.0,
+            codModel = "LT123",
+            typeProduct = "Electronics",
+            category = "Computers",
+            section = "IT",
+            status = Status.NEW,
+            amount = 10,
+            price = 1500.0,
+            image = "image_url",
+            acquisitionDate = LocalDate.of(2023, 1, 1),
+            cancellationDate = LocalDate.of(2025, 1, 1),
+            notes = "Some notes",
+            tags = "Tech"
+        )
+        val notAProduct = "No soy un producto"
+        assertFalse(product.equals(notAProduct))
+    }
 }

@@ -245,8 +245,8 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
                     image = state.image,
                     acquisitionDate = state.acquisitionDate,
                     cancellationDate = state.cancellationDate,
-                    tags = state.tags,
-                    notes = state.notes
+                    notes = state.notes,
+                    tags = state.tags
                 )
                 if (product) {
                     state = state.copy(success = true)
