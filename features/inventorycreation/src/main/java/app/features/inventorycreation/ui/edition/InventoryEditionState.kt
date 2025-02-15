@@ -1,12 +1,10 @@
-package app.features.inventorycreation.ui.creation
+package app.features.inventorycreation.ui.edition
 
 import java.time.LocalDate
 import java.util.Date
 
-data class InventoryCreationState (
-
-    //Variables
-    val id:Int=0,
+data class InventoryEditionState (
+    val id: Int = 0,
     val code:String = "",
     val name:String = "",
     val shortName:String = "",
@@ -15,7 +13,6 @@ data class InventoryCreationState (
     val dateActive: Date = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
     val dateProgress: Date = dateActive,
     val dateHistory: Date = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
-
 
     //Estados
     val isCodeError:Boolean = false,
@@ -28,12 +25,10 @@ data class InventoryCreationState (
     val NoData:Boolean = false,
     val expanded:Boolean = false,
 
-
     //Formatos
     val ErrorCodeFormat:String = "",
     val ErrorNameFormat:String = "",
     val ErrorShortNameFormat:String = "",
     val ErrorDescriptionFormat:String = "",
     val isEmpty: String = "",
-
 )

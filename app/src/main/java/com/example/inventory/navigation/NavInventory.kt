@@ -1,5 +1,6 @@
 package com.example.inventory.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -12,65 +13,92 @@ import app.features.inventorydetail.ui.InventoryDetails
 import app.features.inventorydetail.ui.InventoryDetailsViewModel
 import app.features.inventorylist.ui.InventoryListScreen
 import app.features.inventorylist.ui.InventoryListViewModel
+import app.features.inventorycreation.ui.edition.InventoryEditionViewModel
+import app.features.inventorycreation.ui.edition.inventoryEditionScreen
 
-object InventoryGraph{
+object InventoryGraph {
     const val ROUTE = "InventoryGraph"
 
     fun inventoryCreate() = "$ROUTE/inventorycreation"
     fun inventoryList() = "$ROUTE/inventorylist"
     fun inventoryDetails() = "$ROUTE/inventorydetails/{inventoryId}"
-    fun inventoryDetails(code:Int) = "$ROUTE/inventorydetails/$code"
+    fun inventoryEdit() = "$ROUTE/inventoryedit/{inventoryId}"
+
     fun NavGraphBuilder.inventoryGraph(
         navController: NavController,
-        inventorylistviewmodel: InventoryListViewModel,
-        inventorycreateviewmodel: InventoryCreationViewModel,
-        inventoryDetailsViewModel: InventoryDetailsViewModel,
         onOpenDrawer: () -> Unit
-    ){
-        navigation(startDestination = inventoryList(), route = ROUTE){
-            inventoryList(navController, inventorylistviewmodel,onOpenDrawer)
-            inventoryCreation(navController, inventorycreateviewmodel)
-            inventoryDetails(navController,onOpenDrawer,inventoryDetailsViewModel)
+    ) {
+        navigation(startDestination = inventoryList(), route = ROUTE) {
+            inventoryList(navController, onOpenDrawer)
+            inventoryCreation(navController)
+            inventoryDetails(navController, onOpenDrawer)
+            inventoryEdit(navController) // Ahora sin parámetro
         }
     }
-    private fun NavGraphBuilder.inventoryCreation(navController: NavController,inventorycreateviewmodel: InventoryCreationViewModel){
-        composable(route = inventoryCreate()){
+
+    private fun NavGraphBuilder.inventoryCreation(navController: NavController) {
+        composable(route = inventoryCreate()) {
+            val inventoryCreateViewModel = hiltViewModel<InventoryCreationViewModel>()
             inventoryCreationScreen(
-                goBack = {navController.popBackStack()},
-                viewmodel = inventorycreateviewmodel,
+                goBack = { navController.popBackStack() },
+                viewmodel = inventoryCreateViewModel
             )
         }
     }
+
     private fun NavGraphBuilder.inventoryList(
         navController: NavController,
-        inventorylistviewmodel: InventoryListViewModel,
         onOpenDrawer: () -> Unit
-    ){
-        composable(route = inventoryList()){
+    ) {
+        composable(route = inventoryList()) {
+            val inventoryListViewModel = hiltViewModel<InventoryListViewModel>()
             InventoryListScreen(
-                goAdd = {navController.navigate(inventoryCreate())},
+                goAdd = { navController.navigate(inventoryCreate()) },
                 onOpenDrawer = onOpenDrawer,
-                viewModel = inventorylistviewmodel,
-                goDetails = {inventario -> navController.navigate(inventoryDetails(inventario.id))}
+                viewModel = inventoryListViewModel,
+                goDetails = { inventario -> navController.navigate("InventoryGraph/inventorydetails/${inventario.id}") }
             )
         }
     }
+
     private fun NavGraphBuilder.inventoryDetails(
         navController: NavController,
-        onOpenDrawer: () -> Unit,
-        inventoryDetailsViewModel: InventoryDetailsViewModel
-    ){
+        onOpenDrawer: () -> Unit
+    ) {
         composable(
-            route = "$ROUTE/inventorydetails/{inventoryId}",
+            route = inventoryDetails(),
             arguments = listOf(navArgument("inventoryId") { type = NavType.IntType })
         ) { backStackEntry ->
             val inventoryId = backStackEntry.arguments?.getInt("inventoryId")
+            val inventoryDetailsViewModel = hiltViewModel<InventoryDetailsViewModel>()
 
             if (inventoryId != null) {
                 InventoryDetails(
                     onBack = { navController.popBackStack() },
                     inventoryId = inventoryId,
                     viewModel = inventoryDetailsViewModel,
+                    goEdit = { navController.navigate("InventoryGraph/inventoryedit/$inventoryId") }
+                )
+            }
+        }
+    }
+
+    private fun NavGraphBuilder.inventoryEdit(navController: NavController) {
+        composable(
+            route = inventoryEdit(),
+            arguments = listOf(navArgument("inventoryId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val inventoryId = backStackEntry.arguments?.getInt("inventoryId")
+            val inventoryEditionViewModel = hiltViewModel<InventoryEditionViewModel>()
+
+            if (inventoryId != null) {
+                inventoryEditionViewModel.getInventory(inventoryId)
+
+                inventoryEditionScreen(
+                    goBack = { navController.popBackStack() },
+                    onAccept = { navController.navigate(inventoryList()) },
+                    viewModel = inventoryEditionViewModel,
+                    navController = navController
                 )
             }
         }

@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import app.domain.ddd.repository.InventoryRepository
 import app.domain.invoicing.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
@@ -34,5 +35,11 @@ object AppModule {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(produceNewData = { emptyPreferences() }),
             produceFile = { context.preferencesDataStoreFile(Session.DATA) })
+    }
+
+    @Provides
+    @Singleton
+    fun provideInventoryRepository():InventoryRepository{
+        return InventoryRepository
     }
 }

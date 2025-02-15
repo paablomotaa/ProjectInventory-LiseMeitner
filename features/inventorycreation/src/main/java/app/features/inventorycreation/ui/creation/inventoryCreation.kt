@@ -1,9 +1,12 @@
 package app.features.inventorycreation.ui.creation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -53,9 +56,13 @@ fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,stat
         navigation = NavigationTopAppBar.BackPage( onBack, stringResource(R.string.Registrar))
     ) {
         Column(
-            modifier = Modifier.padding(13.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.Center
         ) {
             BaseTextField(
                 stringResource(R.string.Codigo), state.code, modifier = Modifier.fillMaxWidth(),
@@ -100,15 +107,4 @@ fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,stat
 
         }
     }
-}
-
-@Preview
-@Composable
-fun inventoryCreationPreview(){
-    val viewmodel = remember {InventoryCreationViewModel()}
-    val navController = rememberNavController()
-    inventoryCreationScreen(
-        viewmodel = viewmodel,
-        goBack = {},
-    )
 }
