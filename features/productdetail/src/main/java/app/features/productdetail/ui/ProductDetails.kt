@@ -39,7 +39,7 @@ fun ProductDetailsScreen(
     LaunchedEffect(Unit){
         viewModel.importProduct(viewModel.idProduct)
     }
-    TopAppBarTitle(
+    TopAppBarTitle<Nothing>(
         navigation = NavigationTopAppBar.BackPage(
             {goBack()},
             viewModel.state.shortName.ifEmpty { stringResource(R.string.detailsProduct) },

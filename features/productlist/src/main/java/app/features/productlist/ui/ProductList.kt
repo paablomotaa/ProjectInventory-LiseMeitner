@@ -50,7 +50,7 @@ fun ProductListScreen(
         viewModel.getList()
     }
 
-    TopAppBarTitle(
+    TopAppBarTitle<String>(
         navigation = NavigationTopAppBar.OptDrawer(
             {onOpenDrawer()},
             nameInventory.value,
@@ -60,11 +60,12 @@ fun ProductListScreen(
                     stringResource(id = R.string.filter),
                     {event.onExpandadChange(true)}
                 ),
-                Action.DropDown(
-                    viewModel.viewState.expanded,
-                    event.onExpandadChange,
-                    viewModel.listTags,
-                    event.onFilterProduct)
+                Action.DropDown<String>(
+                    expandedValue = viewModel.viewState.expanded,
+                    onExpandeValueChange = event.onExpandadChange,
+                    menuItemData = viewModel.listTags,
+                    function = { item -> event.onFilterProduct(item) }
+                )
             ),
             Action.ComplexAction(
                 Icons.Default.Add,
@@ -120,7 +121,7 @@ fun ProductItem(product: Product, goView: () -> Unit, goDelete: (Product)-> Unit
     CardRow(onClick = {event.onViewProduct(product, goView)}, onLongClick = {goDelete(product)}) {
         BaseImageSmall()
         Text(
-            text = product.name,
+            text = product.toString(),
             textAlign = TextAlign.Center,
             fontSize = Dimensions.Small,
             modifier = Modifier

@@ -46,6 +46,7 @@ class ProductListViewModel
 
                     Log.d("ProductList", list.joinToString(","))
                     state = ProductListState.Success(list)
+                    listTags = list.map { it.tags.takeIf { it.isNotEmpty() } ?: "Sin Tags" }.plus("Sin Tags").distinct()
                 }
                 else
                     state = ProductListState.NoData
@@ -53,7 +54,6 @@ class ProductListViewModel
             }
         }
 
-        listTags = list.map { it.tags.ifEmpty { "Sin Tags" } }.distinct()
     }
 
 
@@ -81,18 +81,22 @@ class ProductListViewModel
     }
 
     fun onFilterProduct(string: String){
+        viewState = viewState.copy(expanded = false)
         //TODO("Arreglarlo por parte de los tags y el filtrado")
-        val result = if (string != "Sin Tags") {
-            list.filter { it.tags == string }
-        } else {
-            list
-        }
+        viewModelScope.launch {
+            state = ProductListState.Loading
+            val result = if (string != "Sin Tags") {
+                _list.filter { it.tags == string }
+            } else {
+                _list
+            }
 
-        state = if (result.isNotEmpty()) {
-            list = result
-            ProductListState.Success(list)
-        } else {
-            ProductListState.NoData
+            if (result.isNotEmpty()) {
+                list = result
+                state = ProductListState.Success(list)
+            } else {
+                state = ProductListState.NoData
+            }
         }
     }
 

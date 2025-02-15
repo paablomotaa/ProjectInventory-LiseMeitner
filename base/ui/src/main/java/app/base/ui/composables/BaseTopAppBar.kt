@@ -33,7 +33,7 @@ import app.base.ui.composables.topappbar.NavigationTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarTitle(navigation:NavigationTopAppBar, content: @Composable () -> Unit) {
+fun <T> TopAppBarTitle(navigation: NavigationTopAppBar, content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -55,7 +55,7 @@ fun TopAppBarTitle(navigation:NavigationTopAppBar, content: @Composable () -> Un
                 actions = {
                     if (navigation.actions.isNotEmpty()) {
                         navigation.actions.forEach { action ->
-                            when(action){
+                            when (action) {
                                 is Action.SimpleAction -> {
                                     IconButton(onClick = { action.onClick() }) {
                                         Icon(
@@ -65,7 +65,12 @@ fun TopAppBarTitle(navigation:NavigationTopAppBar, content: @Composable () -> Un
                                     }
                                 }
                                 is Action.DropDown<*> -> {
-                                    IconDropDownMenuAnyType(expandeValue = action.expandedValue, onExpandeValueChange = action.onExpandeValueChange, menuItemData = action.menuItemData, function = {action.function})
+                                    IconDropDownMenuAnyType(
+                                        expandeValue = action.expandedValue,
+                                        onExpandeValueChange = action.onExpandeValueChange,
+                                        menuItemData = action.menuItemData as List<T>,
+                                        function = { item -> (action.function as (T) -> Unit)(item) } // Cast explícito
+                                    )
                                 }
                             }
                         }

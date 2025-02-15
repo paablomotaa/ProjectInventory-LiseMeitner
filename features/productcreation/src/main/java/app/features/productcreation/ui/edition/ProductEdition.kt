@@ -69,7 +69,7 @@ fun ProductEditionScreen(goBack: () -> Unit, accept:() -> Unit, viewModel: Produ
         viewModel.importProduct(viewModel.idProduct)
         viewModel.getList()
     }
-    TopAppBarTitle(
+    TopAppBarTitle<Nothing>(
         navigation = NavigationTopAppBar.BackPage({goBack()}, stringResource(R.string.editProduct))
     ) {
         when{
