@@ -44,7 +44,7 @@ fun InventoryDetails(onBack:() -> Unit, inventoryId: Int?, viewModel:InventoryDe
 }
 @Composable
 fun DetailsScreen(onBack: () -> Unit,inventory: Inventory){
-    TopAppBarTitle(
+    TopAppBarTitle<Nothing>(
         navigation = NavigationTopAppBar.BackPage({onBack()}, stringResource(R.string.Detalles)),
         content = {Column(
             modifier = Modifier.padding(13.dp),

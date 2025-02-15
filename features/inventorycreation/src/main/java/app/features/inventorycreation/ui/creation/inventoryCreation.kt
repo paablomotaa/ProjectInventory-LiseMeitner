@@ -49,7 +49,7 @@ fun inventoryCreationContent(onBack:() -> Unit,modifier:Modifier = Modifier,stat
 
     val items = listOf("Semestral", "Anual", "Bianual")
 
-    TopAppBarTitle(
+    TopAppBarTitle<String>(
         navigation = NavigationTopAppBar.BackPage( onBack, stringResource(R.string.Registrar))
     ) {
         Column(
