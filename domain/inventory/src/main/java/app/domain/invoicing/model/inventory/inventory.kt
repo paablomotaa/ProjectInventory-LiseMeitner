@@ -8,12 +8,16 @@ data class Inventory(
     val name:String,
     val shortName:String,
     val description:String,
-    val type:String?,
+    val type:String = "",
     val dateActive: Date?,
     val dateProgress: Date? = dateActive,
     val dateHistory: Date?
     ){
     override fun equals(other: Any?): Boolean {
         return super.equals(other)
+    }
+
+    override fun toString(): String {
+        return name
     }
 }

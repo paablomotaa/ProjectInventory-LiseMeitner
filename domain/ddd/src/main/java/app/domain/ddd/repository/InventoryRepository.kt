@@ -38,41 +38,29 @@ object InventoryRepository {
             BaseResult.Error(exception)
         }
     }
-    suspend fun delete(inventario:Inventory){
-        dataSet.remove(inventario)
+    @Suppress("SuspiciousIndentation")
+    suspend fun delete(id:Int){
+        val inventoryToDelete = dataSet.find { it.id == id }
+        if(inventoryToDelete != null)
+        dataSet.remove(inventoryToDelete)
     }
-    suspend fun edit(
-        id:Int,
-        code:String,
-        name:String,
-        description:String,
-        shortName:String,
-        type:String,
-        dateProgress:Date,
-        dateActive:Date,
-        dateHistory:Date
-    ){
-        var inventario = dataSet.firstOrNull{it.id == id}
-        var inventario2 = Inventory(
-            id = id,
-            code = code,
-            name = name,
-            description = description,
-            shortName = shortName,
-            type = type,
-            dateProgress = dateProgress,
-            dateActive = dateActive,
-            dateHistory = dateHistory,
-        )
-        inventario = inventario2
+    suspend fun edit(inventory: Inventory): Boolean {
+        val inventoryToUpdate = dataSet.find { it.id == inventory.id }
+        if (inventoryToUpdate != null) {
+            dataSet.remove(inventoryToUpdate)
+            dataSet.add(inventory)
+            return true
+        }
+        return false
     }
     suspend fun isDuplicate(code:String):Boolean{
         return dataSet.any{it.code == code}
     }
-    suspend fun existInventory(inventory: Inventory):Boolean{
-        return dataSet.any{it.code == inventory.code}
+    suspend fun existInventory(id:Int):Boolean{
+        return dataSet.any{it.id == id}
     }
-    suspend fun findInventory(id: Int?):Inventory?{
-        return dataSet.find { it.id == id }
+    suspend fun findInventory(id: Int): Inventory? {
+        val inventory = dataSet.find { it.id == id }
+        return inventory
     }
 }

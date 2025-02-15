@@ -9,10 +9,13 @@ import androidx.lifecycle.viewModelScope
 import app.base.utils.BaseResult
 import app.domain.ddd.repository.InventoryRepository
 import app.domain.invoicing.inventory.Inventory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class InventoryListViewModel : ViewModel() {
+@HiltViewModel
+class InventoryListViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepository) : ViewModel() {
     var state by mutableStateOf<InventoryListState>(InventoryListState.Loading)
     private set
 
@@ -23,14 +26,17 @@ class InventoryListViewModel : ViewModel() {
 
     var listinvent: List<Inventory> by mutableStateOf(emptyList())
     private set
-    var listtypes:List<String> by mutableStateOf(listOf("Anual","Bianual"))
+
+    var productDelete by mutableStateOf<Inventory?>(null)
+
+
     init{
         getList()
     }
 
     fun getList(){
         viewModelScope.launch {
-            InventoryRepository.getData().collect{ inventories ->
+            provideInventoryRepository.getData().collect{ inventories ->
                 state = InventoryListState.Loading
                 if(inventories.isNotEmpty()){
                     listinvent = inventories
@@ -47,16 +53,17 @@ class InventoryListViewModel : ViewModel() {
     }
     fun onViewInventory(inventory: Inventory,navigateView:(Inventory)->Unit){
         inventoryid = inventory.id
-        Log.e("PENE",inventory.toString())
+        Log.e("",inventory.toString())
         navigateView(inventory)
     }
 
     fun onAddInventory(navigateAdd: () -> Unit){
+        state = InventoryListState.Loading
         navigateAdd()
     }
     fun onEditInventory(inventory: Inventory,navigateEdit:() -> Unit){
         viewModelScope.launch{
-            val result = InventoryRepository.existInventory(inventory)
+            val result = InventoryRepository.existInventory(inventory.id)
             if(result){
                 navigateEdit()
             }
@@ -70,5 +77,12 @@ class InventoryListViewModel : ViewModel() {
     }
     fun onAccountView(){
 
+    }
+    fun onDelete(id:Int){
+        viewModelScope.launch {
+            state = InventoryListState.Loading
+            provideInventoryRepository.delete(id)
+            getList()
+        }
     }
 }

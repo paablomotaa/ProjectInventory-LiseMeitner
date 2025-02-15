@@ -33,9 +33,6 @@ fun HomeScreen(
     NavHost(navController = navController, startDestination = InventoryGraph.ROUTE) {
         inventoryGraph(
             navController,
-            inventoryListViewModel,
-            inventoryCreationViewModel,
-            inventoryDetailsViewModel,
             onOpenDrawer
         )
         productGraph(
