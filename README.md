@@ -40,21 +40,21 @@ Se a cambiado para que todos los dispositivos se muestre el tema de la aplicaci�
 
 Se ha cambiado las variables que tenian remember y se a creado los `view models` para cada vista con su `state` correspondiente.
 
-<img src="resources/detallesImventario.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/editarImventario.png" alt="Imagen inventario details" width="400" height="875">
+<img src="resources/detallesImventario.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/editarImventario.png" alt="Imagen inventario edit" width="400" height="875">
 
 ---
 ### -3. Implementaci처n de un `lottie` en pantalla de "No data"
 
 Ahora en las listas de cada modulo se ha implementado un `lottie`(una animaci처n) para saver que no hay datos.
 
-<img src="resources/nodata.jpg" alt="Imagen inventario details" width="400" height="875">
+<img src="resources/nodata.jpg" alt="Imagen nodata product" width="400" height="875">
 
 ---
 ### -4. Cambios en los `TopAppBar`
 
 Ahora cada TopAppBar es un mismo composable modificable y cada pantalla de lista de los modulos tienen un icono que abre el `drawer`.
 
-<img src="resources/listaimventario.png" alt="Imagen inventario list" width="400" height="875"><img src="resources/filtradoProduct.jpg" alt="Imagen inventario list" width="400" height="875">
+<img src="resources/listaimventario.png" alt="Imagen inventario list" width="400" height="875"><img src="resources/filtradoProduct.jpg" alt="Imagen product list" width="400" height="875">
 
 ---
 ### -5. `Filtrado` de los objetos de los modulos
@@ -63,14 +63,14 @@ En cada pantalla de lista hay un boton de `filtrar` en los TopAppBar funcional.
 
 Ejemplo se le da al tag "hola":
 
-<img src="resources/filtradoIcono.jpg" alt="Imagen inventario list" width="400" height="875"><img src="resources/filtradoProduct.jpg" alt="Imagen inventario list" width="400" height="875">
+<img src="resources/filtradoIcono.jpg" alt="Imagen filtrado producto icono list" width="400" height="875"><img src="resources/filtradoProduct.jpg" alt="Imagen producto filtrado list" width="400" height="875">
 
 ---
 ### -6. `Eliminaci처n` de los objetos en los modulos
 
 Implementado la eliminaci처n de los objetos al mantener el dedo en la lista(se abrira un dialog para confirmar) o en el `view` del objeto
 
-<img src="resources/eliminacionIcono.jpg" alt="Imagen inventario list" width="400" height="875"><img src="resources/eliminacionProduct.jpg" alt="Imagen inventario list" width="400" height="875">
+<img src="resources/eliminacionIcono.jpg" alt="Imagen eliminacion icono details" width="400" height="875"><img src="resources/eliminacionProduct.jpg" alt="Imagen eliminaci처n dialog list" width="400" height="875">
 
 ---
 ## 2. Cambios no visuales
