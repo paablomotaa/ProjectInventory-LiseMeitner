@@ -1,14 +1,12 @@
 package app.domain.invoicing.repository
 
 import app.base.utils.Status
-import app.domain.invoicing.category.Category
-import app.domain.invoicing.category.CategoryType
 import app.domain.invoicing.product.Product
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
-import java.util.Date
+import java.util.UUID
 
 object ProductRepository {
 
@@ -104,8 +102,9 @@ object ProductRepository {
     ): Boolean {
         delay(2000)
         return productsSet.add(
+            //implementación de uuid temporal
             Product(
-                id,
+                UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE,
                 code,
                 name,
                 shortName,

@@ -39,6 +39,7 @@ data class Product(
     }
 
     override fun toString(): String {
-        return "$id $code $name $shortName $description $numSerial $codModel $typeProduct $category $section $status $amount $price $image $acquisitionDate $cancellationDate $notes $tags"
+        return name
     }
+
 }
