@@ -81,7 +81,7 @@ fun DetailsScreen(
     goEdit: () -> Unit,
     events: InventoryDetailsEvents
 ) {
-    TopAppBarTitle(
+    TopAppBarTitle<Nothing>(
         navigation = NavigationTopAppBar.BackPage(
             { onBack() },
             stringResource(R.string.Detalles),
