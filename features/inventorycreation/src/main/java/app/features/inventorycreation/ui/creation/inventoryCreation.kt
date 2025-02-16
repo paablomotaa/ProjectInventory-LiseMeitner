@@ -33,6 +33,15 @@ data class RegisterEvents(
     val onValueChange:(String) -> Unit,
 )
 
+/**
+ *
+ * Inventory Creation
+ *
+ * Interfaz de inventory creation
+ *
+ *
+ */
+
 @Composable
 fun inventoryCreationScreen(modifier:Modifier = Modifier,viewmodel:InventoryCreationViewModel,goBack:() -> Unit){
 val eventos = RegisterEvents(

@@ -35,6 +35,16 @@ data class EditEvents(
     val onExpandedChange: KFunction1<Boolean, Unit>,
     val onValueChange: KFunction1<String, Unit>
 )
+
+/**
+ *
+ * Inventory Edition
+ *
+ * Interfaz de inventory edition
+ *
+ *
+ */
+
 @Composable
 fun inventoryEdition(modifier: Modifier = Modifier, onBack: () -> Unit, onAccept: () -> Unit, viewModel: InventoryEditionViewModel, events: EditEvents) {
     val items = listOf("Semestral", "Anual", "Bianual")
