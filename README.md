@@ -59,7 +59,7 @@ Ahora cada TopAppBar es un mismo composable modificable y cada pantalla de lista
 ---
 ### -5. `Filtrado` de los objetos del modulo de producto
 
-En cada pantalla de lista hay un boton de `filtrar` en los TopAppBar funcional.
+En la pantalla de la lista de producto hay un boton de `filtrar` en el TopAppBar.
 
 Ejemplo se le da al tag "hola":
 
