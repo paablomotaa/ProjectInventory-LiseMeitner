@@ -75,8 +75,9 @@ Ahora es posible acceder a las pantallas de edit y details de cada objeto de cad
 # Version 0.2.1
 ## 1.Implementación del `icono` de la aplicación
 
-![Imagen completa](resources/FullImage.jpg)
-![Imagen desde cerca](resources/CloseLookImage.jpg)
+<img src="resources/FullImage.jpg" alt="Imagen completa" width="300" height="200">
+<img src="resources/CloseLookImage.jpg" alt="Imagen desde cerca" width="300" height="200">
+<img src="resources/Icono.png" alt="Icono" width="300" height="300">
 ![Icono](resources/Icono.png)
 
 
