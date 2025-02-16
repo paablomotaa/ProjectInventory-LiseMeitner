@@ -48,6 +48,15 @@ data class InventoryDetailsEvents(
     val goEdit: KFunction2<Int, () -> Unit, Unit>,
 )
 
+/**
+ *
+ * Inventory Details
+ *
+ * Interfaz de inventory details
+ *
+ *
+ */
+
 @Composable
 fun InventoryDetails(
     onBack: () -> Unit,

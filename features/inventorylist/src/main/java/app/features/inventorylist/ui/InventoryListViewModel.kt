@@ -17,68 +17,118 @@ import javax.inject.Inject
 @HiltViewModel
 class InventoryListViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepository) : ViewModel() {
     var state by mutableStateOf<InventoryListState>(InventoryListState.Loading)
-    private set
+        private set
 
     var inventoryid by mutableStateOf<Int?>(null)
 
     var stateexpanded by mutableStateOf(InventoryDropMenuState())
-    private set
+        private set
 
     var listinvent: List<Inventory> by mutableStateOf(emptyList())
-    private set
+        private set
 
     var productDelete by mutableStateOf<Inventory?>(null)
 
-
-    init{
+    init {
         getList()
     }
 
-    fun getList(){
+    /**
+     * Obtiene la lista de inventarios desde el repositorio y actualiza el estado en consecuencia.
+     */
+    fun getList() {
         viewModelScope.launch {
-            provideInventoryRepository.getData().collect{ inventories ->
+            provideInventoryRepository.getData().collect { inventories ->
                 state = InventoryListState.Loading
-                if(inventories.isNotEmpty()){
+                if (inventories.isNotEmpty()) {
                     listinvent = inventories
                     state = InventoryListState.Succes(listinvent)
-                }
-                else{
+                } else {
                     state = InventoryListState.NoData
                 }
             }
         }
     }
-    fun onExpandedChange(expanded:Boolean){
+
+    /**
+     * Cambia el estado de expansión del menú desplegable.
+     *
+     * @param expanded
+     *
+     */
+    fun onExpandedChange(expanded: Boolean) {
         stateexpanded = stateexpanded.copy(expanded = expanded)
     }
-    fun onViewInventory(inventory: Inventory,navigateView:(Inventory)->Unit){
+
+    /**
+     * Maneja la navegación a la vista de detalles de un inventario.
+     *
+     * @param inventory
+     *
+     * @param navigateView
+     *
+     */
+    fun onViewInventory(inventory: Inventory, navigateView: (Inventory) -> Unit) {
         inventoryid = inventory.id
-        Log.e("",inventory.toString())
+        Log.e("", inventory.toString())
         navigateView(inventory)
     }
 
-    fun onAddInventory(navigateAdd: () -> Unit){
+    /**
+     * Maneja la navegación a la pantalla de creación de un nuevo inventario.
+     *
+     * @param navigateAdd
+     *
+     */
+    fun onAddInventory(navigateAdd: () -> Unit) {
         state = InventoryListState.Loading
         navigateAdd()
     }
-    fun onEditInventory(inventory: Inventory,navigateEdit:() -> Unit){
-        viewModelScope.launch{
+
+    /**
+     * Verifica si un inventario existe antes de permitir su edición y maneja la navegación a la pantalla de edición.
+     *
+     * @param inventory
+     *
+     * @param navigateEdit
+     *
+     */
+    fun onEditInventory(inventory: Inventory, navigateEdit: () -> Unit) {
+        viewModelScope.launch {
             val result = InventoryRepository.existInventory(inventory.id)
-            if(result){
+            if (result) {
                 navigateEdit()
             }
         }
     }
-    fun onFilterInventory(tipo:String):List<Inventory>{
-        return when (tipo){
-            "Semestral","Anual","Bianual" -> listinvent.filter { it.type == tipo }
+
+    /**
+     * Filtra la lista de inventarios según el tipo especificado.
+     *
+     * @param tipo
+     *
+     */
+    fun onFilterInventory(tipo: String): List<Inventory> {
+        return when (tipo) {
+            "Semestral", "Anual", "Bianual" -> listinvent.filter { it.type == tipo }
             else -> emptyList()
         }
     }
-    fun onAccountView(){
 
+    /**
+     * Maneja la acción de visualización de cuenta (actualmente vacío).
+     */
+    fun onAccountView() {
+        // Implementación futura
     }
-    fun onDelete(id:Int){
+
+    /**
+     * Elimina un inventario por su ID y actualiza la lista de inventarios.
+     *
+     * @param id
+     *
+     */
+    fun onDelete(id: Int) {
         viewModelScope.launch {
             state = InventoryListState.Loading
             provideInventoryRepository.delete(id)

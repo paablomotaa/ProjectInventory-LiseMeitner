@@ -16,21 +16,34 @@ import javax.inject.Inject
 @HiltViewModel
 class InventoryDetailsViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepository) : ViewModel() {
     var state by mutableStateOf<InventoryDetailsState>(InventoryDetailsState.Loading)
-    private set
+        private set
 
+    /**
+     * Obtiene la información de un inventario a partir de su ID y actualiza el estado en consecuencia.
+     *
+     * @param id
+     *
+     */
     fun getInventoryInfo(id: Int){
-            viewModelScope.launch {
-                val inventory = provideInventoryRepository.findInventory(id)
-                if (inventory != null) {
-                    state = InventoryDetailsState.Success(inventory)
-                    Log.e("InventoryDetailsVM", "Exception en success")
-                } else {
-                    state = InventoryDetailsState.NoData
-                    Log.e("InventoryDetailsVM", "Exception en noData: " + id)
-                }
+        viewModelScope.launch {
+            val inventory = provideInventoryRepository.findInventory(id)
+            if (inventory != null) {
+                state = InventoryDetailsState.Success(inventory)
+                Log.e("InventoryDetailsVM", "Exception en success")
+            } else {
+                state = InventoryDetailsState.NoData
+                Log.e("InventoryDetailsVM", "Exception en noData: " + id)
             }
+        }
     }
-    fun onGoEdit(id:Int,goEdit:() -> Unit){
+
+    /**
+     * Verifica si el inventario existe antes de permitir la navegación a la pantalla de edición.
+     *
+     * @param id
+     * @param goEdit
+     */
+    fun onGoEdit(id:Int, goEdit:() -> Unit){
         viewModelScope.launch {
             val res = provideInventoryRepository.existInventory(id)
             if(res){
@@ -38,5 +51,4 @@ class InventoryDetailsViewModel @Inject constructor(private val provideInventory
             }
         }
     }
-
 }

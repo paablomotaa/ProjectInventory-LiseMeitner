@@ -51,6 +51,14 @@ data class eventInventoryList(
     val onDelete:(Int) -> Unit
 )
 
+/**
+ *
+ * Inventory List
+ *
+ * Interfaz de Inventory List
+ *
+ */
+
 @Composable
 fun InventoryListScreen(
     goAdd: () -> Unit,
