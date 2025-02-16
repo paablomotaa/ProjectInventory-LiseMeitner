@@ -71,7 +71,7 @@ fun InventoryListScreen(
     LaunchedEffect(Unit){
         viewModel.getList()
     }
-    TopAppBarTitle(
+    TopAppBarTitle<Nothing>(
         navigation = NavigationTopAppBar.OptDrawer(onClick = onOpenDrawer, label = stringResource(R.string.Titulo),
             floating = Action.ComplexAction(
                 icon = Icons.Default.Add,

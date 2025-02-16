@@ -39,7 +39,7 @@ data class EditEvents(
 fun inventoryEdition(modifier: Modifier = Modifier, onBack: () -> Unit, onAccept: () -> Unit, viewModel: InventoryEditionViewModel, events: EditEvents) {
     val items = listOf("Semestral", "Anual", "Bianual")
 
-    TopAppBarTitle(navigation = NavigationTopAppBar.BackPage(onBack, stringResource(R.string.Registrar))) {
+    TopAppBarTitle<Nothing>(navigation = NavigationTopAppBar.BackPage(onBack, stringResource(R.string.Registrar))) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
