@@ -54,7 +54,7 @@ Ahora en las listas de cada modulo se ha implementado un `lottie`(una animación
 
 Ahora cada TopAppBar es un mismo composable modificable y cada pantalla de lista de los modulos tienen un icono que abre el `drawer`.
 
-<img src="resources/listaimventario.png" alt="Imagen inventario list" width="400" height="875"> <img src="resources/filtradoProduct.jpg" alt="Imagen inventario list" width="400" height="875">
+<img src="resources/listaimventario.png" alt="Imagen inventario list" width="400" height="875"><img src="resources/filtradoProduct.jpg" alt="Imagen inventario list" width="400" height="875">
 
 ---
 ### -5. `Filtrado` de los objetos de los modulos
@@ -63,14 +63,14 @@ En cada pantalla de lista hay un boton de `filtrar` en los TopAppBar funcional.
 
 Ejemplo se le da al tag "hola":
 
-<img src="resources/filtradoIcono.jpg" alt="Imagen inventario list" width="400" height="875"> <img src="resources/filtradoProduct.jpg" alt="Imagen inventario list" width="400" height="875">
+<img src="resources/filtradoIcono.jpg" alt="Imagen inventario list" width="400" height="875"><img src="resources/filtradoProduct.jpg" alt="Imagen inventario list" width="400" height="875">
 
 ---
 ### -6. `Eliminación` de los objetos en los modulos
 
 Implementado la eliminación de los objetos al mantener el dedo en la lista(se abrira un dialog para confirmar) o en el `view` del objeto
 
-<img src="resources/eliminacionIcono.jpg" alt="Imagen inventario list" width="400" height="875"> <img src="resources/eliminacionProduct.jpg" alt="Imagen inventario list" width="400" height="875">
+<img src="resources/eliminacionIcono.jpg" alt="Imagen inventario list" width="400" height="875"><img src="resources/eliminacionProduct.jpg" alt="Imagen inventario list" width="400" height="875">
 
 ---
 ## 2. Cambios no visuales
