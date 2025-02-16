@@ -57,7 +57,7 @@ Ahora cada TopAppBar es un mismo composable modificable y cada pantalla de lista
 <img src="resources/listaimventario.png" alt="Imagen inventario list" width="400" height="875"><img src="resources/filtradoProduct.jpg" alt="Imagen product list" width="400" height="875">
 
 ---
-### -5. `Filtrado` de los objetos de los modulos
+### -5. `Filtrado` de los objetos del modulo de producto
 
 En cada pantalla de lista hay un boton de `filtrar` en los TopAppBar funcional.
 
