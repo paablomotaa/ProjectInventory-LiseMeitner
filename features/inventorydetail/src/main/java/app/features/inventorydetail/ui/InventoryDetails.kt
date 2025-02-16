@@ -127,8 +127,9 @@ fun DetailsScreen(
                     value = inventory.dateActive.toString()
                 )
                 MediumSpace()
+                //TODO Implementar la vista de la lista de los productos de cada inventario
                 Text(
-                    text = "PRODUCTOS",
+                    text = stringResource(R.string.Productos),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
