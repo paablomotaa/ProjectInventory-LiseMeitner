@@ -1,7 +1,17 @@
 # PROYECTO INVENTORY
 
 # Versions
-
+* [Version 0.3.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#version-030)
+  * [Cambios visuales]()
+    * [Visualización de los colores en el tema de la aplicación]()
+    * [Implementación de MVVM en edit y details]()
+    * [Implementación de un lottie en pantalla de "No data"]()
+    * [Cambios en los TopAppBar]()
+    * [Filtrado de los objetos de los modulos]()
+    * [Eliminación de los objetos en los modulos]()
+  * [Cambios no visuales]()
+    * [Implementación de hilt]()
+    * [Navegación a las pantallas edit y details]()
 * [Version 0.2.1](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#version-021)
   * [Implementación del icono de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#1implementaci%C3%B3n-del-icono-de-la-aplicaci%C3%B3n)
 * [Version 0.2.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-020)
@@ -13,6 +23,52 @@
   * [Proyecto Inventory - Módulo Product 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-product-)
   * [Proyecto Inventory - Módulo Inventory 📦](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#proyecto-inventory---m%C3%B3dulo-inventory-)
   * [Bases](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#bases)
+
+---
+---
+# Version 0.3.0
+## 1. Cambios visuales
+
+### -1. Visualización de los colores en el tema de la aplicación
+
+Se a cambiado para que todos los dispositivos se muestre el tema de la aplicación.
+
+---
+### -2. Implementación de `MVVM` en `edit` y `details`
+
+Se ha cambiado las variables que tenian remember y se a creado los `view models` para cada vista con su `state` correspondiente.
+
+---
+### -3. Implementación de un `lottie` en pantalla de "No data"
+
+Ahora en las listas de cada modulo se ha implementado un `lottie`(una animación) para saver que no hay datos.
+
+---
+### -4. Cambios en los `TopAppBar`
+
+Ahora cada TopAppBar es un mismo composable modificable y cada pantalla de lista de los modulos tienen un icono que abre el `drawer`.
+
+---
+### -5. `Filtrado` de los objetos de los modulos
+
+En cada pantalla de lista hay un boton de `filtrar` en los TopAppBar funcional.
+
+---
+### -6. `Eliminación` de los objetos en los modulos
+
+Implementado la eliminación de los objetos al mantener el dedo en la lista(se abrira un dialog para confirmar) o en el `view` del objeto
+
+---
+## 2. Cambios no visuales
+
+### -1. Implementación de hilt
+
+Se a añadido hilt en la aplicación para la `inyección de dependencias`(repositorios y viewmodels) en cada modulo 
+
+---
+### -2. Navegación a las pantallas edit y details
+
+Ahora es posible acceder a las pantallas de edit y details de cada objeto de cada modulo pulsando encima del objeto desde la pantalla de lista
 
 ---
 ---
