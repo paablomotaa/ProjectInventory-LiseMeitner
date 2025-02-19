@@ -16,6 +16,7 @@ import app.base.ui.composables.BaseDropdownMenu
 import app.base.ui.composables.BaseDropdownMenuAnyTypes
 import app.base.ui.composables.BaseDropdownMenuAnyTypesList
 import app.base.ui.composables.BaseImageBig
+import app.base.ui.composables.BasePickerImage
 import app.base.ui.composables.BaseRow
 import app.base.ui.composables.BaseStructureColumnPaddingUpSide
 import app.base.ui.composables.BaseStructureCompletePadding
@@ -136,7 +137,7 @@ fun ProductEdition(modifier: Modifier = Modifier, accept: () -> Unit, state: Pro
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {
-                    BaseImageBig()
+                    BasePickerImage(image = state.image, onImageChange = event.onImageChange)
                     BaseTextFieldRead(stringResource(R.string.code), state.code)
                     BaseTextField(stringResource(R.string.name), state.name, event.onNameChange, isError = state.nameError, ErrorText = state.nameFormatError)
                     BaseTextField(stringResource(R.string.shortName), state.shortName, event.onShortNameChange, isError = state.shortNameError, ErrorText = state.shortNameFormatError)

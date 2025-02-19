@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.base.utils)
     implementation(projects.domain.inventory)
 
+
    // implementation(platform(libs.firebase.bom))
    // implementation(libs.firebase.realtimedb)
    // implementation(libs.firebase.auth)

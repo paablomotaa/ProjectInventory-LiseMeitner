@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 fun ProfileDrawer() {
     Column(modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally){
-        BaseImageMedium()
+        BaseImageMedium( image = "")
         Text(text = "Usuario", textAlign = TextAlign.Center)
     }
 }

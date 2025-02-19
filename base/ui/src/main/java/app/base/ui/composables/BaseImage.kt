@@ -6,6 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -17,68 +21,78 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import app.base.ui.R
+import coil.compose.AsyncImage
 
 @Composable
-fun BaseImageBig(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? = null) {
+fun BaseImageBig(modifier: Modifier = Modifier, image: String) {
     val imageModifier = modifier
         .size(150.dp)
         .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
         .background(Color.Gray, shape = CircleShape)
         .clip(CircleShape)
 
-    val painter = if (image?.value != null) {
-        BitmapPainter(image.value!!)
+    if (image.isNotEmpty() && image.isNotBlank()) {
+        AsyncImage(
+            model = image,
+            contentDescription = "Imagen seleccionada",
+            modifier = imageModifier
+        )
     } else {
-        painterResource(id = R.drawable.ic_cactus)
+        Image(
+            Icons.Default.Close,
+            contentDescription = "hola",
+            contentScale = ContentScale.Crop,
+            modifier = imageModifier
+        )
     }
-    Image(
-        painter = painter,
-        contentDescription = "hola",
-        contentScale = ContentScale.Crop,
-        modifier = imageModifier
-    )
 }
 
 @Composable
-fun BaseImageMedium(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? = null) {
+fun BaseImageMedium(modifier: Modifier = Modifier, image: String) {
     val imageModifier = modifier
         .size(100.dp)
         .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
         .background(Color.Gray, shape = CircleShape)
         .clip(CircleShape)
 
-    val painter = if (image?.value != null) {
-        BitmapPainter(image.value!!)
+    if (image.isNotEmpty() && image.isNotBlank()) {
+        AsyncImage(
+            model = image,
+            contentDescription = "Imagen seleccionada",
+            modifier = imageModifier
+        )
     } else {
-        painterResource(id = R.drawable.ic_cactus)
+        Image(
+            Icons.Default.Close,
+            contentDescription = "hola",
+            contentScale = ContentScale.Crop,
+            modifier = imageModifier
+        )
     }
-    Image(
-        painter = painter,
-        contentDescription = "hola",
-        contentScale = ContentScale.Crop,
-        modifier = imageModifier
-    )
 }
 
 @Composable
-fun BaseImageSmall(modifier: Modifier = Modifier, image: MutableState<ImageBitmap>? = null) {
+fun BaseImageSmall(modifier: Modifier = Modifier, image: String) {
     val imageModifier = modifier
         .size(50.dp)
         .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
         .background(Color.Gray, shape = CircleShape)
         .clip(CircleShape)
 
-    val painter = if (image?.value != null) {
-        BitmapPainter(image.value!!)
+    if (image.isNotEmpty() && image.isNotBlank()) {
+        AsyncImage(
+            model = image,
+            contentDescription = "Imagen seleccionada",
+            modifier = imageModifier
+        )
     } else {
-        painterResource(id = R.drawable.ic_cactus)
+        Image(
+            Icons.Default.Close,
+            contentDescription = "hola",
+            contentScale = ContentScale.Crop,
+            modifier = imageModifier
+        )
     }
-    Image(
-        painter = painter,
-        contentDescription = "hola",
-        contentScale = ContentScale.Crop,
-        modifier = imageModifier
-    )
 }
 
 
