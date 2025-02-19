@@ -26,6 +26,10 @@ material = "1.10.0"
 datastoreCoreAndroid = "1.1.2"
 datastorePreferencesCoreJvm = "1.1.2"
 junitJupiterVersion = "5.8.1"
+androixCompose = "1.7.0"
+ksp = "2.0.21-1.0.27"
+room = "2.6.1"
+roomCommon = "2.6.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -44,6 +48,7 @@ app-android-hilt = { id = "app.android.hilt", version = "unspecified" }
 app-android-feature = { id = "app.android.feature", version = "unspecified" }
 app-jvm-library = { id = "app.jvm.library", version = "unspecified" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-ksp={ id="com.google.devtools.ksp", version.ref="ksp"}
 
 [libraries]
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTestCore" }
@@ -79,6 +84,13 @@ junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.r
 robolectric = "org.robolectric:robolectric:4.13"
 mockk = "io.mockk:mockk:1.13.13"
 android-lottie = {group = "com.airbnb.android", name = "lottie-compose",version.ref = "lottieVersion"}
+androix-compose = {group = "androidx.activity", name = "activity-compose", version.ref = "androixCompose"}
+
+# Room
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+
 
 # Dependencias usadas en archivo build.gradle.kts de :build-domain
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -94,3 +106,4 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
 androidx-datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferencesCoreJvm" }
 jupiter-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiterVersion" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }

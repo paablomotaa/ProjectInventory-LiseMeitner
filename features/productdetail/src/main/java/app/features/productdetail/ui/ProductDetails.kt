@@ -79,7 +79,7 @@ fun ProductDetails(modifier: Modifier = Modifier, goBack: () -> Unit, goEdit: ()
         BaseStructureColumnPaddingUpSide(modifier, Separations.Medium, scrolleable = true) {
             Card {
                 BaseStructureCompletePadding(modifier, Separations.Medium) {
-                    BaseImageBig()
+                    BaseImageBig(image = state.image)
                     BaseTextFieldRead(stringResource(R.string.code), state.code)
                     BaseTextFieldRead(stringResource(R.string.name), state.name)
                     BaseTextFieldRead(stringResource(R.string.shortName), state.shortName)

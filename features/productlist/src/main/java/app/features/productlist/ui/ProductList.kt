@@ -119,7 +119,7 @@ fun ProductList(
 @Composable
 fun ProductItem(product: Product, goView: () -> Unit, goDelete: (Product)-> Unit, event: EventProductList) {
     CardRow(onClick = {event.onViewProduct(product, goView)}, onLongClick = {goDelete(product)}) {
-        BaseImageSmall()
+        BaseImageSmall(image = product.image)
         Text(
             text = product.toString(),
             textAlign = TextAlign.Center,

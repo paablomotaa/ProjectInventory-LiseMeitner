@@ -14,4 +14,6 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.android.lottie)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androix.compose)
+    implementation(libs.coil.compose)
 }
