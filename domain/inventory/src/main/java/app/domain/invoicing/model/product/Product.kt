@@ -1,10 +1,12 @@
 package app.domain.invoicing.product
 
+import androidx.room.Entity
 import app.base.utils.Status
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.section.Section
 import java.time.LocalDate
 
+@Entity(tableName = "product")
 data class Product(
     val id: Long,
     val code: String,

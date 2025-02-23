@@ -30,6 +30,8 @@ androixCompose = "1.7.0"
 ksp = "2.0.21-1.0.27"
 room = "2.6.1"
 roomCommon = "2.6.1"
+playServicesAnalyticsImpl = "18.2.0"
+icons = "1.7.8"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -38,6 +40,8 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 gms-googleServices = "com.google.gms.google-services:4.4.2"
+room = { id = "androidx.room", version.ref = "room" }
+kotlin-kapt = {id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
 
 # Plugins del dominio de build
 app-android-application = { id = "app.android.application", version = "unspecified" }
@@ -85,6 +89,8 @@ robolectric = "org.robolectric:robolectric:4.13"
 mockk = "io.mockk:mockk:1.13.13"
 android-lottie = {group = "com.airbnb.android", name = "lottie-compose",version.ref = "lottieVersion"}
 androix-compose = {group = "androidx.activity", name = "activity-compose", version.ref = "androixCompose"}
+material-icon = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icons"}
+androidx-navigation = {group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation"}
 
 # Room
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -105,5 +111,5 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
 androidx-datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferencesCoreJvm" }
-jupiter-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiterVersion" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImpl" }

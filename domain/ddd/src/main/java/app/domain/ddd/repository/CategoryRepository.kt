@@ -1,5 +1,5 @@
 package app.domain.ddd.repository
-
+/*
 import app.base.utils.BaseResult
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
@@ -76,3 +76,4 @@ object CategoryRepository {
     fun categoryExists(category: Category): Boolean =
         dataSet.any { it.id == category.id }
 }
+*/

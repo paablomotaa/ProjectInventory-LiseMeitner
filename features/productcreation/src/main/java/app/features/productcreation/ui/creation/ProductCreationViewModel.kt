@@ -6,9 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
-import app.domain.ddd.repository.CategoryRepository
 import app.domain.invoicing.category.Category
-import app.domain.invoicing.repository.ProductRepository
+import app.domain.invoicing.repositoryDB.ProductRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -17,7 +16,7 @@ import javax.inject.Inject
 private const val especialExpresion = "*/%!?()[]{}=+-_\":;,.;:|&%#@~*^`\'"
 
 @HiltViewModel
-class ProductCreationViewModel @Inject constructor(private val provideProductRepository: ProductRepository) : ViewModel() {
+class ProductCreationViewModel @Inject constructor(private val provideProductRepository: ProductRepositoryDB) : ViewModel() {
     var state by mutableStateOf(ProductCreationState())
         private set
 
@@ -31,14 +30,14 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
     fun getList(){
         reset()
         viewModelScope.launch {
-            provideProductRepository.getStatus().collect{ products ->
+           /* provideProductRepository.getStatus().collect{ products ->
                 if(products.isNotEmpty())
                     state = state.copy(listStatus = products)
             }
             CategoryRepository.getAllCategories().collect{ categories ->
                 if(categories.isNotEmpty())
                     state = state.copy(listCategoria = categories)
-            }
+            }*/
             state = state.copy(isLoading = false)
         }
     }
@@ -223,12 +222,12 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
         }
         state = state.copy(isLoading = true)
         viewModelScope.launch {
-            val responde = provideProductRepository.existProduct(state.code)
+            val responde = provideProductRepository.validate(state.code)
             if (responde) {
                 state = state.copy(isLoading = false, isExitsError = true)
             }
             else{
-                val product = provideProductRepository.createProduct(
+                val product = provideProductRepository.save(
                     id = state.id,
                     code = state.code,
                     name = state.name,

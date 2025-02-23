@@ -1,4 +1,4 @@
-package app.domain.ddd.dao
+package app.domain.invoicing.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -25,5 +25,8 @@ interface ProductDao {
 
     @Query("SELECT * FROM Product WHERE id = :productId")
     fun getProductById(productId: Int): Product?
+
+    @Query("SELECT * FROM Product WHERE code = :productCode")
+    fun validate(productCode: String): Product?
 
 }
