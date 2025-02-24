@@ -7,15 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.BaseResult
 import app.base.utils.isValidShortName
-import app.domain.ddd.repository.InventoryRepository
-import app.domain.ddd.repository.Repository
 import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryCreationViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepository): ViewModel() {
+class InventoryCreationViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepositoryDB): ViewModel() {
     var state by mutableStateOf(InventoryCreationState())
         private set
     var code = 1
@@ -126,12 +125,12 @@ class InventoryCreationViewModel @Inject constructor(private val provideInventor
             state = state.copy(id = code)
             val inventory = Inventory(state.id, state.code, state.name, state.shortName, state.description, state.type, state.dateActive, state.dateProgress, state.dateHistory)
 
-            if(provideInventoryRepository.existInventory(inventory.id)){
+            if(provideInventoryRepository.getDataById(inventory.id) != null){
                 state = state.copy(isCodeError = true, ErrorCodeFormat = "Inventario duplicado, por favor elige otro código")
                 return@launch
             }
             else{
-                val response = InventoryRepository.add(inventory)
+                val response = provideInventoryRepository.insertInventory(inventory)
                 when(response){
                     is BaseResult.Error -> {
                         state = state.copy(isCodeError = state.isCodeError)

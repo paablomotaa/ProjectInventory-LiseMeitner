@@ -3,8 +3,8 @@ package app.domain.invoicing.repositoryDB
 import app.base.utils.Status
 import app.domain.invoicing.dao.ProductDao
 import app.domain.invoicing.product.Product
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 
 class ProductRepositoryDB @Inject constructor(private val productDao: ProductDao) {

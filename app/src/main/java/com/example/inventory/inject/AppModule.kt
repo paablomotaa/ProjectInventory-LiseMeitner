@@ -8,7 +8,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import app.domain.invoicing.InventoryDataBase
+import app.domain.invoicing.dao.InventoryDao
 import app.domain.invoicing.dao.ProductDao
+import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,11 +42,11 @@ object AppModule {
             produceFile = { context.preferencesDataStoreFile(Session.DATA) })
     }
 
-    /*@Provides
+    @Provides
     @Singleton
-    fun provideInventoryRepository():InventoryRepository{
-        return InventoryRepository
-    }*/
+    fun provideInventoryRepository(inventoryDao:InventoryDao):InventoryRepositoryDB{
+        return InventoryRepositoryDB(inventoryDao)
+    }
 
     @Provides
     @Singleton
@@ -56,5 +58,10 @@ object AppModule {
     @Singleton
     fun provideProductDao(inventoryDataBase: InventoryDataBase): ProductDao{
         return inventoryDataBase.getProductDao()
+    }
+    @Provides
+    @Singleton
+    fun provideInventoryDao(inventoryDatabase:InventoryDataBase):InventoryDao{
+        return inventoryDatabase.getInventoryDao()
     }
 }

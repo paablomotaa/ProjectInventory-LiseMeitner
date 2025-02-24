@@ -6,16 +6,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.base.utils.BaseResult
-import app.domain.ddd.repository.InventoryRepository
 import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryListViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepository) : ViewModel() {
+class InventoryListViewModel @Inject constructor(private val inventoryRepository: InventoryRepositoryDB) : ViewModel() {
     var state by mutableStateOf<InventoryListState>(InventoryListState.Loading)
         private set
 
@@ -38,7 +37,7 @@ class InventoryListViewModel @Inject constructor(private val provideInventoryRep
      */
     fun getList() {
         viewModelScope.launch {
-            provideInventoryRepository.getData().collect { inventories ->
+            inventoryRepository.getData().collect { inventories ->
                 state = InventoryListState.Loading
                 if (inventories.isNotEmpty()) {
                     listinvent = inventories
@@ -95,8 +94,8 @@ class InventoryListViewModel @Inject constructor(private val provideInventoryRep
      */
     fun onEditInventory(inventory: Inventory, navigateEdit: () -> Unit) {
         viewModelScope.launch {
-            val result = InventoryRepository.existInventory(inventory.id)
-            if (result) {
+            val result = inventoryRepository.getDataById(inventory.id)
+            if (result != null) {
                 navigateEdit()
             }
         }
@@ -128,10 +127,10 @@ class InventoryListViewModel @Inject constructor(private val provideInventoryRep
      * @param id
      *
      */
-    fun onDelete(id: Int) {
+    fun onDelete(inventory: Inventory) {
         viewModelScope.launch {
             state = InventoryListState.Loading
-            provideInventoryRepository.delete(id)
+            inventoryRepository.deleteInventory(inventory)
             getList()
         }
     }

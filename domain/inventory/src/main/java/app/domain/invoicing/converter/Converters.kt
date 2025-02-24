@@ -3,6 +3,7 @@ package app.domain.invoicing.converter
 import androidx.room.TypeConverter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Date
 
 class Converters{
 
@@ -17,5 +18,13 @@ class Converters{
     @TypeConverter
     fun toLocalDate(value: String?): LocalDate? {
         return value?.let { LocalDate.parse(it, formatter) }  // Convierte String a LocalDate
+    }
+    @TypeConverter
+    fun fromDate(value: Date?): Long? {
+        return value?.time
+    }
+    @TypeConverter
+    fun toDate(value: Long?): Date? {
+        return value?.let { Date(it) }
     }
 }
