@@ -1,11 +1,15 @@
 package app.domain.invoicing.product
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import app.base.utils.Status
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.section.Section
 import java.time.LocalDate
 
+@Entity(tableName = "product")
 data class Product(
+    @PrimaryKey(autoGenerate = true)
     val id: Long,
     val code: String,
     val name: String,
@@ -19,11 +23,11 @@ data class Product(
     val status: Status,
     val amount: Int,
     val price: Double,
-    val image: String,
-    val acquisitionDate: LocalDate,
-    val cancellationDate: LocalDate,
-    val notes: String,
-    val tags: String
+    val image: String?,
+    val acquisitionDate: LocalDate? = null,
+    val cancellationDate: LocalDate? = null,
+    val notes: String? = null,
+    val tags: String? = null
 ){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

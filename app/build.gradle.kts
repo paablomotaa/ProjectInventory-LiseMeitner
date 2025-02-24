@@ -65,9 +65,18 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    //Iconos extendidos
+    implementation(libs.material.icon)
+
+    // Dependencias de Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+
     // UI
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigationcompose)
+    implementation(libs.androidx.navigation)
     implementation(libs.androidx.datastore.core.android)
     implementation(libs.androidx.datastore.preferences.core.jvm)
 
@@ -88,4 +97,14 @@ dependencies {
     androidTestImplementation(libs.hilt.testing)
     androidTestImplementation(libs.androidx.test.core)
     kaptAndroidTest(libs.hilt.compiler)
+
+    //DataStore
+    implementation(libs.androidx.datastore.preferences.core.jvm)
+
+    // Dependencias de Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+
+
 }

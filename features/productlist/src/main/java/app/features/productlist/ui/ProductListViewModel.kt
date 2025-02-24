@@ -8,14 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
 import app.domain.invoicing.product.Product
-import app.domain.invoicing.repository.ProductRepository
+import app.domain.invoicing.repositoryDB.ProductRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductListViewModel
-@Inject constructor(private val provideProductRepository: ProductRepository) : ViewModel(){
+@Inject constructor(private val provideProductRepository: ProductRepositoryDB) : ViewModel(){
     var state by mutableStateOf<ProductListState>(ProductListState.Loading)
         private set
 
@@ -37,7 +37,7 @@ class ProductListViewModel
     fun getList(){
         viewModelScope.launch {
             state = ProductListState.Loading
-            provideProductRepository.getProduct().collect{ products ->
+            provideProductRepository.getAll().collect{ products ->
                 if(products.isNotEmpty()){
 
                     Log.d("ProductList","Entra")
@@ -46,7 +46,7 @@ class ProductListViewModel
 
                     Log.d("ProductList", list.joinToString(","))
                     state = ProductListState.Success(list)
-                    listTags = list.map { it.tags.takeIf { it.isNotEmpty() } ?: "Sin Tags" }.plus("Sin Tags").distinct()
+                    listTags = list.map { it.tags.takeIf { !it.isNullOrEmpty() } ?: "Sin Tags" }.plus("Sin Tags").distinct()
                 }
                 else
                     state = ProductListState.NoData
@@ -64,7 +64,7 @@ class ProductListViewModel
     fun onViewProduct(product: Product, navigateView: () -> Unit){
         viewModelScope.launch {
             state = ProductListState.Loading
-            val result = provideProductRepository.existProduct(product.code)
+            val result = provideProductRepository.validate(product.code)
             idProduct = product.id
             if(result) {
                 navigateView()
@@ -103,7 +103,7 @@ class ProductListViewModel
     fun onDeleteProduct(product: Product){
         viewModelScope.launch {
             state = ProductListState.Loading
-            provideProductRepository.deleteProduct(product.id)
+            provideProductRepository.remove(product)
             getList()
         }
     }

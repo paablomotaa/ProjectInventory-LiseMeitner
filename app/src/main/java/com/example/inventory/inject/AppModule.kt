@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import app.domain.ddd.repository.InventoryRepository
-import app.domain.invoicing.repository.ProductRepository
+import app.domain.invoicing.InventoryDataBase
+import app.domain.invoicing.dao.ProductDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,11 +20,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    /*
     @Provides
     @Singleton
     fun provideProductRepository(): ProductRepository {
         return ProductRepository
     }
+    */
+
 
     /**
      * Método que provee el DataStore (api-valor) de la sessión
@@ -37,9 +40,21 @@ object AppModule {
             produceFile = { context.preferencesDataStoreFile(Session.DATA) })
     }
 
-    @Provides
+    /*@Provides
     @Singleton
     fun provideInventoryRepository():InventoryRepository{
         return InventoryRepository
+    }*/
+
+    @Provides
+    @Singleton
+    fun provideInventoryDataBase(@ApplicationContext context: Context): InventoryDataBase {
+        return InventoryDataBase.getDatabase(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductDao(inventoryDataBase: InventoryDataBase): ProductDao{
+        return inventoryDataBase.getProductDao()
     }
 }

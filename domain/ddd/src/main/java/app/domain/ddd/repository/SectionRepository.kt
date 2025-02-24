@@ -1,5 +1,5 @@
 package app.domain.ddd.repository
-
+/*
 import app.domain.invoicing.dependency.Dependency
 import app.domain.invoicing.section.Section
 import kotlinx.coroutines.delay
@@ -99,4 +99,4 @@ object SectionRepository {
         delay(2000)
         return dataSet.remove(section)
     }
-}
+}*/
