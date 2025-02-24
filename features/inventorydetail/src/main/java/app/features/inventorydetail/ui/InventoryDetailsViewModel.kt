@@ -6,15 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import app.domain.ddd.repository.InventoryRepository
-import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryDetailsViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepository) : ViewModel() {
+class InventoryDetailsViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepositoryDB) : ViewModel() {
     var state by mutableStateOf<InventoryDetailsState>(InventoryDetailsState.Loading)
         private set
 
@@ -26,7 +24,7 @@ class InventoryDetailsViewModel @Inject constructor(private val provideInventory
      */
     fun getInventoryInfo(id: Int){
         viewModelScope.launch {
-            val inventory = provideInventoryRepository.findInventory(id)
+            val inventory = provideInventoryRepository.getDataById(id)
             if (inventory != null) {
                 state = InventoryDetailsState.Success(inventory)
                 Log.e("InventoryDetailsVM", "Exception en success")
@@ -45,8 +43,8 @@ class InventoryDetailsViewModel @Inject constructor(private val provideInventory
      */
     fun onGoEdit(id:Int, goEdit:() -> Unit){
         viewModelScope.launch {
-            val res = provideInventoryRepository.existInventory(id)
-            if(res){
+            val res = provideInventoryRepository.getDataById(id)
+            if(res !=null){
                 goEdit()
             }
         }

@@ -48,7 +48,7 @@ data class eventInventoryList(
     val onEditInventory:(Inventory,()->Unit) -> Unit,
     val onFilterInventory:(String) -> Unit,
     val onAccountView:() -> Unit,
-    val onDelete:(Int) -> Unit
+    val onDelete:(Inventory) -> Unit
 )
 
 /**
@@ -113,7 +113,6 @@ fun InventoryListScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InventoryListContent(
     goAdd:() -> Unit,
@@ -143,7 +142,7 @@ fun InventoryListContent(
         DeleteObjectDialog(
             obj = viewmodel.productDelete!!,
             onConfirm = {
-                events.onDelete(viewmodel.productDelete!!.id)
+                events.onDelete(viewmodel.productDelete!!)
                 viewmodel.productDelete = null //Aqui ya se ha eliminado
             },
             onDismiss = {viewmodel.productDelete = null }, //Anulo la operación onLongClick

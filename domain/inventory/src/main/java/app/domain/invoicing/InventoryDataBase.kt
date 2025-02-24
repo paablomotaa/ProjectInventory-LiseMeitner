@@ -8,20 +8,24 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import app.base.utils.Status
 import app.domain.invoicing.converter.Converters
+import app.domain.invoicing.dao.InventoryDao
 import app.domain.invoicing.dao.ProductDao
+import app.domain.invoicing.inventory.Inventory
 import app.domain.invoicing.product.Product
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
+import java.util.Date
 import java.util.concurrent.Executors
 
 @Database(
     version = 1,
-    entities = [Product::class],
+    entities = [Product::class,Inventory::class],
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class InventoryDataBase:RoomDatabase(){
     abstract fun getProductDao():ProductDao
+    abstract fun getInventoryDao():InventoryDao
 
     companion object {
         /**
@@ -59,6 +63,7 @@ abstract class InventoryDataBase:RoomDatabase(){
 
         private fun prepopulateDatabase(database: InventoryDataBase) {
             val productDao = database.getProductDao()
+            val inventoryDao = database.getInventoryDao()
 
             runBlocking {
                 productDao.insertProduct(
@@ -83,8 +88,19 @@ abstract class InventoryDataBase:RoomDatabase(){
                         tags = "dad"
                     )
                 )
+                inventoryDao.insert(
+                    Inventory(
+                        id = 1,
+                        code = "237123127",
+                        name = "InventarioEjemplo",
+                        shortName = "IE",
+                        description = "Este es un inventario de ejemplo",
+                        type = "Tipo random",
+                        dateActive = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
+                        dateHistory = Date.from(LocalDate.now().atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()),
+                    )
+                )
             }
-
         }
     }
 }

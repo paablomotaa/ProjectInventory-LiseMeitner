@@ -1,6 +1,5 @@
 package app.features.inventorycreation.ui.edition
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,15 +7,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.isValidShortName
-import app.domain.ddd.repository.InventoryRepository
 import app.domain.invoicing.inventory.Inventory
-import app.features.inventorycreation.ui.creation.InventoryCreationState
+import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryEditionViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepository) : ViewModel() {
+class InventoryEditionViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepositoryDB) : ViewModel() {
     var state by mutableStateOf(InventoryEditionState())
         private set
     var stateView by mutableStateOf<InventoryEditionStateView>(InventoryEditionStateView.Loading)
@@ -29,7 +27,7 @@ class InventoryEditionViewModel @Inject constructor(private val provideInventory
      */
     fun getInventory(id:Int){
         viewModelScope.launch {
-            val inventory = provideInventoryRepository.findInventory(id)
+            val inventory = provideInventoryRepository.getDataById(id)
             if (inventory != null) {
                 if (state.id == 0) {
                     state = state.copy(
@@ -149,9 +147,9 @@ class InventoryEditionViewModel @Inject constructor(private val provideInventory
         }
 
         viewModelScope.launch {
-            val inventoryold = provideInventoryRepository.existInventory(state.id)
-            if(inventoryold){
-                val response = provideInventoryRepository.edit(
+            val inventoryold = provideInventoryRepository.getDataById(state.id)
+            if(inventoryold != null){
+                val response = provideInventoryRepository.update(
                     Inventory(
                         id = state.id,
                         code = state.code,
