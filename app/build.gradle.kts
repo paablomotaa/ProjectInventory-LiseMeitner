@@ -87,7 +87,6 @@ dependencies {
     testImplementation(libs.kotlin.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.truth)
-    testImplementation(kotlin("test"))
 
     // Testing Instrumentado
     androidTestImplementation(libs.truth)
@@ -98,7 +97,6 @@ dependencies {
     androidTestImplementation(libs.hilt.testing)
     androidTestImplementation(libs.androidx.test.core)
     kaptAndroidTest(libs.hilt.compiler)
-    api(project(":domain:inventory"))
 
     //DataStore
     implementation(libs.androidx.datastore.preferences.core.jvm)

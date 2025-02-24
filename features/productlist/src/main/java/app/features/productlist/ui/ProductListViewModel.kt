@@ -46,7 +46,7 @@ class ProductListViewModel
 
                     Log.d("ProductList", list.joinToString(","))
                     state = ProductListState.Success(list)
-                    listTags = list.map { it.tags.takeIf { it.isNotEmpty() } ?: "Sin Tags" }.plus("Sin Tags").distinct()
+                    listTags = list.map { it.tags.takeIf { !it.isNullOrEmpty() } ?: "Sin Tags" }.plus("Sin Tags").distinct()
                 }
                 else
                     state = ProductListState.NoData

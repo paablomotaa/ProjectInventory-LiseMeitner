@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import app.base.utils.Status
+import app.domain.invoicing.converter.Converters
 import app.domain.invoicing.dao.ProductDao
 import app.domain.invoicing.product.Product
 import kotlinx.coroutines.runBlocking
@@ -17,6 +19,7 @@ import java.util.concurrent.Executors
     entities = [Product::class],
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class InventoryDataBase:RoomDatabase(){
     abstract fun getProductDao():ProductDao
 

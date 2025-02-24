@@ -8,6 +8,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.domain.ddd)
     implementation(projects.domain.inventory)
     implementation(project(":features:inventorycreation"))
 }

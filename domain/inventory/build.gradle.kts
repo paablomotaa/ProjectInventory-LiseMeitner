@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlin.kapt)
+    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.app.android.library)
     alias(libs.plugins.app.android.library.compose)
 }
@@ -20,6 +20,7 @@ dependencies {
     implementation(projects.base.utils)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlin.coroutines.core)
+    implementation(libs.hilt.compiler)
 
     // Dependencias de Room
     implementation(libs.room.runtime)
