@@ -6,11 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
-import app.domain.ddd.repository.CategoryRepository
-import app.domain.ddd.repository.SectionRepository
-import app.domain.invoicing.category.Category
+import app.domain.invoicing.repository.CategoryRepository
+import app.domain.invoicing.repository.SectionRepository
 import app.domain.invoicing.product.Product
-import app.domain.invoicing.repository.ProductRepository
+import app.domain.invoicing.repositoryDB.ProductRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -20,7 +19,7 @@ import javax.inject.Inject
 private const val especialExpresion = "*/%!?()[]{}=+-_\":;,.;:|&%#@~*^`\'"
 
 @HiltViewModel
-class ProductEditionViewModel @Inject constructor(private val provideProductRepository: ProductRepository) : ViewModel() {
+class ProductEditionViewModel @Inject constructor(private val provideProductRepository: ProductRepositoryDB) : ViewModel() {
     var state by mutableStateOf(ProductEditionState())
         private set
 
@@ -37,7 +36,7 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
     fun importProduct(id: Long){
         viewModelScope.launch {
             stateView = ProductEditionStateView.Loading
-            provideProductRepository.findProduct(id).collect{ product ->
+            val product = provideProductRepository.getById(id)
                 if(product != null){
                     state = state.copy(
                         id = product.id,
@@ -60,7 +59,6 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
                         notes = product.notes
                     )
                 }
-            }
         }
     }
 
@@ -71,10 +69,9 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
      */
     fun getList(){
         viewModelScope.launch {
-            provideProductRepository.getStatus().collect{ products ->
-                if(products.isNotEmpty())
-                    state = state.copy(listStatus = products)
-            }
+            val status = Status.entries
+                if(status.isNotEmpty())
+                    state = state.copy(listStatus = status.toList())
             CategoryRepository.getAllCategories().collect{ categories ->
                 if(categories.isNotEmpty())
                     state = state.copy(listCategoria = categories)
@@ -408,10 +405,9 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
         }
         stateView = ProductEditionStateView.Loading
         viewModelScope.launch {
-            val responde = ProductRepository.existProduct(state.code)
+            val responde = provideProductRepository.validate(state.code)
             if (responde) {
-                val product = ProductRepository.editProduct(
-                    id = state.id,
+                val product = provideProductRepository.update(
                     Product(
                         id = state.id,
                         code = state.code,
@@ -433,10 +429,9 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
                         notes = state.notes
                     )
                 )
-                if (product) {
-                    state = state.copy(success = true)
-                    goBack()
-                }
+                state = state.copy(success = true)
+                goBack()
+
             }
             else{
                 stateView = ProductEditionStateView.Success

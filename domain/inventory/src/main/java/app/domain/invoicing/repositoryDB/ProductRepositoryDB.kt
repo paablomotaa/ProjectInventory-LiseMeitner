@@ -25,7 +25,7 @@ class ProductRepositoryDB @Inject constructor(private val productDao: ProductDao
         productDao.updateProduct(product)
     }
 
-    fun getById(id: Int): Product? {
+    fun getById(id: Long): Product? {
         return productDao.getProductById(id)
     }
 

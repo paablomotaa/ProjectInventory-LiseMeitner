@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.domain.invoicing.category.Category
-import app.domain.ddd.repository.CategoryRepository
+import app.domain.invoicing.repository.CategoryRepository
 import kotlinx.coroutines.launch
 
 class CategoryListViewModel : ViewModel() {

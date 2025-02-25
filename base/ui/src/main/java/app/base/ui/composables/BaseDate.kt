@@ -29,7 +29,7 @@ import java.util.Date
 @Composable
 fun DateField(
     showDialog: () -> Unit,
-    selectedDate: LocalDate,
+    selectedDate: LocalDate?,
     isDateError: Boolean,
     text: String,
     dateFormatError: String?,

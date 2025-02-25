@@ -1,7 +1,7 @@
-package app.domain.ddd.repository
+package app.domain.invoicing.repository
 
 
-/*import app.base.utils.BaseResult
+import app.base.utils.BaseResult
 import app.domain.invoicing.inventory.Inventory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -64,4 +64,4 @@ object InventoryRepository {
         val inventory = dataSet.find { it.id == id }
         return inventory
     }
-}*/
+}

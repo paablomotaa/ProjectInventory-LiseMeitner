@@ -24,14 +24,14 @@ import app.base.ui.R
 import coil.compose.AsyncImage
 
 @Composable
-fun BaseImageBig(modifier: Modifier = Modifier, image: String) {
+fun BaseImageBig(modifier: Modifier = Modifier, image: String?) {
     val imageModifier = modifier
         .size(150.dp)
         .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
         .background(Color.Gray, shape = CircleShape)
         .clip(CircleShape)
 
-    if (image.isNotEmpty() && image.isNotBlank()) {
+    if (!image.isNullOrEmpty() && image.isNotBlank()) {
         AsyncImage(
             model = image,
             contentDescription = "Imagen seleccionada",
@@ -48,14 +48,14 @@ fun BaseImageBig(modifier: Modifier = Modifier, image: String) {
 }
 
 @Composable
-fun BaseImageMedium(modifier: Modifier = Modifier, image: String) {
+fun BaseImageMedium(modifier: Modifier = Modifier, image: String?) {
     val imageModifier = modifier
         .size(100.dp)
         .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
         .background(Color.Gray, shape = CircleShape)
         .clip(CircleShape)
 
-    if (image.isNotEmpty() && image.isNotBlank()) {
+    if (!image.isNullOrEmpty() && image.isNotBlank()) {
         AsyncImage(
             model = image,
             contentDescription = "Imagen seleccionada",
@@ -72,14 +72,14 @@ fun BaseImageMedium(modifier: Modifier = Modifier, image: String) {
 }
 
 @Composable
-fun BaseImageSmall(modifier: Modifier = Modifier, image: String) {
+fun BaseImageSmall(modifier: Modifier = Modifier, image: String?) {
     val imageModifier = modifier
         .size(50.dp)
         .border(BorderStroke(1.dp, Color.Black), shape = CircleShape)
         .background(Color.Gray, shape = CircleShape)
         .clip(CircleShape)
 
-    if (image.isNotEmpty() && image.isNotBlank()) {
+    if (!image.isNullOrEmpty() && image.isNotBlank()) {
         AsyncImage(
             model = image,
             contentDescription = "Imagen seleccionada",

@@ -23,7 +23,7 @@ import coil.compose.AsyncImage
 
 
 @Composable
-fun BasePickerImage(image: String, onImageChange: (String) -> Unit) {
+fun BasePickerImage(image: String?, onImageChange: (String) -> Unit) {
 
 // Launcher para seleccionar la imagen
 val imagePickerLauncher =
@@ -40,7 +40,7 @@ val imagePickerLauncher =
             .clickable { imagePickerLauncher.launch("image/*") },
         contentAlignment = Alignment.Center
     ) {
-        if (image.isNotEmpty() && image.isNotBlank()) {
+        if (!image.isNullOrEmpty() && image.isNotBlank()) {
             AsyncImage(
                 model = image,
                 contentDescription = "Imagen seleccionada",
