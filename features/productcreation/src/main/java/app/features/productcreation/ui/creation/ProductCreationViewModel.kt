@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
 import app.domain.invoicing.category.Category
+import app.domain.invoicing.product.Product
+import app.domain.invoicing.repository.CategoryRepository
 import app.domain.invoicing.repositoryDB.ProductRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,14 +32,14 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
     fun getList(){
         reset()
         viewModelScope.launch {
-           /* provideProductRepository.getStatus().collect{ products ->
-                if(products.isNotEmpty())
-                    state = state.copy(listStatus = products)
-            }
+            val status = Status.entries
+            if(status.isNotEmpty())
+                state = state.copy(listStatus = status.toList())
+
             CategoryRepository.getAllCategories().collect{ categories ->
                 if(categories.isNotEmpty())
                     state = state.copy(listCategoria = categories)
-            }*/
+            }
             state = state.copy(isLoading = false)
         }
     }
@@ -227,30 +229,30 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
                 state = state.copy(isLoading = false, isExitsError = true)
             }
             else{
-                val product = provideProductRepository.save(
-                    id = state.id,
-                    code = state.code,
-                    name = state.name,
-                    shortName = state.shortName,
-                    description = state.description,
-                    numSerial = state.numSerial,
-                    codModel = state.codModel,
-                    typeProduct = state.typeProduct,
-                    category = state.category,
-                    section = state.section,
-                    status = state.status,
-                    amount = state.amount,
-                    price = state.price,
-                    image = state.image,
-                    acquisitionDate = state.acquisitionDate,
-                    cancellationDate = state.cancellationDate,
-                    notes = state.notes,
-                    tags = state.tags
+                provideProductRepository.save(
+                    Product(
+                        id = state.id,
+                        code = state.code,
+                        name = state.name,
+                        shortName = state.shortName,
+                        description = state.description,
+                        numSerial = state.numSerial,
+                        codModel = state.codModel,
+                        typeProduct = state.typeProduct,
+                        category = state.category,
+                        section = state.section,
+                        status = state.status,
+                        amount = state.amount,
+                        price = state.price,
+                        image = state.image,
+                        acquisitionDate = state.acquisitionDate,
+                        cancellationDate = state.cancellationDate,
+                        notes = state.notes,
+                        tags = state.tags
+                    )
                 )
-                if (product) {
-                    state = state.copy(success = true)
-                    goBack()
-                }
+                state = state.copy(success = true)
+                goBack()
             }
         }
     }

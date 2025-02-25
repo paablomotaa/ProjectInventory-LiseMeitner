@@ -32,22 +32,22 @@ fun BaseTextField(
 }
 
 @Composable
-fun BaseTextFieldNoError(text: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier) {
+fun BaseTextFieldNoError(text: String, value: String?, onValueChange: (String) -> Unit, modifier: Modifier = Modifier) {
     TextField(
         modifier = modifier,
         singleLine = true,
-        value = value,
+        value = value ?: "",
         onValueChange = onValueChange,
         label = { Text(text) }
     )
 }
 
 @Composable
-fun BaseTextFieldRead(text: String, value: String, modifier: Modifier = Modifier) {
+fun BaseTextFieldRead(text: String, value: String?, modifier: Modifier = Modifier) {
     TextField(
         modifier = modifier,
         singleLine = true,
-        value = value,
+        value = value ?: "",
         onValueChange = {},
         label = { Text(text) },
         readOnly = true

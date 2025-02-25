@@ -5,13 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.domain.invoicing.repository.ProductRepository
+import app.domain.invoicing.product.Product
+import app.domain.invoicing.repositoryDB.ProductRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductDetailsViewModel @Inject constructor(val provideProductRepository: ProductRepository) : ViewModel() {
+class ProductDetailsViewModel @Inject constructor(val provideProductRepository: ProductRepositoryDB) : ViewModel() {
     var state by mutableStateOf(ProductDetailsState())
         private set
 
@@ -23,7 +24,7 @@ class ProductDetailsViewModel @Inject constructor(val provideProductRepository: 
 
     fun importProduct(id: Long) {
         viewModelScope.launch {
-            provideProductRepository.findProduct(id).collect{ product ->
+            val product = provideProductRepository.getById(id)
                 if(product != null){
                     state = state.copy(
                         id = product.id,
@@ -48,14 +49,13 @@ class ProductDetailsViewModel @Inject constructor(val provideProductRepository: 
                     )
                     viewState = ProductDetailsStateView.Success
                 }
-            }
         }
     }
 
     fun onGoEdit(goEdit: () -> Unit) {
         viewModelScope.launch {
             viewState = ProductDetailsStateView.Loading
-            val result = provideProductRepository.existProduct(state.code)
+            val result = provideProductRepository.validate(state.code)
             idProduct = state.id
             if(result){
                 goEdit()
@@ -69,7 +69,27 @@ class ProductDetailsViewModel @Inject constructor(val provideProductRepository: 
     fun removeProduct(goBack: () -> Unit) {
         viewModelScope.launch {
             viewState = ProductDetailsStateView.Loading
-            provideProductRepository.deleteProduct(state.id)
+            val product = Product(
+                id = state.id,
+                code = state.code,
+                name = state.name,
+                shortName = state.shortName,
+                description = state.description,
+                numSerial = state.numSerial,
+                codModel = state.codModel,
+                typeProduct = state.typeProduct,
+                category = state.category,
+                section = state.section,
+                status = state.status,
+                amount = state.amount,
+                price = state.price,
+                image = state.image,
+                acquisitionDate = state.acquisitionDate,
+                cancellationDate = state.cancellationDate,
+                tags = state.tags,
+                notes = state.notes
+            )
+            provideProductRepository.remove(product)
             goBack()
         }
 

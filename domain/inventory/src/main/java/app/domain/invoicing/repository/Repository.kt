@@ -1,6 +1,7 @@
-package app.domain.ddd.repository
+package app.domain.invoicing.repository
 
-import app.domain.ddd.model.UniqueId
+import app.domain.invoicing.model.UniqueId
+
 
 interface Repository<ID : UniqueId, E> {
 

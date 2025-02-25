@@ -1,4 +1,4 @@
-package app.domain.ddd.model
+package app.domain.invoicing.model
 
 abstract class UniqueId(open val value: Any) {
     override fun equals(other: Any?): Boolean {

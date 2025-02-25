@@ -11,7 +11,7 @@ import app.base.utils.BaseResult
 import app.base.utils.BaseResult.Success
 import app.domain.invoicing.category.Category
 import app.domain.invoicing.category.CategoryType
-import app.domain.ddd.repository.CategoryRepository
+import app.domain.invoicing.repository.CategoryRepository
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID

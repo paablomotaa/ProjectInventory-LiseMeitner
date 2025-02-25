@@ -7,6 +7,23 @@ plugins {
 
 android {
 
+        packaging {
+            resources.excludes.addAll(
+                listOf(
+                    "META-INF/DEPENDENCIES",
+                    "META-INF/LICENSE",
+                    "META-INF/LICENSE.txt",
+                    "META-INF/license.txt",
+                    "META-INF/NOTICE",
+                    "META-INF/NOTICE.txt",
+                    "META-INF/notice.txt",
+                    "META-INF/ASL2.0",
+                    "META-INF/*.kotlin_module",
+                    "META-INF/gradle/incremental.annotation.processors"
+                )
+            )
+        }
+
     defaultConfig {
         applicationId = "com.example.inventory"
         versionCode = 1
@@ -105,6 +122,5 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
-
 
 }
