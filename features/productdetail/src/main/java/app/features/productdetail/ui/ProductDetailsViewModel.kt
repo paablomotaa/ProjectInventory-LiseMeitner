@@ -24,7 +24,8 @@ class ProductDetailsViewModel @Inject constructor(val provideProductRepository: 
 
     fun importProduct(id: Long) {
         viewModelScope.launch {
-            val product = provideProductRepository.getById(id)
+            provideProductRepository.getById(id).collect{
+                product ->
                 if(product != null){
                     state = state.copy(
                         id = product.id,
@@ -49,6 +50,7 @@ class ProductDetailsViewModel @Inject constructor(val provideProductRepository: 
                     )
                     viewState = ProductDetailsStateView.Success
                 }
+            }
         }
     }
 

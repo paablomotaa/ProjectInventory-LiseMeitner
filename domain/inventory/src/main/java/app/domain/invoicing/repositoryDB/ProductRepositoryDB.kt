@@ -25,11 +25,11 @@ class ProductRepositoryDB @Inject constructor(private val productDao: ProductDao
         productDao.updateProduct(product)
     }
 
-    fun getById(id: Long): Product? {
+    fun getById(id: Long): Flow<Product?> {
         return productDao.getProductById(id)
     }
 
-    fun validate(code: String): Boolean {
+    suspend fun validate(code: String): Boolean {
         return productDao.validate(code) != null
     }
 
