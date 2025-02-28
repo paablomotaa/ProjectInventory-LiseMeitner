@@ -24,9 +24,9 @@ interface ProductDao {
     fun getAllProducts(): Flow<List<Product>>
 
     @Query("SELECT * FROM Product WHERE id = :productId")
-    fun getProductById(productId: Long): Product?
+    fun getProductById(productId: Long): Flow<Product?>
 
     @Query("SELECT * FROM Product WHERE code = :productCode")
-    fun validate(productCode: String): Product?
+    suspend fun validate(productCode: String): Product?
 
 }

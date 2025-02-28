@@ -1,8 +1,13 @@
 package app.features.productcreation.ui.creation
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.Status
@@ -10,7 +15,9 @@ import app.domain.invoicing.category.Category
 import app.domain.invoicing.product.Product
 import app.domain.invoicing.repository.CategoryRepository
 import app.domain.invoicing.repositoryDB.ProductRepositoryDB
+import app.features.productcreation.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -18,7 +25,7 @@ import javax.inject.Inject
 private const val especialExpresion = "*/%!?()[]{}=+-_\":;,.;:|&%#@~*^`\'"
 
 @HiltViewModel
-class ProductCreationViewModel @Inject constructor(private val provideProductRepository: ProductRepositoryDB) : ViewModel() {
+class ProductCreationViewModel @Inject constructor(private val provideProductRepository: ProductRepositoryDB, @ApplicationContext private val context: Context) : ViewModel() {
     var state by mutableStateOf(ProductCreationState())
         private set
 
@@ -251,7 +258,8 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
                         tags = state.tags
                     )
                 )
-                state = state.copy(success = true)
+                val contenido = "${context.getString(R.string.createProductContent)} ${state.name}, ${state.description}"
+                showNotification(context, channelId = "Inventory", notificationId = 1, tittle = context.getString(R.string.createProductTittle), content = contenido)
                 goBack()
             }
         }
@@ -365,4 +373,17 @@ class ProductCreationViewModel @Inject constructor(private val provideProductRep
     }
 
     //producto listado de todo productos añadir recoger datos dependencias no hace falta(secciones)
+
+
+    fun showNotification(@ApplicationContext context: Context, channelId: String, notificationId: Int, tittle: String, content: String){
+        val builder= NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(tittle)
+            .setContentText(content)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(context)){
+            notify(notificationId, builder.build())
+        }
+    }
 }

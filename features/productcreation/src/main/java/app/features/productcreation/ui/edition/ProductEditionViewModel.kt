@@ -36,8 +36,10 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
     fun importProduct(id: Long){
         viewModelScope.launch {
             stateView = ProductEditionStateView.Loading
-            val product = provideProductRepository.getById(id)
-                if(product != null){
+            provideProductRepository.getById(id).collect { product ->
+
+
+                if (product != null) {
                     state = state.copy(
                         id = product.id,
                         code = product.code,
@@ -59,6 +61,7 @@ class ProductEditionViewModel @Inject constructor(private val provideProductRepo
                         notes = product.notes
                     )
                 }
+            }
         }
     }
 

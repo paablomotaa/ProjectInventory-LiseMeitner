@@ -214,7 +214,7 @@ fun ProductEdition(modifier: Modifier = Modifier, accept: () -> Unit, state: Pro
 
                     BaseTextFieldNoError(stringResource(R.string.tags), state.tags, event.onTagsChange)
 
-                    NormalButton(stringResource(R.string.create), onClick = {event.onClickEditProduct(accept)})
+                    NormalButton(stringResource(R.string.edit), onClick = {event.onClickEditProduct(accept)})
                 }
             }
     }

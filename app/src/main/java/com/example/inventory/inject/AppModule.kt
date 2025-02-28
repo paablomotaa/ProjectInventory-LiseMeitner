@@ -11,6 +11,8 @@ import app.domain.invoicing.InventoryDataBase
 import app.domain.invoicing.dao.InventoryDao
 import app.domain.invoicing.dao.ProductDao
 import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
+import app.domain.invoicing.repositoryDB.ProductRepositoryDB
+import com.example.inventory.home.Notification
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,6 +44,7 @@ object AppModule {
             produceFile = { context.preferencesDataStoreFile(Session.DATA) })
     }
 
+
     @Provides
     @Singleton
     fun provideInventoryRepository(inventoryDao:InventoryDao):InventoryRepositoryDB{
@@ -63,5 +66,11 @@ object AppModule {
     @Singleton
     fun provideInventoryDao(inventoryDatabase:InventoryDataBase):InventoryDao{
         return inventoryDatabase.getInventoryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductRepository(dao: ProductDao): ProductRepositoryDB{
+        return ProductRepositoryDB(dao)
     }
 }
