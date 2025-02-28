@@ -77,6 +77,7 @@ dependencies {
     implementation(projects.features.inventorycreation)
     implementation(projects.features.inventorylist)
     implementation(projects.features.inventorydetail)
+    implementation(libs.accompanist.permissions)
 
 
 
