@@ -22,7 +22,7 @@ interface InventoryDao {
     @Query("SELECT * from inventory")
     fun getAllInventories(): Flow<List<Inventory>>
     @Query("SELECT * from inventory WHERE id=:inventoryId")
-    fun getInventoryById(inventoryId:Int):Inventory
+    suspend fun getInventoryById(inventoryId:Int):Inventory
     @Query("SELECT * from inventory WHERE code=:inventoryCode")
-    fun getInventoryByCode(inventoryCode:String):Inventory
+    suspend fun getInventoryByCode(inventoryCode:String):Inventory
 }

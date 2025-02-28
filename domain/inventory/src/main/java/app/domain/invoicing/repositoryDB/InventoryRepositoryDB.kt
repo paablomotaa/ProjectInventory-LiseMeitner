@@ -24,14 +24,14 @@ class InventoryRepositoryDB @Inject constructor(private val inventoryDao: Invent
         inventoryDao.update(inventory)
     }
 
-    fun getData(): Flow<List<Inventory>> {
+    suspend fun getData(): Flow<List<Inventory>> {
         return inventoryDao.getAllInventories()
     }
 
-    fun getDataById(inventoryId:Int):Inventory{
+    suspend fun getDataById(inventoryId:Int):Inventory{
         return inventoryDao.getInventoryById(inventoryId)
     }
-    fun getDataByCode(inventoryCode:String):Inventory{
+    suspend fun getDataByCode(inventoryCode:String):Inventory{
         return inventoryDao.getInventoryByCode(inventoryCode)
     }
 }
