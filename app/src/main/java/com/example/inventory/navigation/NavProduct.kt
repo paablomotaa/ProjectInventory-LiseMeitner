@@ -45,8 +45,6 @@ private fun NavGraphBuilder.productCreate(navController: NavController) {
     composable(route = ProductGraph.productCreate()) {
 
         val productCreationViewModel = hiltViewModel<ProductCreationViewModel>()
-        productCreationViewModel.reset()
-        productCreationViewModel.getList()
         ProductCreationScreen(
             goBack = {navController.popBackStack()},
             viewModel = productCreationViewModel

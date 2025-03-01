@@ -15,6 +15,8 @@ import app.domain.invoicing.model.inventoryproducts.InventoryProducts
 import app.domain.invoicing.repositoryDB.InventoryProductsRepositoryDB
 import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import com.example.inventory.home.NavigationDrawerItemSealed
+import app.domain.invoicing.repositoryDB.ProductRepositoryDB
+import com.example.inventory.home.Notification
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,6 +47,7 @@ object AppModule {
             corruptionHandler = ReplaceFileCorruptionHandler(produceNewData = { emptyPreferences() }),
             produceFile = { context.preferencesDataStoreFile(Session.DATA) })
     }
+
 
     @Provides
     @Singleton
@@ -77,5 +80,10 @@ object AppModule {
     @Singleton
     fun provideInventoryProductsRepository(inventoryProductsDao:InventoryProductsDao):InventoryProductsRepositoryDB{
         return InventoryProductsRepositoryDB(inventoryProductsDao)
+    }
+    @Provides
+    @Singleton
+    fun provideProductRepository(dao: ProductDao): ProductRepositoryDB{
+        return ProductRepositoryDB(dao)
     }
 }

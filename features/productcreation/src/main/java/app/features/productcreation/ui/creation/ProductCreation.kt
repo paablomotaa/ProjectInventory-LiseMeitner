@@ -2,6 +2,7 @@ package app.features.productcreation.ui.creation
 
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,6 +61,10 @@ fun ProductCreationScreen(goBack: () -> Unit,viewModel: ProductCreationViewModel
                               onDismissDialog = viewModel::onDismissDialog,
                               onClickCreateProduct = viewModel::onClickCreateProduct,
                           )){
+    LaunchedEffect(Unit){
+        viewModel.reset()
+        viewModel.getList()
+    }
     when{
         viewModel.state.isLoading -> LoadingUi()
         viewModel.state.isExitsError -> BaseAlertDialog(
