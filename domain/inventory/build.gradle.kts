@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.hilt.compiler)
 
+    implementation(libs.gson)
     // Dependencias de Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

@@ -1,6 +1,9 @@
 package app.domain.invoicing.converter
 
 import androidx.room.TypeConverter
+import app.domain.invoicing.product.Product
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
@@ -26,5 +29,15 @@ class Converters{
     @TypeConverter
     fun toDate(value: Long?): Date? {
         return value?.let { Date(it) }
+    }
+    @TypeConverter
+    fun fromProductList(products: List<Product>?): String {
+        return Gson().toJson(products)
+    }
+
+    @TypeConverter
+    fun toProductList(data: String): List<Product> {
+        val listType = object : TypeToken<List<Product>>() {}.type
+        return Gson().fromJson(data, listType)
     }
 }

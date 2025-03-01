@@ -6,15 +6,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.domain.invoicing.product.Product
+import app.domain.invoicing.repositoryDB.InventoryProductsRepositoryDB
 import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryDetailsViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepositoryDB) : ViewModel() {
+class InventoryDetailsViewModel @Inject constructor(
+    private val provideInventoryRepository: InventoryRepositoryDB,
+    private val provideInventoryProductsRepository: InventoryProductsRepositoryDB
+) : ViewModel() {
     var state by mutableStateOf<InventoryDetailsState>(InventoryDetailsState.Loading)
         private set
+    var listproducts by mutableStateOf<List<Product>>(emptyList())
+    private set
 
     /**
      * Obtiene la información de un inventario a partir de su ID y actualiza el estado en consecuencia.
@@ -25,8 +32,10 @@ class InventoryDetailsViewModel @Inject constructor(private val provideInventory
     fun getInventoryInfo(id: Int){
         viewModelScope.launch {
             val inventory = provideInventoryRepository.getDataById(id)
+            val products = provideInventoryProductsRepository.getDataById(id)
             if (inventory != null) {
                 state = InventoryDetailsState.Success(inventory)
+                listproducts = products.products
                 Log.e("InventoryDetailsVM", "Exception en success")
             } else {
                 state = InventoryDetailsState.NoData
@@ -46,6 +55,15 @@ class InventoryDetailsViewModel @Inject constructor(private val provideInventory
             val res = provideInventoryRepository.getDataById(id)
             if(res !=null){
                 goEdit()
+            }
+        }
+    }
+
+    fun onGoToAdd(id:Int,goToAdd:() -> Unit){
+        viewModelScope.launch {
+            val res = provideInventoryProductsRepository.getDataById(id)
+            if(res !=null){
+                goToAdd()
             }
         }
     }

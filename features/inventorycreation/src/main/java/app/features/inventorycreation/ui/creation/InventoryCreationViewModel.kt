@@ -8,13 +8,18 @@ import androidx.lifecycle.viewModelScope
 import app.base.utils.BaseResult
 import app.base.utils.isValidShortName
 import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.model.inventoryproducts.InventoryProducts
+import app.domain.invoicing.repositoryDB.InventoryProductsRepositoryDB
 import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryCreationViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepositoryDB): ViewModel() {
+class InventoryCreationViewModel @Inject constructor(
+    private val provideInventoryRepository: InventoryRepositoryDB,
+    private val provideInventoryProducts: InventoryProductsRepositoryDB
+): ViewModel() {
     var state by mutableStateOf(InventoryCreationState())
         private set
     var code = 1
@@ -131,6 +136,11 @@ class InventoryCreationViewModel @Inject constructor(private val provideInventor
             }
             else{
                 val response = provideInventoryRepository.insertInventory(inventory)
+                val response2 = provideInventoryProducts.insertInventory(InventoryProducts(
+                    inventory.id,
+                    emptyList()
+                )
+                )
                 when(response){
                     is BaseResult.Error -> {
                         state = state.copy(isCodeError = state.isCodeError)

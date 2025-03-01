@@ -9,8 +9,12 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import app.domain.invoicing.InventoryDataBase
 import app.domain.invoicing.dao.InventoryDao
+import app.domain.invoicing.dao.InventoryProductsDao
 import app.domain.invoicing.dao.ProductDao
+import app.domain.invoicing.model.inventoryproducts.InventoryProducts
+import app.domain.invoicing.repositoryDB.InventoryProductsRepositoryDB
 import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
+import com.example.inventory.home.NavigationDrawerItemSealed
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,5 +67,15 @@ object AppModule {
     @Singleton
     fun provideInventoryDao(inventoryDatabase:InventoryDataBase):InventoryDao{
         return inventoryDatabase.getInventoryDao()
+    }
+    @Provides
+    @Singleton
+    fun provideInventoryProductsDao(inventoryDatabase: InventoryDataBase):InventoryProductsDao{
+        return inventoryDatabase.getInventoryProductsDao()
+    }
+    @Provides
+    @Singleton
+    fun provideInventoryProductsRepository(inventoryProductsDao:InventoryProductsDao):InventoryProductsRepositoryDB{
+        return InventoryProductsRepositoryDB(inventoryProductsDao)
     }
 }
