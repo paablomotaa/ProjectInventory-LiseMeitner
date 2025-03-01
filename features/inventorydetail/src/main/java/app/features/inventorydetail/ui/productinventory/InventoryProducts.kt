@@ -59,7 +59,7 @@ fun InventoryProductsList(
     TopAppBarTitle<Nothing>(
         navigation = NavigationTopAppBar.BackPage(
             {onBack()},
-            stringResource(R.string.Productos) + inventoryId,
+            stringResource(R.string.Productos),
             floating = Action.ComplexAction(
                 Icons.Default.Check,
                 "Confirmar",
