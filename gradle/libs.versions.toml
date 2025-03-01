@@ -32,6 +32,7 @@ room = "2.6.1"
 roomCommon = "2.6.1"
 playServicesAnalyticsImpl = "18.2.0"
 icons = "1.7.8"
+gson = "2.10.1"
 accompanist = "0.31.1-alpha"
 
 [plugins]
@@ -43,6 +44,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 gms-googleServices = "com.google.gms.google-services:4.4.2"
 room = { id = "androidx.room", version.ref = "room" }
 kotlin-kapt = {id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
+
 
 # Plugins del dominio de build
 app-android-application = { id = "app.android.application", version = "unspecified" }
@@ -92,6 +94,7 @@ android-lottie = {group = "com.airbnb.android", name = "lottie-compose",version.
 androix-compose = {group = "androidx.activity", name = "activity-compose", version.ref = "androixCompose"}
 material-icon = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icons"}
 androidx-navigation = {group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation"}
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 
 # Room
