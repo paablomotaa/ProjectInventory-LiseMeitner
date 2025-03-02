@@ -1,4 +1,4 @@
-package com.example.inventory.inject
+package app.domain.invoicing
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*

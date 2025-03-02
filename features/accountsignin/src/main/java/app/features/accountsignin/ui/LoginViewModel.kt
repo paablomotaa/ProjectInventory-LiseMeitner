@@ -6,7 +6,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.ui.validateEmail
@@ -15,7 +14,7 @@ import app.base.utils.BaseResult
 import app.domain.invoicing.account.Email
 import app.domain.invoicing.repositoryDB.AccountRepositoryDB
 import com.example.login.data.model.AccountException
-import com.example.inventory.inject.Session
+import app.domain.invoicing.Session
 import com.moronlu18.loginjetpackcompose.login.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
