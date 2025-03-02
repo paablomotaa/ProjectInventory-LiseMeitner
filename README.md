@@ -3,7 +3,10 @@
 # Versions
 * [Version 0.4.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-040)
   * [Añadir imagenes a producto](https://github.com/paablomotaa/ProjectInventory-LiseMeitner/blob/main/README.md#1a%C3%B1adir-imagenes-a-producto)
-  * 
+  * [Implementación de base de datos en todos los módulos de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner/blob/Inventario/README.md#2-implementaci%C3%B3n-de-base-de-datos-en-todos-los-m%C3%B3dulos-de-la-aplicaci%C3%B3n)
+  * [Añadir productos a los inventarios](https://github.com/paablomotaa/ProjectInventory-LiseMeitner/blob/Inventario/README.md#3-a%C3%B1adir-productos-a-los-inventarios)
+  * [Inicio de sesión y registro de cuentas](https://github.com/paablomotaa/ProjectInventory-LiseMeitner/blob/Inventario/README.md#4-inicio-de-sesi%C3%B3n-y-registro-de-cuentas)
+  * [Notificaciones al crear.](https://github.com/paablomotaa/ProjectInventory-LiseMeitner/blob/Inventario/README.md#5-notificaciones-al-crear)
 * [Version 0.3.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-030)
   * [Cambios visuales](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#1-cambios-visuales)
     * [Visualización de los colores en el tema de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#-1-visualizaci%C3%B3n-de-los-colores-en-el-tema-de-la-aplicaci%C3%B3n)
@@ -30,14 +33,41 @@
 ---
 ---
 # Version 0.4.0
-## 1.Añadir imagenes a producto
+## 1.Añadir imagenes a producto.
 
-Se a añadido la posibilidad de añadir imagenes en editar y crear productos gracias a un "Image picker", ademas de poder verlos desde listar y detalles. Si no hay se elige una imagen se mostrara una "X"
+Se ha añadido la posibilidad de añadir imagenes en editar y crear productos gracias a un "Image picker", ademas de poder verlos desde listar y detalles. Si no hay se elige una imagen se mostrara una "X"
+
+<img src="resources/UpdatePhoto.jpg" alt="Imagen inventario details" width="400" height="875">
 
 ---
 
+## 2. Implementación de base de datos en todos los módulos de la aplicación.
+
+Se han implementado las entidades, los repositorios y las funciones necesarias a través de la librería Room para poder guardar el estado de la aplicación.
+
 ---
+
+## 3. Añadir productos a los inventarios.
+
+Se ha añadido la posibilidad de añadir productos a los inventarios desde Details. En el icono de + podremos acceder a la lista de productos para seleccionar cual queremos añadir.
+
+<img src="resources/AñadirProductos.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/DetallesDeProductosNuevo.png" alt="Imagen inventario details" width="400" height="875">
+
 ---
+
+## 4. Inicio de sesión y registro de cuentas.
+
+Se ha añadido la posibilidad de iniciar sesión y crear una cuenta propia dentro de la aplicación.
+<img src="resources/Login.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/Register.png" alt="Imagen inventario details" width="400" height="875">
+
+---
+
+## 5. Notificaciones al crear.
+
+Se ha añadido la generación de una notificación cada vez que el usuario añade un inventario o un producto.
+<img src="resources/InventoryNotification.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/NotificationProduct.jpg" alt="Imagen inventario details" width="400" height="875">
+
+
 # Version 0.3.0
 ## 1. Cambios visuales
 
