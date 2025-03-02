@@ -45,12 +45,15 @@ Se han implementado las entidades, los repositorios y las funciones necesarias a
 ## 3. Añadir productos a los inventarios.
 
 Se ha añadido la posibilidad de añadir productos a los inventarios desde Details. En el icono de + podremos acceder a la lista de productos para seleccionar cual queremos añadir.
-
+<img src="resources/AñadirProductos.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/editarImventario.png" alt="Imagen inventario edit" width="400" height="875">
+<img src="resources/DetallesDeProductosNuevo.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/editarImventario.png" alt="Imagen inventario edit" width="400" height="875">
 ---
 
 ## 4. Inicio de sesión y registro de cuentas.
 
 Se ha añadido la posibilidad de iniciar sesión y crear una cuenta propia dentro de la aplicación.
+<img src="resources/Login.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/editarImventario.png" alt="Imagen inventario edit" width="400" height="875">
+<img src="resources/Register.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/editarImventario.png" alt="Imagen inventario edit" width="400" height="875">
 
 ---
 # Version 0.3.0
