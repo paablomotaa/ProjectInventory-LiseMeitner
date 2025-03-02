@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.features.categorycreation.ui.creation.CategoryCreateViewModel
@@ -24,6 +25,7 @@ import app.features.productcreation.ui.edition.ProductEditionViewModel
 import app.features.productdetail.ui.ProductDetailsViewModel
 import app.features.productlist.ui.ProductListViewModel
 import com.example.inventory.home.HomeScreen
+import com.example.inventory.home.MainViewModel
 import com.example.inventory.home.Notification
 import com.example.inventory.theme.InventoryTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,15 +49,19 @@ class MainActivity : ComponentActivity() {
             val notification = Notification()
             notification.createNotificationChannel(LocalContext.current,"Inventory")
 
+            val viewModel = hiltViewModel<MainViewModel>()
+            viewModel.isActiveAccount()
+
             InventoryTheme {
                 Surface {
-                    AppDrawer(navController = navController, navBackStackEntry = navBackStackEntry,drawerState = drawerState, scope = scope) {
+                    AppDrawer(navController = navController, navBackStackEntry = navBackStackEntry,drawerState = drawerState, scope = scope, viewModel = viewModel) {
 
                         HomeScreen(
                             navController = navController,
                             categoryListViewModel,
                             categoryCreateViewModel,
-                            onOpenDrawer = { scope.launch { drawerState.open() } }
+                            onOpenDrawer = { scope.launch { drawerState.open() } },
+                            viewModel
                         )
                     }
                 }

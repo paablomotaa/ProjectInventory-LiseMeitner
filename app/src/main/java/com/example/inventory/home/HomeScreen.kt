@@ -3,6 +3,7 @@ package com.example.inventory.home
 import android.Manifest
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -28,15 +29,21 @@ fun HomeScreen(
     navController: NavHostController,
     categoryListViewModel: CategoryListViewModel,
     categoryCreateViewModel: CategoryCreateViewModel,
-    onOpenDrawer: () -> Unit
+    onOpenDrawer: () -> Unit,
+    viewModel: MainViewModel
 ) {
-    val viewModel = hiltViewModel<LoginViewModel>()
+    viewModel.getName()
     val permissionsState = rememberMultiplePermissionsState(
         permissions = listOf(
             Manifest.permission.POST_NOTIFICATIONS,
         )
     )
     LaunchedEffect(Unit){
+        snapshotFlow { viewModel.state }.collect{ state -> //Viene del cambio de estado del ViewModel(asincrono, flujo caliente)
+            val destination = state.starNavDestination()
+            if(navController.currentDestination?.route != destination)
+                navController.navigate(destination)
+        }
         if(!permissionsState.allPermissionsGranted)
             permissionsState.launchMultiplePermissionRequest()
     }
@@ -56,8 +63,7 @@ fun HomeScreen(
             onOpenDrawer
         )
         signUpGraph(
-            navController,
-            viewModel
+            navController
         )
     }
 }

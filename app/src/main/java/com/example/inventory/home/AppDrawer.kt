@@ -20,6 +20,7 @@ import app.base.ui.composables.ProfileDrawer
 import app.base.ui.composables.SmallSpace
 import app.domain.navigation.CategoryGraph
 import com.example.inventory.R
+import com.example.inventory.home.MainViewModel
 import com.example.inventory.home.NavigationDrawerItemSealed
 import com.example.inventory.navigation.InventoryGraph
 import com.example.inventory.navigation.ProductGraph
@@ -33,6 +34,7 @@ fun AppDrawer(
     navController: NavHostController,
     scope: CoroutineScope,
     drawerState: DrawerState,
+    viewModel: MainViewModel,
     content: @Composable () -> Unit
 ) {
     val currentDestination = navBackStackEntry?.destination
@@ -47,7 +49,7 @@ fun AppDrawer(
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(Separations.Medium)
                     )
-                    ProfileDrawer()
+                    ProfileDrawer(viewModel.nameAccount)
                     NavigationDrawerItemSealed.list().forEach {
                         NavigationDrawerItem(
                             selected = it.route == currentDestination?.route,
