@@ -10,9 +10,13 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import app.domain.invoicing.InventoryDataBase
 import app.domain.invoicing.dao.InventoryDao
 import app.domain.invoicing.dao.ProductDao
+import app.domain.invoicing.repositoryDB.AccountRepositoryDB
 import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
 import app.domain.invoicing.repositoryDB.ProductRepositoryDB
 import com.example.inventory.home.Notification
+import com.example.login.data.dao.AccountDao
+import com.example.login.data.dao.BusinessDao
+import com.example.login.data.dao.PersonalDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +35,6 @@ object AppModule {
         return ProductRepository
     }
     */
-
 
     /**
      * Método que provee el DataStore (api-valor) de la sessión
@@ -72,5 +75,32 @@ object AppModule {
     @Singleton
     fun provideProductRepository(dao: ProductDao): ProductRepositoryDB{
         return ProductRepositoryDB(dao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAccountDao(loginDatabase: InventoryDataBase): AccountDao {
+        //Se crea con esta llamada la base de datos
+        return loginDatabase.getAccountDao()
+    }
+    @Singleton
+    @Provides
+    fun providePersonalDao(loginDatabase: InventoryDataBase): PersonalDao {
+        //Se crea con esta llamada la base de datos
+        return loginDatabase.getPersonalDao()
+    }
+    @Singleton
+    @Provides
+    fun provideBusinessDao(loginDatabase: InventoryDataBase): BusinessDao {
+        //Se crea con esta llamada la base de datos
+        return loginDatabase.getBusinessDao()
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAccountRepository(accountDao: AccountDao, personalDao: PersonalDao, businessDao: BusinessDao): AccountRepositoryDB {
+        // Proporciona el caso de uso GetAccount, que interactúa con el repositorio para obtener cuentas
+        return AccountRepositoryDB(accountDao, personalDao, businessDao)
     }
 }

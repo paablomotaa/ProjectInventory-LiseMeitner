@@ -91,3 +91,48 @@ fun <T> TopAppBarTitle(navigation: NavigationTopAppBar, content: @Composable () 
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BaseTopAppBar(appBarState: BaseTopAppBarState) {
+    TopAppBar(title = { Text(text = appBarState.title) },
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Blue),
+        actions = {
+            appBarState.actions.forEach{
+                if(it.isVisible){
+                    IconButton(onClick = { it.onClick() }) {
+                        it.icon?.let { it1 ->
+                            Icon(
+                                imageVector = it1,
+                                contentDescription = it.contentDescription
+                            )
+                        }
+                    }
+                }
+            }
+            var expandeValue by remember { mutableStateOf(false) }
+
+            IconButton(
+                onClick = {expandeValue = true}) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "Content"
+                )
+            }
+            DropdownMenu(
+                expanded = expandeValue,
+                onDismissRequest = {expandeValue = false}
+            ) {
+                appBarState.actions.forEach {
+                    if(!it.isVisible){
+                        DropdownMenuItem(
+                            {Text(it.title)},
+                            onClick = it.onClick
+                        )
+                    }
+                }
+            }
+
+        }
+    )
+}
