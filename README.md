@@ -2,7 +2,7 @@
 
 # Versions
 * [Version 0.4.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-040)
-  * [Añadir imagenes a producto](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#1-cambios-visuales)
+  * [Añadir imagenes a producto](https://github.com/paablomotaa/ProjectInventory-LiseMeitner/blob/main/README.md#1a%C3%B1adir-imagenes-a-producto)
   * 
 * [Version 0.3.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-030)
   * [Cambios visuales](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#1-cambios-visuales)
