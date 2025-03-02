@@ -32,11 +32,26 @@
 # Version 0.4.0
 ## 1.Añadir imagenes a producto
 
-Se a añadido la posibilidad de añadir imagenes en editar y crear productos gracias a un "Image picker", ademas de poder verlos desde listar y detalles. Si no hay se elige una imagen se mostrara una "X"
+Se ha añadido la posibilidad de añadir imagenes en editar y crear productos gracias a un "Image picker", ademas de poder verlos desde listar y detalles. Si no hay se elige una imagen se mostrara una "X"
 
 ---
 
+## 2. Implementación de base de datos en todos los módulos de la aplicación.
+
+Se han implementado las entidades, los repositorios y las funciones necesarias a través de la librería Room para poder guardar el estado de la aplicación.
+
 ---
+
+## 3. Añadir productos a los inventarios.
+
+Se ha añadido la posibilidad de añadir productos a los inventarios desde Details. En el icono de + podremos acceder a la lista de productos para seleccionar cual queremos añadir.
+
+---
+
+## 4. Inicio de sesión y registro de cuentas.
+
+Se ha añadido la posibilidad de iniciar sesión y crear una cuenta propia dentro de la aplicación.
+
 ---
 # Version 0.3.0
 ## 1. Cambios visuales
