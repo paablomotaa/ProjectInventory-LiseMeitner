@@ -3,7 +3,10 @@
 # Versions
 * [Version 0.4.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-040)
   * [Añadir imagenes a producto](https://github.com/paablomotaa/ProjectInventory-LiseMeitner/blob/main/README.md#1a%C3%B1adir-imagenes-a-producto)
-  * 
+  * [Implementación de base de datos en todos los módulos de la aplicación]()
+  * [Añadir productos a los inventarios]()
+  * [Inicio de sesión y registro de cuentas]()
+  * [Notificaciones al crear.]()
 * [Version 0.3.0](https://github.com/paablomotaa/ProjectInventory-LiseMeitner?tab=readme-ov-file#version-030)
   * [Cambios visuales](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#1-cambios-visuales)
     * [Visualización de los colores en el tema de la aplicación](https://github.com/paablomotaa/ProjectInventory-LiseMeitner#-1-visualizaci%C3%B3n-de-los-colores-en-el-tema-de-la-aplicaci%C3%B3n)
@@ -30,7 +33,7 @@
 ---
 ---
 # Version 0.4.0
-## 1.Añadir imagenes a producto
+## 1.Añadir imagenes a producto.
 
 Se ha añadido la posibilidad de añadir imagenes en editar y crear productos gracias a un "Image picker", ademas de poder verlos desde listar y detalles. Si no hay se elige una imagen se mostrara una "X"
 
