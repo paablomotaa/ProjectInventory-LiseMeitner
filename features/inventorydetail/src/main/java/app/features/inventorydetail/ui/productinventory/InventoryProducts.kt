@@ -1,7 +1,6 @@
 package app.features.inventorydetail.ui.productinventory
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,8 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
@@ -28,13 +28,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.base.ui.components.LoadingUi
 import app.base.ui.components.NoDataScreen
+import app.base.ui.composables.BaseImageMedium
+import app.base.ui.composables.BaseImageSmall
 import app.base.ui.composables.TopAppBarTitle
 import app.base.ui.composables.topappbar.Action
 import app.base.ui.composables.topappbar.NavigationTopAppBar
@@ -85,10 +85,12 @@ fun InventoryProductsList(
 
 @Composable
 fun InventoryProductListContent(data: List<Product>,viewModel: InventoryProductsViewModel) {
+    val scrollstate = rememberScrollState()
     Box(
         modifier = Modifier.padding(WindowInsets.systemBars.asPaddingValues()).fillMaxSize()
     ) {
-        Column {
+        Column(
+        ) {
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
             ) {
@@ -103,15 +105,15 @@ fun InventoryProductListContent(data: List<Product>,viewModel: InventoryProducts
 }
 @Composable
 fun ProductItem(
-    inventario: Product,
-    isSelected: Boolean, // Recibe el estado de selección desde el ViewModel
-    onSelectionChange: (Product) -> Unit // Notifica cambios
+    product: Product,
+    isSelected: Boolean,
+    onSelectionChange: (Product) -> Unit
 ) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
             .fillMaxSize()
-            .clickable { onSelectionChange(inventario) },
+            .clickable { onSelectionChange(product) },
         shape = RoundedCornerShape(16.dp),
         border = if (isSelected) BorderStroke(2.dp, Color.Blue) else null,
         colors = CardDefaults.cardColors(
@@ -119,14 +121,7 @@ fun ProductItem(
         )
     ) {
         Row {
-            Image(
-                painter = painterResource(app.base.ui.R.drawable.ic_cactus),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .size(84.dp)
-                    .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
-            )
+            BaseImageMedium(modifier = Modifier.padding(8.dp).size(84.dp),image = product.image)
             Column(
                 modifier = Modifier
                     .padding(16.dp)
@@ -134,10 +129,10 @@ fun ProductItem(
                     .align(Alignment.CenterVertically)
             ) {
                 Column {
-                    Text(inventario.code)
+                    Text(product.code)
                 }
                 Spacer(modifier = Modifier.padding(5.dp))
-                Text(inventario.description)
+                Text(product.description)
             }
         }
     }

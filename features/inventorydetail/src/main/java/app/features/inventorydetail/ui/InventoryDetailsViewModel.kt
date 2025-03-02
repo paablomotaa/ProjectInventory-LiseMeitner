@@ -36,10 +36,8 @@ class InventoryDetailsViewModel @Inject constructor(
             if (inventory != null) {
                 state = InventoryDetailsState.Success(inventory)
                 listproducts = products.products
-                Log.e("InventoryDetailsVM", "Exception en success")
             } else {
                 state = InventoryDetailsState.NoData
-                Log.e("InventoryDetailsVM", "Exception en noData: " + id)
             }
         }
     }
