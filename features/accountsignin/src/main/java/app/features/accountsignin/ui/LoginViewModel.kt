@@ -9,19 +9,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.base.ui.validateEmail
 import app.base.ui.validatePassword
 import app.base.utils.BaseResult
-import app.base.utils.validateEmail
 import app.domain.invoicing.account.Email
-import com.example.login.R
-import com.example.login.base.network.BaseResult
+import app.domain.invoicing.repositoryDB.AccountRepositoryDB
 import com.example.login.data.model.AccountException
-import com.example.login.data.model.Email
-import com.example.login.data.repository.AccountRepository
-import com.example.login.data.repository.AccountRepositoryDB
-import com.example.login.di.Session
-import com.example.login.utils.validateEmail
-import com.example.login.utils.validatePassword
+import com.example.inventory.inject.Session
 import com.moronlu18.loginjetpackcompose.login.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -107,8 +101,8 @@ class LoginViewModel @Inject constructor(
                     is BaseResult.Error -> {
                         state = state.copy(
                             isErrorAccount = true,
-                            accountError = response.exception as AccountException,
-                            emailErrorFormat = response.exception.message.toString(),
+                            accountError = response.message as AccountException,
+                            emailErrorFormat = response.message.toString(),
                             isLoading = false
                         )
                     }

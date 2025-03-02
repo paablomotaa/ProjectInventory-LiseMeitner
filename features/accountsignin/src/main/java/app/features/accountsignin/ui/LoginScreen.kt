@@ -21,15 +21,8 @@ import app.base.ui.composables.PasswordField
 import app.base.ui.composables.SmallSpace
 import app.base.ui.composables.StructureScreen
 import app.base.ui.composables.TitleTxt
+
 import app.features.accountsignin.R
-import com.example.login.R
-import com.example.login.base.Composable.EmailField
-import com.example.login.base.Composable.LoadingUI
-import com.example.login.base.Composable.MediumSpace
-import com.example.login.base.Composable.PasswordField
-import com.example.login.base.Composable.SmallSpace
-import com.example.login.base.Composable.StructureScreen
-import com.example.login.base.Composable.TitleTxt
 import com.moronlu18.loginjetpackcompose.login.LoginState
 
 /**
@@ -143,7 +136,7 @@ fun OfflineUI(modifier: Modifier = Modifier) {
     StructureScreen(modifier = modifier){
         Card {
             Image(
-                painter = painterResource(R.drawable.android_studio_v2),
+                painter = painterResource(R.drawable.ic_cloud_off),
                 contentDescription = stringResource(id = R.string.errorDescription),
             )
         }

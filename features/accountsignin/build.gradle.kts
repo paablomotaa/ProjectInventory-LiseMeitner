@@ -1,5 +1,6 @@
 plugins {
-    alias(libs.plugins.app.android.feature)
+    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.app.android.library)
     alias(libs.plugins.app.android.library.compose)
 }
 
@@ -29,4 +30,7 @@ android {
 
 dependencies {
     implementation(projects.domain.inventory)
+    implementation(libs.hilt.library)
+    implementation(project(":base:ui"))
+    implementation(project(":base:utils"))
 }

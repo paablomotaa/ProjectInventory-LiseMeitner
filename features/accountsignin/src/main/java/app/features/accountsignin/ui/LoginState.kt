@@ -1,6 +1,7 @@
 package com.moronlu18.loginjetpackcompose.login
 
-import com.example.login.model.AccountException
+import com.example.login.data.model.AccountException
+
 
 data class LoginState(
     var email: String = "",

@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -25,8 +27,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import app.base.ui.Dimensions
 import app.base.ui.Separations
-import com.example.login.R
-import java.util.Date
 
 /**
  * Loading animation
@@ -64,8 +64,8 @@ fun PasswordField(password: String, passwordVisible: Boolean, isPasswordError: B
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
             val image = if (passwordVisible)
-                Icons.Filled.Visibility
-            else Icons.Filled.VisibilityOff
+                Icons.Filled.Check
+            else Icons.Filled.Close
 
             IconButton(onClick = { onClickPassword(passwordVisible) }){
                 Icon(imageVector  = image, contentDescription = null)

@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import app.base.ui.components.LoadingUi
+import app.base.ui.composables.BaseAlertDialog
 import app.base.ui.composables.BaseField
 import app.base.ui.composables.DateField
 import app.base.ui.composables.DialogDate
@@ -16,15 +17,6 @@ import app.base.ui.composables.EmailField
 import app.base.ui.composables.MediumSpace
 import app.base.ui.composables.StructureScreen
 import app.base.ui.composables.TitleTxt
-import com.example.login.base.Composable.BaseField
-import com.example.login.base.Composable.DateField
-import com.example.login.base.Composable.DialogDate
-import com.example.login.base.Composable.EmailField
-import com.example.login.base.Composable.LoadingUI
-import com.example.login.base.Composable.MediumSpace
-import com.example.login.base.Composable.StructureScreen
-import com.example.login.base.Composable.TitleTxt
-import com.example.login.ui.feature.Account.AlertDialogOK
 import com.moronlu18.loginjetpackcompose.register.RegisterState
 import java.time.LocalDate
 
@@ -47,21 +39,28 @@ fun RegisterScreen(
 ) {
     when {
         viewModel.state.isLoading -> LoadingUi()
-        viewModel.state.accountExitsError -> AlertDialogOK(
+        viewModel.state.accountExitsError -> BaseAlertDialog(
             title = "Error",
-            message = "Cuenta ya existe",
+            text = "Cuenta ya existe",
+            confirmText = "Ok",
+            onConfirm = {
+                event.onDismissError()
+            },
             onDismiss = {
                 event.onDismissError()
                 //viewModel.state.copy(accountExitsError = false) }
             }
         )
 
-        viewModel.state.isEmpty -> AlertDialogOK(
+        viewModel.state.isEmpty -> BaseAlertDialog(
             title = "Error",
-            message = "Campos vacios",
+            text = "Campos vacios",
+            confirmText = "ok",
+            onConfirm = {
+                event.onDismissError()
+            },
             onDismiss = {
                 event.onDismissError()
-                //viewModel.state.copy(isEmpty = false) }
             }
         )
 
