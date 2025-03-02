@@ -10,8 +10,10 @@ import app.base.utils.Status
 import app.domain.invoicing.account.Email
 import app.domain.invoicing.converter.Converters
 import app.domain.invoicing.dao.InventoryDao
+import app.domain.invoicing.dao.InventoryProductsDao
 import app.domain.invoicing.dao.ProductDao
 import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.model.inventoryproducts.InventoryProducts
 import app.domain.invoicing.product.Product
 import com.example.login.data.dao.AccountDao
 import com.example.login.data.dao.BusinessDao
@@ -29,7 +31,7 @@ import java.util.concurrent.Executors
 
 @Database(
     version = 1,
-    entities = [Product::class,Inventory::class,Account::class, Personal::class, Business::class],
+    entities = [Product::class,Inventory::class,Account::class, Personal::class, Business::class,InventoryProducts::class],
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -39,6 +41,7 @@ abstract class InventoryDataBase:RoomDatabase(){
     abstract fun getAccountDao(): AccountDao
     abstract fun getPersonalDao(): PersonalDao
     abstract fun getBusinessDao(): BusinessDao
+    abstract fun getInventoryProductsDao():InventoryProductsDao
 
     companion object {
         /**
@@ -80,7 +83,7 @@ abstract class InventoryDataBase:RoomDatabase(){
             val accountDao = database.getAccountDao()
             val personalDao = database.getPersonalDao()
             val businessDao = database.getBusinessDao()
-
+            val inventoryProdDao = database.getInventoryProductsDao()
             runBlocking {
                 productDao.insertProduct(
                     Product(
@@ -92,6 +95,28 @@ abstract class InventoryDataBase:RoomDatabase(){
                         numSerial = 1.0,
                         codModel = "001",
                         typeProduct = "PRODUCTO PRUEBA",
+                        category = "h",
+                        section = "",
+                        status = Status.NEW,
+                        amount = 1,
+                        price = 1.0,
+                        image = "",
+                        acquisitionDate = LocalDate.now(),
+                        cancellationDate = LocalDate.now(),
+                        notes = "",
+                        tags = "dad"
+                    )
+                )
+                productDao.insertProduct(
+                    Product(
+                        id = 2,
+                        code = "002",
+                        name = "PRODUCTO PRUEBA 2",
+                        shortName = "PRODUCTO PRUEBA 2",
+                        description = "PRODUCTO PRUEBA 2" ,
+                        numSerial = 2.0,
+                        codModel = "002",
+                        typeProduct = "PRODUCTO PRUEBA 2",
                         category = "h",
                         section = "",
                         status = Status.NEW,
@@ -174,6 +199,30 @@ abstract class InventoryDataBase:RoomDatabase(){
                             city = "Madrid",
                             postalCode = 28006,
                             country = "España"
+                inventoryProdDao.insert(
+                    InventoryProducts(
+                        id = 1,
+                        products = listOf(
+                            Product(
+                                id = 1,
+                                code = "001",
+                                name = "PRODUCTO PRUEBA",
+                                shortName = "PRODUCTO PRUEBA",
+                                description = "PRODUCTO PRUEBA",
+                                numSerial = 1.0,
+                                codModel = "001",
+                                typeProduct = "PRODUCTO PRUEBA",
+                                category = "h",
+                                section = "",
+                                status = Status.NEW,
+                                amount = 1,
+                                price = 1.0,
+                                image = "",
+                                acquisitionDate = LocalDate.now(),
+                                cancellationDate = LocalDate.now(),
+                                notes = "",
+                                tags = "dad"
+                            )
                         )
                     )
                 )

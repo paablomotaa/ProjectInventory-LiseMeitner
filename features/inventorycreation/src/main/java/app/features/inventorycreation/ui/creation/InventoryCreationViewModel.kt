@@ -1,20 +1,31 @@
 package app.features.inventorycreation.ui.creation
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.base.utils.BaseResult
 import app.base.utils.isValidShortName
 import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.model.inventoryproducts.InventoryProducts
+import app.domain.invoicing.repositoryDB.InventoryProductsRepositoryDB
 import app.domain.invoicing.repositoryDB.InventoryRepositoryDB
+import app.features.inventorycreation.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryCreationViewModel @Inject constructor(private val provideInventoryRepository: InventoryRepositoryDB): ViewModel() {
+class InventoryCreationViewModel @Inject constructor(
+    private val provideInventoryRepository: InventoryRepositoryDB,
+    private val provideInventoryProducts: InventoryProductsRepositoryDB,
+    @ApplicationContext private val context: Context
+): ViewModel() {
     var state by mutableStateOf(InventoryCreationState())
         private set
     var code = 1
@@ -131,11 +142,24 @@ class InventoryCreationViewModel @Inject constructor(private val provideInventor
             }
             else{
                 val response = provideInventoryRepository.insertInventory(inventory)
+                val response2 = provideInventoryProducts.insertInventory(InventoryProducts(
+                    inventory.id,
+                    emptyList()
+                )
+                )
                 when(response){
                     is BaseResult.Error -> {
                         state = state.copy(isCodeError = state.isCodeError)
                     }
                     is BaseResult.Success -> {
+
+                        ShowNotification(
+                            context = context,
+                            channelId = "Inventory",
+                            notificationId = state.id,
+                            Title = "Se creó un inventario nuevo",
+                            Content = "Nombre: " + state.name + " Code: " + state.code
+                        )
                         state = state.copy(Success = true, code = "", name = "", description = "", shortName = "")
                         onBack()
                     }
@@ -144,6 +168,17 @@ class InventoryCreationViewModel @Inject constructor(private val provideInventor
         }
     }
 
+    fun ShowNotification(@ApplicationContext context: Context,channelId:String,notificationId:Int,Title:String,Content:String){
+        val builder = NotificationCompat.Builder(context,channelId)
+            .setContentTitle(Title)
+            .setContentText(Content)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setSmallIcon(R.mipmap.ic_launcher)
+
+        with(NotificationManagerCompat.from(context)){
+            notify(notificationId,builder.build())
+        }
+    }
     /**
      * Verifica si hay campos vacíos en el estado del inventario y actualiza los errores correspondientes.
      */

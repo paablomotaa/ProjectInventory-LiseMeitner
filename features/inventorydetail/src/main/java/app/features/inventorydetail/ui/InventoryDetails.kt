@@ -1,19 +1,20 @@
 package app.features.inventorydetail.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -21,10 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,20 +30,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.base.ui.components.LoadingUi
 import app.base.ui.components.NoDataScreen
+import app.base.ui.composables.BaseImageMedium
 import app.base.ui.composables.BaseTextFieldRead
 import app.base.ui.composables.MediumSpace
-import app.base.ui.composables.SmallSpace
 import app.base.ui.composables.TopAppBarTitle
 import app.base.ui.composables.topappbar.Action
 import app.base.ui.composables.topappbar.NavigationTopAppBar
 import app.domain.invoicing.inventory.Inventory
+import app.domain.invoicing.product.Product
 import app.features.inventorydetail.R
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.reflect.KFunction1
 import kotlin.reflect.KFunction2
 
 data class InventoryDetailsEvents(
     val getInventoryInfo: KFunction1<Int, Unit>,
     val goEdit: KFunction2<Int, () -> Unit, Unit>,
+    val goToAdd: (Int,() -> Unit) -> Unit
 )
 
 /**
@@ -62,11 +64,13 @@ fun InventoryDetails(
     onBack: () -> Unit,
     inventoryId: Int,
     viewModel: InventoryDetailsViewModel,
-    goEdit: () -> Unit
+    goEdit: () -> Unit,
+    goToAdd: () -> Unit
 ) {
     val events = InventoryDetailsEvents(
         getInventoryInfo = viewModel::getInventoryInfo,
-        goEdit = viewModel::onGoEdit
+        goEdit = viewModel::onGoEdit,
+        goToAdd = viewModel::onGoToAdd
     )
     val inventoryid2 = inventoryId
     viewModel.getInventoryInfo(inventoryid2)
@@ -78,7 +82,7 @@ fun InventoryDetails(
             LoadingUi()
         }
         is InventoryDetailsState.Success -> {
-            DetailsScreen(onBack, (viewModel.state as InventoryDetailsState.Success).inventory, goEdit, events)
+            DetailsScreen(onBack, (viewModel.state as InventoryDetailsState.Success).inventory, goEdit, events,viewModel.listproducts,goToAdd)
         }
     }
 }
@@ -88,12 +92,21 @@ fun DetailsScreen(
     onBack: () -> Unit,
     inventory: Inventory,
     goEdit: () -> Unit,
-    events: InventoryDetailsEvents
+    events: InventoryDetailsEvents,
+    listProduct: List<Product>,
+    goToAdd: () -> Unit
 ) {
+    val scrollstate = rememberScrollState()
     TopAppBarTitle<Nothing>(
         navigation = NavigationTopAppBar.BackPage(
             { onBack() },
             stringResource(R.string.Detalles),
+            actions = listOf( Action.SimpleAction(
+                icon = Icons.Default.Add,
+                label = "Añadir productos",
+                onClick = {goToAdd()}
+            )
+            ),
             floating = Action.ComplexAction(
                 Icons.Default.Edit,
                 "Editar Producto",
@@ -107,7 +120,7 @@ fun DetailsScreen(
                     .fillMaxWidth()
                     .padding(16.dp)
                     .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
-                    .padding(16.dp),
+                    .padding(16.dp).verticalScroll(state = scrollstate),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -127,56 +140,61 @@ fun DetailsScreen(
                 )
                 MediumSpace()
                 BaseTextFieldRead(
+                    text = stringResource(R.string.NombreCorto),
+                    value = inventory.shortName
+                )
+                MediumSpace()
+                BaseTextFieldRead(
                     text = stringResource(R.string.Tipo),
                     value = inventory.type
                 )
                 MediumSpace()
+                val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(inventory.dateActive)
                 BaseTextFieldRead(
                     text = stringResource(R.string.FechActivo),
-                    value = inventory.dateActive.toString()
+                    value = formattedDate
                 )
                 MediumSpace()
-                //TODO Implementar la vista de la lista de los productos de cada inventario
-                Text(
-                    text = stringResource(R.string.Productos),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-                )
                 Column {
-                    Card(
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
-                            .fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp),
+                    Text(
+                        text = stringResource(R.string.Productos),
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    )
+
+                    listProduct.forEach { product ->
+                        Card(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp, vertical = 8.dp)
+                                .fillMaxWidth(),
+                            shape = RoundedCornerShape(16.dp),
                         ) {
-                        Row {
-                            Image(
-                                painter = painterResource(app.base.ui.R.drawable.ic_cactus),
-                                contentDescription = null,
-                                modifier = Modifier.padding(8.dp).size(84.dp).clip(
-                                    RoundedCornerShape(corner = CornerSize(16.dp))
-                                )
-                            )
-                            Column(
-                                modifier = Modifier.padding(16.dp).fillMaxWidth()
-                                    .align(Alignment.CenterVertically)
-                            ) {
-                                Column {
-                                    Text("Product")
+                            Row {
+                                BaseImageMedium(modifier = Modifier.padding(8.dp).size(84.dp),image = product.image)
+                                Column(
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                        .fillMaxWidth()
+                                        .align(Alignment.CenterVertically)
+                                ) {
+                                    Text(text = product.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                                    Spacer(modifier = Modifier.height(5.dp))
+                                    Text(text = product.description)
                                 }
-                                Spacer(modifier = Modifier.padding(5.dp))
-                                Text("Description")
                             }
                         }
                     }
                 }
+
             }
         }
     )
 }
-
 @Preview
 @Composable
 fun InventoryDetailsPreview(){

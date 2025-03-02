@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,12 +33,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.text.font.FontWeight
 import app.base.ui.components.LoadingUi
 import app.base.ui.components.NoDataScreen
 import app.base.ui.composables.DeleteObjectDialog
 import app.base.ui.composables.TopAppBarTitle
 import app.base.ui.composables.topappbar.Action
 import app.base.ui.composables.topappbar.NavigationTopAppBar
+import app.base.ui.icon_composable.InventoryIcon
 
 data class eventInventoryList(
     val onViewInventory: (Inventory,(Inventory)->Unit) -> Unit,
@@ -97,11 +98,9 @@ fun InventoryListScreen(
 
             is InventoryListState.Succes -> {
                 InventoryListContent(
-                    goAdd,
                     viewmodel = viewModel,
                     events = events,
                     inventories = (viewModel.state as InventoryListState.Succes).data,
-                    onOpenDrawer = onOpenDrawer,
                     goDetails = goDetails
                 )
             }
@@ -115,20 +114,16 @@ fun InventoryListScreen(
 
 @Composable
 fun InventoryListContent(
-    goAdd:() -> Unit,
-    modifier: Modifier = Modifier,
     viewmodel:InventoryListViewModel,
     events:eventInventoryList,
     inventories:List<Inventory>,
-    onOpenDrawer: () -> Unit,
     goDetails: (Inventory) -> Unit
 )
 {
-
         Box(
             modifier = Modifier.padding(WindowInsets.systemBars.asPaddingValues()).fillMaxSize()
         ) {
-            Column {
+            Column{
                 LazyColumn(
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                 ) {
@@ -143,9 +138,9 @@ fun InventoryListContent(
             obj = viewmodel.productDelete!!,
             onConfirm = {
                 events.onDelete(viewmodel.productDelete!!)
-                viewmodel.productDelete = null //Aqui ya se ha eliminado
+                viewmodel.productDelete = null
             },
-            onDismiss = {viewmodel.productDelete = null }, //Anulo la operación onLongClick
+            onDismiss = {viewmodel.productDelete = null },
             name = viewmodel.productDelete!!.name
         )
     }
@@ -169,7 +164,7 @@ fun InventoryItem(
         ) {
         Row {
             Image(
-                painter = painterResource(app.base.ui.R.drawable.ic_cactus),
+                imageVector = InventoryIcon(),
                 contentDescription = null,
                 modifier = Modifier.padding(8.dp).size(84.dp).clip(
                     RoundedCornerShape(corner = CornerSize(16.dp))
@@ -180,7 +175,7 @@ fun InventoryItem(
                     .align(Alignment.CenterVertically)
             ) {
                 Column {
-                    Text(inventario.code)
+                    Text(inventario.name, fontWeight = FontWeight.Bold)
                 }
                 Spacer(modifier = Modifier.padding(5.dp))
                 Text(inventario.description)
