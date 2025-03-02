@@ -58,6 +58,13 @@ Se ha añadido la posibilidad de iniciar sesión y crear una cuenta propia dentr
 <img src="resources/Login.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/Register.png" alt="Imagen inventario details" width="400" height="875">
 
 ---
+
+## 5. Notificaciones al crear.
+
+Se ha añadido la generación de una notificación cada vez que el usuario añade un inventario o un producto.
+<img src="resources/InventoryNotification.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/NotificationProduct.jpg" alt="Imagen inventario details" width="400" height="875">
+
+
 # Version 0.3.0
 ## 1. Cambios visuales
 
