@@ -34,6 +34,8 @@
 
 Se ha añadido la posibilidad de añadir imagenes en editar y crear productos gracias a un "Image picker", ademas de poder verlos desde listar y detalles. Si no hay se elige una imagen se mostrara una "X"
 
+<img src="resources/UpdatePhoto.jpg" alt="Imagen inventario details" width="400" height="875">
+
 ---
 
 ## 2. Implementación de base de datos en todos los módulos de la aplicación.
@@ -46,15 +48,14 @@ Se han implementado las entidades, los repositorios y las funciones necesarias a
 
 Se ha añadido la posibilidad de añadir productos a los inventarios desde Details. En el icono de + podremos acceder a la lista de productos para seleccionar cual queremos añadir.
 
-<img src="resources/AñadirProductos.png" alt="Imagen inventario details" width="400" height="875">
-<img src="resources/DetallesDeProductosNuevo.png" alt="Imagen inventario details" width="400" height="875">
+<img src="resources/AñadirProductos.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/DetallesDeProductosNuevo.png" alt="Imagen inventario details" width="400" height="875">
+
 ---
 
 ## 4. Inicio de sesión y registro de cuentas.
 
 Se ha añadido la posibilidad de iniciar sesión y crear una cuenta propia dentro de la aplicación.
-<img src="resources/Login.png" alt="Imagen inventario details" width="400" height="875">
-<img src="resources/Register.png" alt="Imagen inventario details" width="400" height="875">
+<img src="resources/Login.png" alt="Imagen inventario details" width="400" height="875"><img src="resources/Register.png" alt="Imagen inventario details" width="400" height="875">
 
 ---
 # Version 0.3.0
