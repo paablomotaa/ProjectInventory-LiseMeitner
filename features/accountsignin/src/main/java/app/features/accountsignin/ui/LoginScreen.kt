@@ -20,6 +20,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.base.ui.components.LoadingUi
+import app.base.ui.components.NoDataScreen
 import app.base.ui.composables.BaseImageSmall
 import app.base.ui.composables.EmailField
 import app.base.ui.composables.MediumSpace
@@ -55,7 +56,7 @@ fun LoginScreen(
     }
     when{
         viewModel.state.isLoading -> LoadingUi()
-        viewModel.state.isOffline -> OfflineUI(modifier)
+        viewModel.state.isOffline -> NoDataScreen(modifier)
         //viewModel.state.isErrorAccount -> DialogUI()
         else -> LoginScreenContent(
             viewModel = viewModel,goToAccountList,goToSignUp, modifier,)
