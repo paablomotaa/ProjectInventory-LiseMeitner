@@ -23,15 +23,15 @@ object SignUpGraph {
     fun signUp() = "$ROUTE/signup"
 }
 
-fun NavGraphBuilder.signUpGraph(navController: NavController,loginViewModel: LoginViewModel) {
+fun NavGraphBuilder.signUpGraph(navController: NavController) {
 
     navigation(startDestination = SignUpGraph.login(), route = SignUpGraph.ROUTE) {
-        login(navController, loginViewModel)
+        login(navController)
         signUp(navController)
     }
 }
 
-private fun NavGraphBuilder.login(navController: NavController, loginViewModel: LoginViewModel) {
+private fun NavGraphBuilder.login(navController: NavController) {
     composable(
         route = SignUpGraph.login(),
         arguments = listOf(
@@ -50,7 +50,7 @@ private fun NavGraphBuilder.login(navController: NavController, loginViewModel: 
         LoginScreen(
             email = email,
             password = password,
-            loginViewModel,
+            hiltViewModel<LoginViewModel>(),
             goToAccountList = { navController.navigate(InventoryGraph.inventoryList()){
                 popUpTo(SignUpGraph.login()) { inclusive = true }
             } },
@@ -67,6 +67,5 @@ private fun NavGraphBuilder.signUp(navController: NavController) {
                 navController.navigate("sign_up_graph/login?email=${viewModel.state.email}&password=${viewModel.state.password}")},
             viewModel
         )
-
     }
 }

@@ -93,7 +93,7 @@ class LoginViewModel @Inject constructor(private val repository: AccountReposito
 
                     is BaseResult.Success<*> -> {
                         state = state.copy(success = true)
-                        //session.saveUserSession(state.email, state.password, isUserLoggedIn = true)
+                        session.saveUserSession(state.email, state.password, isUserLoggedIn = true)
                         navRegister()
                     }
                 }
