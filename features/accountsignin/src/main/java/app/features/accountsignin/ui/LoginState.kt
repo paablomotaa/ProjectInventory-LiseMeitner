@@ -1,4 +1,4 @@
-package com.moronlu18.loginjetpackcompose.login
+package app.features.accountsignin.ui
 
 import com.example.login.data.model.AccountException
 

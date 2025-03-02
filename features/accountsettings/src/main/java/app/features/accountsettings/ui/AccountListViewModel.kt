@@ -1,4 +1,4 @@
-package com.example.login.ui.feature.Account
+package app.features.accountsettings.ui
 
 import android.util.Log
 import androidx.compose.runtime.getValue

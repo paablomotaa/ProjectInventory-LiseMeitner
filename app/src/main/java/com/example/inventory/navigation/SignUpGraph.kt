@@ -1,4 +1,4 @@
-package com.example.inventory.navigation
+package app.features.accountsignin.ui
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -7,10 +7,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.login.ui.feature.login.LoginScreen
-import com.example.login.ui.feature.login.LoginViewModel
-import com.example.login.ui.feature.register.RegisterScreen
-import com.example.login.ui.feature.register.RegisterViewModel
+import app.features.accountsignup.ui.RegisterScreen
+import app.features.accountsignup.ui.RegisterViewModel
+import com.example.inventory.navigation.AccountGraph
+import com.example.inventory.navigation.InventoryGraph
 
 
 object SignUpGraph {
@@ -23,15 +23,15 @@ object SignUpGraph {
     fun signUp() = "$ROUTE/signup"
 }
 
-fun NavGraphBuilder.signUpGraph(navController: NavController) {
+fun NavGraphBuilder.signUpGraph(navController: NavController,loginViewModel: LoginViewModel) {
 
     navigation(startDestination = SignUpGraph.login(), route = SignUpGraph.ROUTE) {
-        login(navController)
+        login(navController, loginViewModel)
         signUp(navController)
     }
 }
 
-private fun NavGraphBuilder.login(navController: NavController) {
+private fun NavGraphBuilder.login(navController: NavController, loginViewModel: LoginViewModel) {
     composable(
         route = SignUpGraph.login(),
         arguments = listOf(
@@ -50,8 +50,8 @@ private fun NavGraphBuilder.login(navController: NavController) {
         LoginScreen(
             email = email,
             password = password,
-            hiltViewModel<LoginViewModel>(),
-            goToAccountList = { navController.navigate(AccountGraph.accountList()){
+            loginViewModel,
+            goToAccountList = { navController.navigate(InventoryGraph.inventoryList()){
                 popUpTo(SignUpGraph.login()) { inclusive = true }
             } },
             goToSignUp = { navController.navigate(SignUpGraph.signUp()) },

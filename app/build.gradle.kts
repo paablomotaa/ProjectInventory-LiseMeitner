@@ -59,6 +59,7 @@ dependencies {
     implementation(projects.infrastructure.printer)
     //implementation(projects.infrastructure.firebase)
 
+    implementation(projects.features.accountsignin)
     implementation(projects.features.accountsignup)
     implementation(projects.features.accountsettings)
     implementation(projects.features.productcreation)
@@ -88,7 +89,6 @@ dependencies {
     // Dependencias de Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    implementation(project(":features:accountsignin"))
     kapt(libs.room.compiler)
 
     // UI

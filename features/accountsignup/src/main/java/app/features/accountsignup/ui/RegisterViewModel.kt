@@ -1,5 +1,6 @@
-package com.example.login.ui.feature.register
+package app.features.accountsignup.ui
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +14,6 @@ import app.base.utils.*
 import app.domain.invoicing.account.Email
 import app.domain.invoicing.repositoryDB.AccountRepositoryDB
 import com.example.login.data.model.Account
-import com.moronlu18.loginjetpackcompose.register.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -103,7 +103,8 @@ class RegisterViewModel @Inject constructor(private val repository: AccountRepos
         state = state.copy(showDialog = showDialog)
     }
 
-    fun onClickRegister(navController: () -> Unit) {
+    @SuppressLint("SuspiciousIndentation")
+    fun onClickRegister(goBack:() ->Unit) {
         if(areFieldEmpty()){
             state = state.copy(isEmpty = true)
             return
@@ -143,8 +144,8 @@ class RegisterViewModel @Inject constructor(private val repository: AccountRepos
                     )
                     if (accountCreate is BaseResult.Success<*>) {
                         state = state.copy(success = true, isLoading = false)
-                        navController()
                         Log.d(TAG, "Account create")
+                        goBack()
                     } else {
                         state = state.copy(isLoading = false)
                         Log.d(TAG, "Account not create")

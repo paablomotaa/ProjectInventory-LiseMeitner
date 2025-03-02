@@ -1,4 +1,4 @@
-package com.moronlu18.loginjetpackcompose.register
+package app.features.accountsignup.ui
 
 data class RegisterState(
     var id: Int = 0,

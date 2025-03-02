@@ -1,4 +1,4 @@
-package com.example.login.ui.feature.Account
+package app.features.accountsettings.ui
 
 import com.example.login.data.model.Account
 

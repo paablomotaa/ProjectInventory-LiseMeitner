@@ -1,6 +1,7 @@
 package com.example.inventory.inject
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
@@ -48,7 +49,8 @@ object AppModule {
     fun provideSessionDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(produceNewData = { emptyPreferences() }),
-            produceFile = { context.preferencesDataStoreFile(Session.DATA) })
+            produceFile = { context.preferencesDataStoreFile(Session.DATA) }
+        )
     }
 
 
@@ -109,11 +111,15 @@ object AppModule {
         return loginDatabase.getBusinessDao()
     }
 
-
     @Provides
     @Singleton
     fun provideAccountRepository(accountDao: AccountDao, personalDao: PersonalDao, businessDao: BusinessDao): AccountRepositoryDB {
         // Proporciona el caso de uso GetAccount, que interactúa con el repositorio para obtener cuentas
         return AccountRepositoryDB(accountDao, personalDao, businessDao)
+    }
+    @Provides
+    @Singleton
+    fun provideSession(dataStore:DataStore<Preferences>):Session{
+        return Session(dataStore)
     }
 }

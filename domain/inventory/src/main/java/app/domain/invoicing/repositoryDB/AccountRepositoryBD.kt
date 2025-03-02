@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AccountRepositoryDB @Inject constructor(private val accountDao: AccountDao, private val personalDao: PersonalDao, private val businessDao: BusinessDao) {
 
     suspend fun validate(email: Email, password: String): BaseResult<Account> {

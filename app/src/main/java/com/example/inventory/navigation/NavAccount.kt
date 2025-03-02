@@ -5,8 +5,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.login.ui.feature.Account.AccountListViewModel
-import com.example.login.ui.feature.Account.AccountsListScreen
+import app.features.accountsettings.ui.AccountListViewModel
+import app.features.accountsettings.ui.AccountsListScreen
 
 object AccountGraph {
     const val ROUTE = "account_graph"
@@ -16,7 +16,7 @@ object AccountGraph {
 
 fun NavGraphBuilder.accountGraph(navController: NavController) {
 
-    navigation(startDestination = AccountGraph.accountList(), route = AccountGraph.ROUTE) {
+    navigation(startDestination = AccountGraph.accountList(), route = InventoryGraph.ROUTE) {
         accountList(navController)
     }
 }

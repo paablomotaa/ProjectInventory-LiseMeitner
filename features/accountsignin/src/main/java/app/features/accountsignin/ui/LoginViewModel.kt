@@ -1,8 +1,5 @@
-package com.example.login.ui.feature.login
+package app.features.accountsignin.ui
 
-import android.content.res.Resources
-import android.util.Log
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,11 +8,10 @@ import androidx.lifecycle.viewModelScope
 import app.base.ui.validateEmail
 import app.base.ui.validatePassword
 import app.base.utils.BaseResult
+import app.domain.invoicing.Session
 import app.domain.invoicing.account.Email
 import app.domain.invoicing.repositoryDB.AccountRepositoryDB
 import com.example.login.data.model.AccountException
-import app.domain.invoicing.Session
-import com.moronlu18.loginjetpackcompose.login.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,18 +19,7 @@ import javax.inject.Inject
 const val TAG = "ViewModel"
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val repository: AccountRepositoryDB,
-    //private val resources: Resources,
-    private val session: Session
-) : ViewModel() {
-    //1. Solucion google
-    /*
-    private val _stateGoogle = mutableStateOf(LoginState())
-    val stateGoogle: State<LoginState> = _stateGoogle
-    */
-
-    //2. Solucion Lourdes
+class LoginViewModel @Inject constructor(private val repository: AccountRepositoryDB, private val session: Session) : ViewModel() {
     var state by mutableStateOf(LoginState())
         private set
 
@@ -108,9 +93,8 @@ class LoginViewModel @Inject constructor(
 
                     is BaseResult.Success<*> -> {
                         state = state.copy(success = true)
-                        session.saveUserSession(state.email, state.password, isUserLoggedIn = true)
+                        //session.saveUserSession(state.email, state.password, isUserLoggedIn = true)
                         navRegister()
-                        Log.d(TAG, response.data.toString())
                     }
                 }
             }

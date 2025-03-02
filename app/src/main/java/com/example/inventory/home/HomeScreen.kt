@@ -3,24 +3,23 @@ package com.example.inventory.home
 import android.Manifest
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import app.domain.navigation.categoryGraph
+import app.features.accountsignin.ui.LoginViewModel
+import app.features.accountsignin.ui.SignUpGraph
+import app.features.accountsignin.ui.signUpGraph
 import app.features.categorycreation.ui.creation.CategoryCreateViewModel
 import app.features.categorylist.ui.CategoryListViewModel
-import app.features.inventorycreation.ui.creation.InventoryCreationViewModel
-import app.features.inventorydetail.ui.InventoryDetailsViewModel
-import app.features.inventorylist.ui.InventoryListViewModel
-import app.features.productcreation.ui.creation.ProductCreationViewModel
-import app.features.productcreation.ui.edition.ProductEditionViewModel
-import app.features.productdetail.ui.ProductDetailsViewModel
-import app.features.productlist.ui.ProductListViewModel
 import com.example.inventory.navigation.InventoryGraph
 import com.example.inventory.navigation.InventoryGraph.inventoryGraph
+import com.example.inventory.navigation.accountGraph
 import com.example.inventory.navigation.productGraph
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -31,6 +30,7 @@ fun HomeScreen(
     categoryCreateViewModel: CategoryCreateViewModel,
     onOpenDrawer: () -> Unit
 ) {
+    val viewModel = hiltViewModel<LoginViewModel>()
     val permissionsState = rememberMultiplePermissionsState(
         permissions = listOf(
             Manifest.permission.POST_NOTIFICATIONS,
@@ -40,8 +40,7 @@ fun HomeScreen(
         if(!permissionsState.allPermissionsGranted)
             permissionsState.launchMultiplePermissionRequest()
     }
-
-    NavHost(navController = navController, startDestination = InventoryGraph.ROUTE) {
+    NavHost(navController = navController, startDestination = SignUpGraph.ROUTE) {
         inventoryGraph(
             navController,
             onOpenDrawer
@@ -55,6 +54,10 @@ fun HomeScreen(
             categoryListViewModel,
             categoryCreateViewModel,
             onOpenDrawer
+        )
+        signUpGraph(
+            navController,
+            viewModel
         )
     }
 }

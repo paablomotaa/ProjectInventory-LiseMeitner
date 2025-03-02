@@ -1,4 +1,4 @@
-package com.example.login.ui.feature.Account
+package app.features.accountsettings.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape

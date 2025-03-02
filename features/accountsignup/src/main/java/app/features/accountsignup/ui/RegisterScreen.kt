@@ -1,4 +1,4 @@
-package com.example.login.ui.feature.register
+package app.features.accountsignup.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
@@ -11,13 +11,11 @@ import app.base.ui.components.LoadingUi
 import app.base.ui.composables.BaseAlertDialog
 import app.base.ui.composables.BaseField
 import app.base.ui.composables.DateField
-import app.base.ui.composables.DialogDate
 import app.base.ui.composables.DialogDate2
 import app.base.ui.composables.EmailField
 import app.base.ui.composables.MediumSpace
 import app.base.ui.composables.StructureScreen
 import app.base.ui.composables.TitleTxt
-import com.moronlu18.loginjetpackcompose.register.RegisterState
 import java.time.LocalDate
 
 @Composable

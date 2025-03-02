@@ -1,4 +1,4 @@
-package com.example.login.ui.feature.login
+package app.features.accountsignin.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -23,7 +23,6 @@ import app.base.ui.composables.StructureScreen
 import app.base.ui.composables.TitleTxt
 
 import app.features.accountsignin.R
-import com.moronlu18.loginjetpackcompose.login.LoginState
 
 /**
  * Login screen
