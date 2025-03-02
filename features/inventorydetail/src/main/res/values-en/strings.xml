@@ -7,4 +7,6 @@
     <string name="Descripcion">Description</string>
     <string name="Tipo">Type</string>
     <string name="FechActivo">Active Time</string>
+    <string name="Productos">Products</string>
+    <string name="NombreCorto">Short Name</string>
 </resources>
