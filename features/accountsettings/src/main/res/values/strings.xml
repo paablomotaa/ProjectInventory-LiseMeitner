@@ -1,3 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Login</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_new_user">New user?</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_register">Register</string>
+    <string name="txt_loading">Cargando...</string>
+    <string name="errorDescription">Error de conexión</string>
+    <string name="dateBirth">Fecha de nacimiento</string>
+    <string name="title_accounts_list_screen">Titulos de cuentas</string>
+    <string name="filter">Filtrar</string>
+    <string name="icon_filter_content_description">Icono filtrar</string>
+    <string name="icon_settings_content_description">Configuración app</string>
+    <string name="name_action_setting">Ajustes</string>
+    <string name="name_icon_logout">Logout</string>
+    <string name="sort">Ordenar</string>
+    <string name="icon_sort_content_description">Icono ordenar</string>
 </resources>

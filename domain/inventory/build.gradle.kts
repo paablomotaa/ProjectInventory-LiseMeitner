@@ -62,4 +62,6 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.test)
     androidTestImplementation(libs.hilt.testing)
     androidTestImplementation(libs.androidx.test.core)
+
+    implementation(libs.androidx.datastore.preferences.core.jvm)
 }

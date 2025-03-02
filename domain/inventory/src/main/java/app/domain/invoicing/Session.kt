@@ -1,4 +1,4 @@
-package com.example.inventory.inject
+package app.domain.invoicing
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class Session @Inject constructor(private val dataStore: DataStore<Preferences>) {
     companion object {
         const val DATA = "Data"

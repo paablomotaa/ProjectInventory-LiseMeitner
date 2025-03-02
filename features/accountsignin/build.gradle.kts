@@ -21,12 +21,12 @@ android {
         )
     }
     namespace = "app.features.accountsignin"
-
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-    }
 }
 
 dependencies {
+    implementation(project(":base:ui"))
+    implementation(project(":base:utils"))
+    implementation(projects.domain.ddd)
     implementation(projects.domain.inventory)
+
 }

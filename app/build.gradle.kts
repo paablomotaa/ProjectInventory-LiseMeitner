@@ -59,8 +59,8 @@ dependencies {
     implementation(projects.infrastructure.printer)
     //implementation(projects.infrastructure.firebase)
 
-    implementation(projects.features.accountsignup)
     implementation(projects.features.accountsignin)
+    implementation(projects.features.accountsignup)
     implementation(projects.features.accountsettings)
     implementation(projects.features.productcreation)
     implementation(projects.features.productlist)

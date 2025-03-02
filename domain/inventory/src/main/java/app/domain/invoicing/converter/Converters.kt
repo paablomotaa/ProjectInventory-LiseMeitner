@@ -1,6 +1,7 @@
 package app.domain.invoicing.converter
 
 import androidx.room.TypeConverter
+import app.domain.invoicing.account.Email
 import app.domain.invoicing.product.Product
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
@@ -31,10 +32,18 @@ class Converters{
         return value?.let { Date(it) }
     }
     @TypeConverter
+    fun toEmail(value: String?): Email? {
+        return value?.let {Email(it)}
+    }
+
+    @TypeConverter
+    fun fromEmail(value: Email?): String? {
+        return value?.value
+    }
+    @TypeConverter
     fun fromProductList(products: List<Product>?): String {
         return Gson().toJson(products)
     }
-
     @TypeConverter
     fun toProductList(data: String): List<Product> {
         val listType = object : TypeToken<List<Product>>() {}.type
