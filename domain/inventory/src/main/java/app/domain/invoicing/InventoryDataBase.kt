@@ -199,6 +199,9 @@ abstract class InventoryDataBase:RoomDatabase(){
                             city = "Madrid",
                             postalCode = 28006,
                             country = "España"
+                        )
+                    )
+                )
                 inventoryProdDao.insert(
                     InventoryProducts(
                         id = 1,
