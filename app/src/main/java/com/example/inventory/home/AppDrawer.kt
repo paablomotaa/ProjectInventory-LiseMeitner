@@ -1,4 +1,7 @@
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DrawerState
@@ -10,6 +13,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
@@ -38,9 +42,11 @@ fun AppDrawer(
     val currentDestination = navBackStackEntry?.destination
 
     ModalNavigationDrawer(
+        drawerState = drawerState,
+        gesturesEnabled = false,
         drawerContent = {
             ModalDrawerSheet(modifier = modifier.width(250.dp)) {
-                Column{
+                Column {
                     SmallSpace()
                     Text(
                         text = stringResource(R.string.principal_menu),
@@ -57,8 +63,8 @@ fun AppDrawer(
                                 scope.launch {
                                     drawerState.close()
                                 }
-                                navController.navigate(it.route){
-                                    popUpTo(navController.graph.findStartDestination().id){
+                                navController.navigate(it.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
                                     launchSingleTop = true
@@ -69,9 +75,8 @@ fun AppDrawer(
                     }
                 }
             }
-        },
-        drawerState = drawerState
+        }
     ) {
-        content()
+            content()
     }
 }

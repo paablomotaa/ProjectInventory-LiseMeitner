@@ -3,6 +3,7 @@ package app.features.accountsignin.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -11,10 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import app.base.ui.components.LoadingUi
+import app.base.ui.composables.BaseImageSmall
 import app.base.ui.composables.EmailField
 import app.base.ui.composables.MediumSpace
 import app.base.ui.composables.PasswordField
@@ -96,7 +102,7 @@ fun LoginScreenLourdes(
 
     StructureScreen( modifier = modifier){
         TitleTxt(stringResource(R.string.txt_login))
-
+        Image(painter = painterResource(id = R.drawable.ic_launcher), contentDescription = "", modifier = Modifier.size(100.dp))
         MediumSpace()
 
         SmallSpace()
